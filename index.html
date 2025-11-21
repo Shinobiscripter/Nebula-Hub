@@ -743,6 +743,70 @@
       box-shadow: none;
       border-color: #9ca3af;
     }
+    /* ===========================
+   THEME OVERRIDES
+   =========================== */
+
+/* Default: Nebula */
+:root[data-theme="nebula"] {
+  --bg: #050816;
+  --bg-elevated: #0b1020;
+  --bg-soft: #11182a;
+  --accent: #4f46e5;
+  --accent-soft: rgba(79, 70, 229, 0.25);
+  --accent-strong: #22c55e;
+  --text: #e5e7eb;
+  --text-soft: #9ca3af;
+}
+
+/* Midnight Dark */
+:root[data-theme="midnight"] {
+  --bg: #010409;
+  --bg-elevated: #0d1117;
+  --bg-soft: #161b22;
+  --accent: #58a6ff;
+  --accent-soft: rgba(88,166,255,0.23);
+  --accent-strong: #238636;
+  --text: #c9d1d9;
+  --text-soft: #8b949e;
+}
+
+/* Bubblegum */
+:root[data-theme="bubblegum"] {
+  --bg: #ffe4f1;
+  --bg-elevated: #ffd6ec;
+  --bg-soft: #ffcae6;
+  --accent: #ff4fa3;
+  --accent-soft: rgba(255, 79, 163, 0.23);
+  --accent-strong: #ff1e80;
+  --text: #3a0035;
+  --text-soft: #5f1a50;
+}
+
+/* MATRIX */
+:root[data-theme="matrix"] {
+  --bg: #000000;
+  --bg-elevated: #020402;
+  --bg-soft: #001100;
+  --accent: #00ff41;
+  --accent-soft: rgba(0,255,65,0.15);
+  --accent-strong: #00ff41;
+  --text: #d9ffd9;
+  --text-soft: #71ff8e;
+}
+
+/* ⭐ MINECRAFT THEME ⭐ */
+:root[data-theme="minecraft"] {
+  --bg: #0b2e0b;
+  --bg-elevated: #0f3d0f;
+  --bg-soft: #145214;
+  --accent: #3c8527;      /* grass top */
+  --accent-soft: rgba(60,133,39,0.25);
+  --accent-strong: #8b5a2b; /* dirt block */
+  --text: #d6f5d6;
+  --text-soft: #a4c9a4;
+}
+
   </style>
 </head>
 <body>
@@ -1123,6 +1187,23 @@
       }
       location.reload();
     });
+/* ===========================
+   THEME SWITCHER JS
+   =========================== */
+
+const themeSelector = document.getElementById("themeSelector");
+
+// Load saved theme
+const savedTheme = localStorage.getItem("site-theme") || "nebula";
+document.documentElement.setAttribute("data-theme", savedTheme);
+themeSelector.value = savedTheme;
+
+// Change theme
+themeSelector.addEventListener("change", () => {
+  const newTheme = themeSelector.value;
+  document.documentElement.setAttribute("data-theme", newTheme);
+  localStorage.setItem("site-theme", newTheme);
+});
 
     // 🔹 6. Init
     document.addEventListener("DOMContentLoaded", () => {
