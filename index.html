@@ -960,6 +960,55 @@
             </p>
           </div>
         </div>
+        <!-- Accounts + Chat panel -->
+<div>
+  <div class="sidebar-title">Account</div>
+  <div class="sidebar-card" id="authPanel">
+    <div class="sidebar-card-header">
+      <div class="sidebar-card-title" id="authStatusTitle">Not signed in</div>
+    </div>
+
+    <div id="authSignedOut">
+      <p class="sidebar-card-text">
+        Create an account to join the NebulaHub global chat.
+      </p>
+      <input id="authEmail" type="email" placeholder="Email" style="width:100%;margin-bottom:6px;">
+      <input id="authPassword" type="password" placeholder="Password" style="width:100%;margin-bottom:8px;">
+      <input id="authUsername" type="text" placeholder="Username (display name)" style="width:100%;margin-bottom:8px;">
+
+      <button class="btn" id="authSignUpBtn" style="margin-right:4px;">Sign up</button>
+      <button class="btn btn-ghost" id="authSignInBtn">Log in</button>
+    </div>
+
+    <div id="authSignedIn" style="display:none;">
+      <p class="sidebar-card-text">
+        Signed in as <strong id="authUserNameLabel"></strong>
+      </p>
+      <button class="btn btn-ghost" id="authSignOutBtn">Log out</button>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="sidebar-title">Global chat</div>
+  <div class="sidebar-card" id="chatPanel">
+    <div id="chatMessages"
+         style="height:180px;overflow-y:auto;border-radius:8px;border:1px solid rgba(148,163,184,0.4);padding:6px 8px;font-size:0.82rem;background:rgba(15,23,42,0.9);">
+      <!-- messages go here -->
+    </div>
+    <div style="margin-top:6px;display:flex;gap:4px;">
+      <input id="chatInput"
+             type="text"
+             placeholder="Type a message..."
+             style="flex:1;padding:6px 8px;border-radius:8px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.9);color:#e5e7eb;">
+      <button class="btn" id="chatSendBtn">Send</button>
+    </div>
+    <p class="sidebar-card-text" id="chatHint" style="margin-top:4px;font-size:0.72rem;">
+      You must be signed in to chat.
+    </p>
+  </div>
+</div>
+
       </aside>
 
       <!-- Library / Player -->
@@ -1280,5 +1329,6 @@ function panicHide() {
       renderGrid();
     });
   </script>
+  <script type="module" src="supabase-chat.js"></script>
 </body>
 </html>
