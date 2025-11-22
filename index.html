@@ -743,6 +743,13 @@
       box-shadow: none;
       border-color: #9ca3af;
     }
+    <footer class="legal-footer">
+  <span>© <span id="yearSpan"></span> NebulaHub</span>
+  <a href="/about.html">About</a>
+  <a href="/privacy.html">Privacy Policy</a>
+  <a href="/terms.html">Terms of Use</a>
+</footer>
+
     /* ===========================
    THEME OVERRIDES
    =========================== */
@@ -824,6 +831,10 @@
 
   </style>
 </head>
+  <head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092"
+    crossorigin="anonymous"></script>
+
 <body>
   <div class="app-shell">
     <!-- Top bar -->
@@ -1004,8 +1015,26 @@
         Host this on <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>.
         <span class="portal-link" id="portalLink">Portal mode</span>
       </span>
+      
     </footer>
+    .legal-footer {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.legal-footer a {
+  color: #93c5fd;
+  text-decoration: none;
+}
+.legal-footer a:hover {
+  text-decoration: underline;
+}
   </div>
+
 
   <script>
     // 🔹 1. Game data – put your real URLs here
