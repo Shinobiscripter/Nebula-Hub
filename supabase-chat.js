@@ -1,13 +1,18 @@
 // supabase-chat.js
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-// TODO: replace with your actual values from Supabase → Settings → API
+// Your Supabase project config
 const SUPABASE_URL = "https://aokbylwdfdgyojhrdjuf.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFva2J5bHdkZmRneW9qaHJkanVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4MzI0MzAsImV4cCI6MjA3OTQwODQzMH0.9fFJBxJa_iYHZMWBwLwGO3U036Cis2bTgUY5s9LpzLY";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFva2J5bHdkZmRneW9qaHJkanVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4MzI0MzAsImV4cCI6MjA3OTQwODQzMH0.9fFJBxJa_iYHZMWBwLwGO3U036Cis2bTgUY5s9LpzLY";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Grab elements
+// -------------------------------------------------------------
+// DOM ELEMENTS
+// -------------------------------------------------------------
+
+// Auth + global chat
 const authStatusTitle = document.getElementById("authStatusTitle");
 const authSignedOut = document.getElementById("authSignedOut");
 const authSignedIn = document.getElementById("authSignedIn");
@@ -24,10 +29,26 @@ const chatInput = document.getElementById("chatInput");
 const chatSendBtn = document.getElementById("chatSendBtn");
 const chatHint = document.getElementById("chatHint");
 
+// Private groups + group chat
+const groupList = document.getElementById("groupList");
+const newGroupNameInput = document.getElementById("newGroupName");
+const createGroupBtn = document.getElementById("createGroupBtn");
+
+const currentGroupNameEl = document.getElementById("currentGroupName");
+const groupChatMessages = document.getElementById("groupChatMessages");
+const groupChatInput = document.getElementById("groupChatInput");
+const groupChatSendBtn = document.getElementById("groupChatSendBtn");
+
 let currentUser = null;
 let currentProfile = null;
 
-// ---------- Auth helpers ----------
+// private-group state
+let currentGroupId = null;
+let groupMessagesChannel = null;
+
+// -------------------------------------------------------------
+// AUTH HELPERS
+// -------------------------------------------------------------
 
 async function loadProfile(userId) {
   if (!userId) return null;
@@ -46,7 +67,6 @@ async function loadProfile(userId) {
 
 async function ensureProfile(userId, username) {
   if (!userId) return;
-  // try existing
   const { data, error } = await supabase
     .from("profiles")
     .select("*")
@@ -58,7 +78,6 @@ async function ensureProfile(userId, username) {
   }
   if (data) return data;
 
-  // create new
   const { data: created, error: insertError } = await supabase
     .from("profiles")
     .insert([{ id: userId, username }])
@@ -77,18 +96,23 @@ function updateAuthUI() {
   if (!authStatusTitle) return;
   if (!currentUser) {
     authStatusTitle.textContent = "Not signed in";
-    authSignedOut.style.display = "block";
-    authSignedIn.style.display = "none";
-    chatHint.textContent = "You must be signed in to chat.";
+    if (authSignedOut) authSignedOut.style.display = "block";
+    if (authSignedIn) authSignedIn.style.display = "none";
+    if (chatHint) chatHint.textContent = "You must be signed in to chat.";
   } else {
     const name = currentProfile?.username || currentUser.email || "User";
     authStatusTitle.textContent = "Signed in";
-    authSignedOut.style.display = "none";
-    authSignedIn.style.display = "block";
-    authUserNameLabel.textContent = name;
-    chatHint.textContent = "Global chat – be chill and respect others.";
+    if (authSignedOut) authSignedOut.style.display = "none";
+    if (authSignedIn) authSignedIn.style.display = "block";
+    if (authUserNameLabel) authUserNameLabel.textContent = name;
+    if (chatHint)
+      chatHint.textContent = "Global chat – be chill and respect others.";
   }
 }
+
+// -------------------------------------------------------------
+// AUTH EVENTS
+// -------------------------------------------------------------
 
 // Sign up
 signUpBtn?.addEventListener("click", async () => {
@@ -103,7 +127,7 @@ signUpBtn?.addEventListener("click", async () => {
 
   const { data, error } = await supabase.auth.signUp({
     email,
-    password
+    password,
   });
 
   if (error) {
@@ -129,7 +153,7 @@ signInBtn?.addEventListener("click", async () => {
 
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
-    password
+    password,
   });
 
   if (error) {
@@ -141,6 +165,7 @@ signInBtn?.addEventListener("click", async () => {
     currentUser = data.user;
     currentProfile = await loadProfile(currentUser.id);
     updateAuthUI();
+    refreshGroups();
   }
 });
 
@@ -150,9 +175,10 @@ signOutBtn?.addEventListener("click", async () => {
   currentUser = null;
   currentProfile = null;
   updateAuthUI();
+  clearGroupState();
 });
 
-// Listen for auth changes
+// Listen for auth changes (covers page refresh)
 supabase.auth.onAuthStateChange(async (event, session) => {
   currentUser = session?.user ?? null;
   if (currentUser) {
@@ -161,20 +187,27 @@ supabase.auth.onAuthStateChange(async (event, session) => {
     currentProfile = null;
   }
   updateAuthUI();
+  refreshGroups();
 });
 
-// ---------- Chat ----------
+// -------------------------------------------------------------
+// GLOBAL CHAT
+// -------------------------------------------------------------
 
 function renderMessage(msg) {
+  if (!chatMessages) return;
   const div = document.createElement("div");
   const name = msg.username || "User";
-  const time = msg.created_at ? new Date(msg.created_at).toLocaleTimeString() : "";
+  const time = msg.created_at
+    ? new Date(msg.created_at).toLocaleTimeString()
+    : "";
   div.textContent = `[${time}] ${name}: ${msg.content}`;
   chatMessages.appendChild(div);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
 async function loadInitialMessages() {
+  if (!chatMessages) return;
   const { data, error } = await supabase
     .from("messages")
     .select("*")
@@ -203,8 +236,8 @@ chatSendBtn?.addEventListener("click", async () => {
     {
       user_id: currentUser.id,
       username,
-      content: text
-    }
+      content: text,
+    },
   ]);
 
   if (error) {
@@ -214,7 +247,7 @@ chatSendBtn?.addEventListener("click", async () => {
   chatInput.value = "";
 });
 
-// send on Enter
+// send on Enter (global)
 chatInput?.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
@@ -222,7 +255,7 @@ chatInput?.addEventListener("keydown", (e) => {
   }
 });
 
-// Realtime subscription
+// Realtime subscription for global chat
 supabase
   .channel("public:messages")
   .on(
@@ -234,5 +267,207 @@ supabase
   )
   .subscribe();
 
-// Load messages on startup
+// -------------------------------------------------------------
+// PRIVATE GROUPS + GROUP CHAT
+// -------------------------------------------------------------
+
+function clearGroupState() {
+  if (groupList) groupList.innerHTML = "";
+  if (currentGroupNameEl) currentGroupNameEl.textContent = "No group selected";
+  if (groupChatMessages) groupChatMessages.innerHTML = "";
+  currentGroupId = null;
+
+  if (groupMessagesChannel) {
+    supabase.removeChannel(groupMessagesChannel);
+    groupMessagesChannel = null;
+  }
+}
+
+// Load list of groups the user belongs to
+async function refreshGroups() {
+  if (!groupList) return;
+
+  if (!currentUser) {
+    groupList.innerHTML = "<span>Sign in to see your private groups.</span>";
+    clearGroupState();
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("groups")
+    .select("id, name, created_at")
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.warn("load groups error", error);
+    groupList.innerHTML = "<span>Could not load groups.</span>";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    groupList.innerHTML = "<span>No groups yet. Create one below.</span>";
+    return;
+  }
+
+  groupList.innerHTML = "";
+  data.forEach((group) => {
+    const btn = document.createElement("button");
+    btn.textContent = group.name;
+    btn.className = "btn btn-ghost";
+    btn.style.width = "100%";
+    btn.style.justifyContent = "flex-start";
+    btn.style.marginBottom = "4px";
+    btn.addEventListener("click", () => {
+      selectGroup(group);
+    });
+    groupList.appendChild(btn);
+  });
+}
+
+function renderGroupMessage(msg) {
+  if (!groupChatMessages) return;
+  const div = document.createElement("div");
+  const name = msg.username || "User";
+  const time = msg.created_at
+    ? new Date(msg.created_at).toLocaleTimeString()
+    : "";
+  div.textContent = `[${time}] ${name}: ${msg.content}`;
+  groupChatMessages.appendChild(div);
+  groupChatMessages.scrollTop = groupChatMessages.scrollHeight;
+}
+
+async function loadGroupMessages(groupId) {
+  if (!groupChatMessages || !groupId) return;
+
+  const { data, error } = await supabase
+    .from("group_messages")
+    .select("*")
+    .eq("group_id", groupId)
+    .order("created_at", { ascending: true })
+    .limit(100);
+
+  if (error) {
+    console.warn("load group messages error", error);
+    return;
+  }
+
+  groupChatMessages.innerHTML = "";
+  data.forEach(renderGroupMessage);
+}
+
+function subscribeToGroupMessages(groupId) {
+  if (!groupId) return;
+
+  if (groupMessagesChannel) {
+    supabase.removeChannel(groupMessagesChannel);
+    groupMessagesChannel = null;
+  }
+
+  groupMessagesChannel = supabase
+    .channel(`group:${groupId}`)
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+        table: "group_messages",
+        filter: `group_id=eq.${groupId}`,
+      },
+      (payload) => {
+        renderGroupMessage(payload.new);
+      }
+    )
+    .subscribe();
+}
+
+async function selectGroup(group) {
+  currentGroupId = group.id;
+  if (currentGroupNameEl) currentGroupNameEl.textContent = group.name;
+  await loadGroupMessages(group.id);
+  subscribeToGroupMessages(group.id);
+}
+
+// Create group
+createGroupBtn?.addEventListener("click", async () => {
+  if (!currentUser) {
+    alert("You must be signed in to create groups.");
+    return;
+  }
+  const name = newGroupNameInput.value.trim();
+  if (!name) {
+    alert("Group name is required.");
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("groups")
+    .insert([{ name, is_private: true, created_by: currentUser.id }])
+    .select()
+    .maybeSingle();
+
+  if (error) {
+    alert("Could not create group: " + error.message);
+    return;
+  }
+
+  // add creator as member
+  if (data) {
+    await supabase.from("group_members").insert([
+      {
+        group_id: data.id,
+        user_id: currentUser.id,
+      },
+    ]);
+
+    newGroupNameInput.value = "";
+    await refreshGroups();
+    await selectGroup(data);
+  }
+});
+
+// Send message to current group
+groupChatSendBtn?.addEventListener("click", async () => {
+  if (!currentUser) {
+    alert("You must be signed in to chat in groups.");
+    return;
+  }
+  if (!currentGroupId) {
+    alert("Select a group first.");
+    return;
+  }
+  const text = groupChatInput.value.trim();
+  if (!text) return;
+
+  const username = currentProfile?.username || currentUser.email || "User";
+
+  const { error } = await supabase.from("group_messages").insert([
+    {
+      group_id: currentGroupId,
+      user_id: currentUser.id,
+      username,
+      content: text,
+    },
+  ]);
+
+  if (error) {
+    alert("Send failed: " + error.message);
+    return;
+  }
+  groupChatInput.value = "";
+});
+
+// send on Enter (group)
+groupChatInput?.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    groupChatSendBtn.click();
+  }
+});
+
+// -------------------------------------------------------------
+// INIT
+// -------------------------------------------------------------
+
+// Global chat messages
 loadInitialMessages();
+// Groups will refresh when auth state listener fires on load
