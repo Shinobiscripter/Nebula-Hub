@@ -1003,6 +1003,13 @@
   </div>
 </div>
 
+<div style="margin-top:8px;">
+  <input id="addMemberUsernameInput"
+         placeholder="Add user to this group by username"
+         style="width:100%;padding:6px;margin-bottom:6px;">
+  <button class="btn btn-ghost" id="addMemberBtn" style="width:100%;">Add to group</button>
+</div>
+
         
 <div>
   <div class="sidebar-title">Global chat</div>
@@ -1031,6 +1038,21 @@
 
     <input id="newGroupName" placeholder="Group name" style="margin-top:8px;width:100%;padding:6px;">
     <button class="btn" id="createGroupBtn" style="margin-top:6px;">Create group</button>
+  </div>
+</div>
+<div>
+  <div class="sidebar-title">Friends</div>
+  <div class="sidebar-card">
+    <div id="friendsList"
+         class="hint-list"
+         style="max-height:140px;overflow-y:auto;margin-bottom:8px;">
+      <!-- filled by JS -->
+    </div>
+
+    <input id="friendUsernameInput"
+           placeholder="Add friend by username"
+           style="width:100%;padding:6px;margin-bottom:6px;">
+    <button class="btn btn-ghost" id="addFriendBtn" style="width:100%;">Add friend</button>
   </div>
 </div>
 
