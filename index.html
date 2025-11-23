@@ -828,6 +828,140 @@
   background: #dc2626;
   border-color: #fca5a5;
 }
+/* NebulaChat layout */
+.chat-section {
+  margin-top: 18px;
+  background: radial-gradient(circle at top left, rgba(79,70,229,0.22), transparent 55%), var(--bg-elevated);
+  border-radius: 22px;
+  border: 1px solid rgba(148,163,184,0.35);
+  padding: 14px 16px 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.chat-header-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.chat-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.chat-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+.chat-pill {
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border: 1px solid rgba(129,140,248,0.8);
+  background: rgba(15,23,42,0.9);
+  color: #c7d2fe;
+}
+
+.chat-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .chat-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.chat-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-column-wide {
+  min-height: 260px;
+}
+
+.chat-card {
+  background: var(--bg-soft);
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,0.35);
+  padding: 10px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.chat-card-text {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+.chat-input {
+  background: rgba(15,23,42,0.95);
+  border-radius: 10px;
+  border: 1px solid rgba(148,163,184,0.5);
+  color: var(--text);
+  font-size: 0.85rem;
+  padding: 6px 8px;
+  outline: none;
+  width: 100%;
+}
+
+.chat-input::placeholder {
+  color: #6b7280;
+}
+
+.chat-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(79,70,229,0.6);
+}
+
+.chat-btn-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.chat-messages-box {
+  height: 170px;
+  overflow-y: auto;
+  border-radius: 10px;
+  border: 1px solid rgba(30,64,175,0.7);
+  background: rgba(15,23,42,0.98);
+  padding: 6px 8px;
+  font-size: 0.8rem;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.flex-1 {
+  flex: 1;
+}
 
   </style>
 </head>
@@ -1104,6 +1238,145 @@
         </div>
       </section>
     </main>
+    <!-- NebulaChat: separate social / chat section -->
+    <section id="nebulaChat" class="chat-section">
+      <div class="chat-header-row">
+        <div>
+          <h2 class="chat-title">NebulaChat</h2>
+          <p class="chat-subtitle">
+            Friends, DMs & group chats – separate from the game library.
+          </p>
+        </div>
+        <span class="chat-pill">BETA</span>
+      </div>
+
+      <div class="chat-layout">
+        <!-- LEFT COLUMN: account + friends + chats list -->
+        <div class="chat-column">
+          <!-- Account card -->
+          <div class="chat-card">
+            <div class="chat-card-header">
+              <div class="chat-card-title">
+                <span id="authStatusTitle">Not signed in</span>
+              </div>
+            </div>
+
+            <div id="authSignedOut">
+              <p class="chat-card-text">
+                Create an account to chat, add friends, and use DMs.
+              </p>
+              <input id="authEmail" type="email" placeholder="Email" class="chat-input">
+              <input id="authPassword" type="password" placeholder="Password" class="chat-input">
+              <input id="authUsername" type="text" placeholder="Username (display name)" class="chat-input">
+
+              <div class="chat-btn-row">
+                <button class="btn" id="authSignUpBtn">Sign up</button>
+                <button class="btn btn-ghost" id="authSignInBtn">Log in</button>
+              </div>
+            </div>
+
+            <div id="authSignedIn" style="display:none;">
+              <p class="chat-card-text">
+                Signed in as <strong id="authUserNameLabel"></strong>
+              </p>
+              <button class="btn btn-ghost" id="authSignOutBtn">Log out</button>
+            </div>
+          </div>
+
+          <!-- Friends list -->
+          <div class="chat-card">
+            <div class="chat-card-header">
+              <div class="chat-card-title">Friends</div>
+            </div>
+
+            <div id="friendsList"
+                 class="hint-list"
+                 style="max-height:150px;overflow-y:auto;margin-bottom:8px;">
+              <!-- filled by JS -->
+            </div>
+
+            <input id="friendUsernameInput"
+                   placeholder="Add friend by username"
+                   class="chat-input">
+            <button class="btn btn-ghost" id="addFriendBtn" style="width:100%;margin-top:6px;">
+              Add friend
+            </button>
+          </div>
+
+          <!-- Chats list -->
+          <div class="chat-card">
+            <div class="chat-card-header">
+              <div class="chat-card-title">Chats</div>
+            </div>
+            <div id="groupList"
+                 class="hint-list"
+                 style="max-height:160px;overflow-y:auto;">
+              <!-- filled by JS -->
+            </div>
+
+            <input id="newGroupName" placeholder="New group chat name" class="chat-input" />
+            <button class="btn" id="createGroupBtn" style="width:100%;margin-top:6px;">
+              Create group chat
+            </button>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: global chat + current thread -->
+        <div class="chat-column chat-column-wide">
+          <!-- Global chat -->
+          <div class="chat-card">
+            <div class="chat-card-header">
+              <div class="chat-card-title">Global chat</div>
+            </div>
+            <div id="chatMessages"
+                 class="chat-messages-box">
+              <!-- global messages -->
+            </div>
+            <div class="chat-input-row">
+              <input id="chatInput"
+                     type="text"
+                     placeholder="Say something to everyone..."
+                     class="chat-input flex-1">
+              <button class="btn" id="chatSendBtn">Send</button>
+            </div>
+            <p class="chat-card-text" id="chatHint" style="margin-top:4px;font-size:0.75rem;">
+              You must be signed in to chat.
+            </p>
+          </div>
+
+          <!-- Current DM / Group thread -->
+          <div class="chat-card">
+            <div class="chat-card-header">
+              <div class="chat-card-title" id="currentGroupName">No chat selected</div>
+            </div>
+
+            <div id="groupChatMessages"
+                 class="chat-messages-box">
+              <!-- group / DM messages -->
+            </div>
+
+            <div class="chat-input-row">
+              <input id="groupChatInput"
+                     type="text"
+                     placeholder="Message this chat..."
+                     class="chat-input flex-1">
+              <button class="btn" id="groupChatSendBtn">Send</button>
+            </div>
+
+            <!-- Add member to current group -->
+            <div class="chat-card-text" style="margin-top:6px;">
+              <input id="addMemberUsernameInput"
+                     placeholder="Add user to this chat by username"
+                     class="chat-input"
+                     style="margin-bottom:6px;">
+              <button class="btn btn-ghost" id="addMemberBtn" style="width:100%;">
+                Add to chat
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <footer>
       <span>NebulaHub • static HTML build</span>
