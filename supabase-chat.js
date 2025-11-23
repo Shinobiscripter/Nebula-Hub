@@ -39,6 +39,16 @@ const groupChatMessages = document.getElementById("groupChatMessages");
 const groupChatInput = document.getElementById("groupChatInput");
 const groupChatSendBtn = document.getElementById("groupChatSendBtn");
 
+// Add members to group
+const addMemberUsernameInput = document.getElementById("addMemberUsernameInput");
+const addMemberBtn = document.getElementById("addMemberBtn");
+
+// Friends
+const friendsList = document.getElementById("friendsList");
+const friendUsernameInput = document.getElementById("friendUsernameInput");
+const addFriendBtn = document.getElementById("addFriendBtn");
+
+
 let currentUser = null;
 let currentProfile = null;
 
@@ -393,6 +403,58 @@ createGroupBtn?.addEventListener("click", async () => {
     alert("You must be signed in to create groups.");
     return;
   }
+
+// Add a member to the current group by username
+addMemberBtn?.addEventListener("click", async () => {
+  if (!currentUser) {
+    alert("You must be signed in to add members.");
+    return;
+  }
+  if (!currentGroupId) {
+    alert("Select a group first.");
+    return;
+  }
+  const username = addMemberUsernameInput.value.trim();
+  if (!username) {
+    alert("Enter a username.");
+    return;
+  }
+
+  // Find user by username
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("id, username")
+    .ilike("username", username)
+    .maybeSingle();
+
+  if (error || !profile) {
+    alert("No user found with that username.");
+    return;
+  }
+
+  if (profile.id === currentUser.id) {
+    alert("You're already in the group.");
+    return;
+  }
+
+  // Insert into group_members (RLS ensures only current members can do this)
+  const { error: insertErr } = await supabase.from("group_members").insert([
+    {
+      group_id: currentGroupId,
+      user_id: profile.id,
+    },
+  ]);
+
+  if (insertErr) {
+    alert("Could not add member: " + insertErr.message);
+    return;
+  }
+
+  addMemberUsernameInput.value = "";
+  alert(`Added ${profile.username || "user"} to the group!`);
+});
+
+  
   const name = newGroupNameInput.value.trim();
   if (!name) {
     alert("Group name is required.");
@@ -463,6 +525,124 @@ groupChatInput?.addEventListener("keydown", (e) => {
     groupChatSendBtn.click();
   }
 });
+
+// -------------------------------------------------------------
+// FRIENDS LIST
+// -------------------------------------------------------------
+
+async function loadFriends() {
+  if (!friendsList) return;
+
+  if (!currentUser) {
+    friendsList.innerHTML = "<span>Sign in to see your friends.</span>";
+    return;
+  }
+
+  // Get all friendships where the user is either side
+  const { data, error } = await supabase
+    .from("friends")
+    .select("id, user_id, friend_id, status")
+    .or(`user_id.eq.${currentUser.id},friend_id.eq.${currentUser.id}`)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.warn("loadFriends error", error);
+    friendsList.innerHTML = "<span>Could not load friends.</span>";
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    friendsList.innerHTML = "<span>No friends yet. Add some!</span>";
+    return;
+  }
+
+  // Collect "other user" ids
+  const otherIds = [];
+  const friendRows = [];
+
+  data.forEach((row) => {
+    const otherId = row.user_id === currentUser.id ? row.friend_id : row.user_id;
+    if (!otherId) return;
+    otherIds.push(otherId);
+    friendRows.push({ ...row, otherId });
+  });
+
+  if (otherIds.length === 0) {
+    friendsList.innerHTML = "<span>No friends yet.</span>";
+    return;
+  }
+
+  // Fetch usernames for those ids
+  const { data: profiles, error: profErr } = await supabase
+    .from("profiles")
+    .select("id, username")
+    .in("id", otherIds);
+
+  if (profErr) {
+    console.warn("friends profiles error", profErr);
+  }
+
+  const nameById = {};
+  (profiles || []).forEach((p) => {
+    nameById[p.id] = p.username || "User";
+  });
+
+  friendsList.innerHTML = "";
+  friendRows.forEach((row) => {
+    const li = document.createElement("div");
+    const name = nameById[row.otherId] || "User";
+    li.textContent = `${name}`;
+    friendsList.appendChild(li);
+  });
+}
+
+// Add friend by username
+addFriendBtn?.addEventListener("click", async () => {
+  if (!currentUser) {
+    alert("You must be signed in to add friends.");
+    return;
+  }
+  const username = friendUsernameInput.value.trim();
+  if (!username) {
+    alert("Enter a username.");
+    return;
+  }
+
+  // Find that user by username in profiles
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("id, username")
+    .ilike("username", username)
+    .maybeSingle();
+
+  if (error || !profile) {
+    alert("No user found with that username.");
+    return;
+  }
+
+  if (profile.id === currentUser.id) {
+    alert("You can't add yourself.");
+    return;
+  }
+
+  // Create friendship row (auto-accepted for now)
+  const { error: insertErr } = await supabase.from("friends").insert([
+    {
+      user_id: currentUser.id,
+      friend_id: profile.id,
+      status: "accepted",
+    },
+  ]);
+
+  if (insertErr) {
+    alert("Could not add friend: " + insertErr.message);
+    return;
+  }
+
+  friendUsernameInput.value = "";
+  await loadFriends();
+});
+
 
 // -------------------------------------------------------------
 // INIT
