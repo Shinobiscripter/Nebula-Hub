@@ -35,11 +35,7 @@
       --transition-fast: 0.15s ease-out;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
@@ -58,7 +54,6 @@
       overflow-x: hidden;
     }
 
-    /* animated starfield layers */
     body::before,
     body::after {
       content: "";
@@ -109,7 +104,6 @@
       backdrop-filter: blur(18px) saturate(1.2);
     }
 
-    /* Top bar */
     .top-bar {
       display: flex;
       align-items: center;
@@ -118,35 +112,22 @@
       flex-wrap: wrap;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .brand { display:flex; align-items:center; gap:10px; }
 
     .brand-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 14px;
+      width: 38px; height: 38px; border-radius: 14px;
       background: conic-gradient(from 200deg, #8b5cf6, #22c55e, #ec4899, #0ea5e9, #8b5cf6);
       padding: 2px;
       box-shadow: 0 0 20px rgba(129,140,248,0.8);
     }
 
     .brand-logo-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
+      width: 100%; height: 100%; border-radius: 12px;
       background:
         radial-gradient(circle at 30% 20%, #22c55e, #040018 65%),
         radial-gradient(circle at 80% 80%, rgba(96,165,250,0.65), transparent 60%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #e5e7eb;
-      letter-spacing: 0.08em;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700; font-size:1.1rem; color:#e5e7eb; letter-spacing:0.08em;
     }
 
     .brand-text-main {
@@ -159,15 +140,8 @@
       gap: 4px;
     }
 
-    .brand-text-main span:nth-child(2) {
-      color: var(--accent-strong);
-      font-weight: 800;
-    }
-
-    .brand-sub {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-    }
+    .brand-text-main span:nth-child(2) { color: var(--accent-strong); font-weight: 800; }
+    .brand-sub { font-size: 0.78rem; color: var(--text-soft); }
 
     .pill {
       border-radius: 999px;
@@ -185,43 +159,31 @@
     }
 
     .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
+      width: 8px; height: 8px; border-radius: 999px;
       background: var(--accent-strong);
       box-shadow: 0 0 10px rgba(34,197,94,0.8);
     }
 
-    /* Search & filters */
     .toolbar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      justify-content: space-between;
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center; justify-content:space-between;
     }
 
-    .search-wrapper {
-      flex: 1 1 220px;
-      position: relative;
-      max-width: 420px;
-    }
+    .search-wrapper { flex:1 1 220px; position:relative; max-width:420px; }
 
     .search-input {
-      width: 100%;
-      padding: 10px 34px 10px 32px;
+      width:100%;
+      padding:10px 34px 10px 32px;
       background: rgba(15,23,42,0.95);
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.55);
-      color: var(--text);
-      outline: none;
-      font-size: 0.9rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      color:var(--text);
+      outline:none;
+      font-size:0.9rem;
       transition: border var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
     }
 
-    .search-input::placeholder {
-      color: #6b7280;
-    }
+    .search-input::placeholder { color:#6b7280; }
 
     .search-input:focus {
       border-color: var(--accent);
@@ -231,61 +193,46 @@
     }
 
     .search-icon {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.9rem;
-      color: #6b7280;
-      pointer-events: none;
+      position:absolute; left:10px; top:50%;
+      transform:translateY(-50%);
+      font-size:0.9rem; color:#6b7280; pointer-events:none;
     }
 
     .clear-search {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      border: none;
-      background: transparent;
-      color: #6b7280;
-      cursor: pointer;
-      font-size: 0.8rem;
-      padding: 0;
-      display: none;
+      position:absolute; right:10px; top:50%;
+      transform:translateY(-50%);
+      border:none; background:transparent;
+      color:#6b7280; cursor:pointer;
+      font-size:0.8rem; padding:0;
+      display:none;
     }
 
     .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: flex-end;
+      display:flex; flex-wrap:wrap;
+      gap:8px; justify-content:flex-end;
     }
 
     .filter-chip {
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.4);
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
       background: rgba(15,23,42,0.96);
-      padding: 6px 11px;
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      cursor: pointer;
+      padding:6px 11px;
+      font-size:0.78rem;
+      color:var(--text-soft);
+      cursor:pointer;
       transition: background var(--transition-fast), border var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      display:inline-flex; align-items:center; gap:6px;
     }
 
     .filter-chip span.dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
+      width:8px; height:8px; border-radius:999px;
       background: rgba(148,163,184,0.8);
     }
 
     .filter-chip.active {
       background: var(--accent-soft);
       border-color: var(--accent);
-      color: #e5e7eb;
+      color:#e5e7eb;
       transform: translateY(-1px);
     }
 
@@ -294,222 +241,190 @@
       box-shadow: 0 0 10px rgba(34,197,94,0.9);
     }
 
-    /* Content layout */
     .content {
       margin-top: 4px;
-      display: grid;
+      display:grid;
       grid-template-columns: 260px minmax(0, 1fr);
-      gap: 14px;
+      gap:14px;
     }
 
     @media (max-width: 850px) {
-      .content {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .content { grid-template-columns: minmax(0,1fr); }
     }
 
     .sidebar {
       background: radial-gradient(circle at top left, rgba(51,65,85,0.5), transparent 60%), var(--bg-elevated);
-      border-radius: 22px;
-      border: 1px solid rgba(148,163,184,0.35);
-      padding: 13px 13px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,0.35);
+      padding:13px 13px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
     }
 
     .sidebar-title {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-soft);
-      margin-bottom: 4px;
+      font-size:0.8rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:var(--text-soft);
+      margin-bottom:4px;
     }
 
     .sidebar-card {
       background: var(--bg-soft);
-      border-radius: 16px;
-      padding: 10px 11px;
-      border: 1px solid rgba(148,163,184,0.28);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      border-radius:16px;
+      padding:10px 11px;
+      border:1px solid rgba(148,163,184,0.28);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
     }
 
-    .sidebar-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-    }
+    .sidebar-card-header { display:flex; align-items:center; justify-content:space-between; gap:6px; }
 
     .badge {
-      font-size: 0.72rem;
-      padding: 3px 7px;
-      border-radius: 999px;
+      font-size:0.72rem;
+      padding:3px 7px;
+      border-radius:999px;
       background: rgba(34,197,94,0.16);
-      color: #bbf7d0;
-      border: 1px solid rgba(34,197,94,0.6);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.6);
+      text-transform:uppercase;
+      letter-spacing:0.08em;
     }
 
-    .sidebar-card-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-
-    .sidebar-card-text {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      line-height: 1.45;
-    }
+    .sidebar-card-title { font-size:0.9rem; font-weight:600; }
+    .sidebar-card-text { font-size:0.78rem; color:var(--text-soft); line-height:1.45; }
 
     .hint-list {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      margin-top: 4px;
+      font-size:0.75rem;
+      color:var(--text-soft);
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      margin-top:4px;
     }
 
-    .hint-list span {
-      opacity: 0.95;
-    }
+    .hint-list span { opacity:0.95; }
 
     .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 0.78rem;
-      margin-top: 6px;
-      color: var(--text-soft);
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      font-size:0.78rem;
+      margin-top:6px;
+      color:var(--text-soft);
     }
 
-    .stat-row strong {
-      font-size: 0.9rem;
-      color: #e5e7eb;
-    }
+    .stat-row strong { font-size:0.9rem; color:#e5e7eb; }
 
     .small-link {
-      font-size: 0.75rem;
-      color: #93c5fd;
-      text-decoration: none;
-      margin-top: 4px;
-      align-self: flex-start;
+      font-size:0.75rem;
+      color:#93c5fd;
+      text-decoration:none;
+      margin-top:4px;
+      align-self:flex-start;
     }
 
-    .small-link:hover {
-      text-decoration: underline;
-    }
+    .small-link:hover { text-decoration:underline; }
 
-    /* Library & player */
     .library {
       background: radial-gradient(circle at top right, rgba(79,70,229,0.24), transparent 60%), var(--bg-elevated);
-      border-radius: 22px;
-      border: 1px solid rgba(148,163,184,0.3);
-      padding: 14px 14px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 260px;
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,0.3);
+      padding:14px 14px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:260px;
     }
 
     .library-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 6px;
-      flex-wrap: wrap;
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:6px;
+      flex-wrap:wrap;
     }
 
     .library-title {
-      font-size: 0.97rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      font-size:0.97rem;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:6px;
     }
 
     .library-title span.count {
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
+      font-size:0.75rem;
+      color:var(--text-soft);
+      text-transform:uppercase;
+      letter-spacing:0.14em;
     }
 
-    .view-toggle {
-      display: flex;
-      gap: 6px;
-      font-size: 0.75rem;
-    }
+    .view-toggle { display:flex; gap:6px; font-size:0.75rem; }
 
     .view-btn {
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.4);
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
       background: rgba(15,23,42,0.9);
-      padding: 4px 9px;
-      color: var(--text-soft);
-      cursor: pointer;
+      padding:4px 9px;
+      color:var(--text-soft);
+      cursor:pointer;
       transition: background var(--transition-fast), border var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
     }
 
     .view-btn.active {
       background: rgba(15,23,42,0.9);
       border-color: var(--accent);
-      color: #e5e7eb;
+      color:#e5e7eb;
       transform: translateY(-1px);
     }
 
     .library-body {
-      margin-top: 2px;
-      border-radius: 18px;
+      margin-top:2px;
+      border-radius:18px;
       background: rgba(15,23,42,0.7);
-      border: 1px solid rgba(30,64,175,0.5);
-      padding: 10px;
+      border:1px solid rgba(30,64,175,0.5);
+      padding:10px;
     }
 
     .game-grid {
-      display: grid;
+      display:grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
+      gap:10px;
     }
 
-    @media (max-width: 600px) {
-      .game-grid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-      }
+    @media (max-width:600px) {
+      .game-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
     }
 
     .game-card {
       background: radial-gradient(circle at top left, rgba(22,163,74,0.32), transparent 58%),
                   linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.85));
-      border-radius: 16px;
-      border: 1px solid rgba(148,163,184,0.45);
-      padding: 8px 9px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border var(--transition-fast), background var(--transition-fast), translate var(--transition-fast);
-      position: relative;
-      overflow: hidden;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.45);
+      padding:8px 9px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      cursor:pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border var(--transition-fast), background var(--transition-fast);
+      position:relative;
+      overflow:hidden;
     }
 
     .game-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
+      content:"";
+      position:absolute;
+      inset:-40%;
       background: radial-gradient(circle at top, rgba(129,140,248,0.45), transparent 60%);
-      opacity: 0;
+      opacity:0;
       transition: opacity var(--transition-fast);
-      pointer-events: none;
+      pointer-events:none;
     }
 
-    .game-card:hover::before {
-      opacity: 0.65;
-    }
+    .game-card:hover::before { opacity:0.65; }
 
     .game-card:hover {
       transform: translateY(-2px);
@@ -518,115 +433,101 @@
     }
 
     .game-thumb {
-      height: 80px;
-      border-radius: 11px;
+      height:80px;
+      border-radius:11px;
       background:
         radial-gradient(circle at 30% 20%, #22c55e, #0b1020),
         radial-gradient(circle at 80% 90%, rgba(56,189,248,0.9), transparent 60%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      color: #e5e7eb;
-      position: relative;
-      overflow: hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#e5e7eb;
+      position:relative;
+      overflow:hidden;
     }
 
     .game-thumb span {
-      position: relative;
-      z-index: 1;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      font-size: 0.9rem;
-      text-transform: uppercase;
+      position:relative;
+      z-index:1;
+      font-weight:700;
+      letter-spacing:0.12em;
+      font-size:0.9rem;
+      text-transform:uppercase;
     }
 
     .game-thumb::after {
-      content: "";
-      position: absolute;
-      inset: -30%;
+      content:"";
+      position:absolute;
+      inset:-30%;
       background: radial-gradient(circle at bottom right, rgba(56,189,248,0.6), transparent 60%);
       mix-blend-mode: screen;
-      opacity: 0.7;
+      opacity:0.7;
     }
 
     .game-name {
-      font-size: 0.88rem;
-      font-weight: 600;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size:0.88rem;
+      font-weight:600;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
 
     .game-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 0.75rem;
-      color: var(--text-soft);
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      font-size:0.75rem;
+      color:var(--text-soft);
     }
 
     .game-tag {
-      font-size: 0.7rem;
-      padding: 3px 7px;
-      border-radius: 999px;
+      font-size:0.7rem;
+      padding:3px 7px;
+      border-radius:999px;
       background: rgba(37,99,235,0.25);
-      border: 1px solid rgba(129,140,248,0.7);
+      border:1px solid rgba(129,140,248,0.7);
     }
 
     .empty-state {
-      padding: 24px 10px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-soft);
+      padding:24px 10px;
+      text-align:center;
+      font-size:0.85rem;
+      color:var(--text-soft);
     }
 
-    .empty-state strong {
-      color: #e5e7eb;
-    }
+    .empty-state strong { color:#e5e7eb; }
 
-    /* Player view */
-    .player-view {
-      display: none;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .player-view { display:none; flex-direction:column; gap:8px; }
 
     .player-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
     }
 
     .player-title {
-      font-size: 0.93rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
+      font-size:0.93rem;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
     }
 
-    .player-title span.main {
-      font-weight: 600;
-    }
-
-    .player-title span.sub {
-      font-size: 0.76rem;
-      color: var(--text-soft);
-    }
+    .player-title span.main { font-weight:600; }
+    .player-title span.sub { font-size:0.76rem; color:var(--text-soft); }
 
     .btn {
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.8);
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.8);
       background: rgba(15,23,42,0.96);
-      padding: 6px 11px;
-      font-size: 0.78rem;
-      color: #e5e7eb;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      padding:6px 11px;
+      font-size:0.78rem;
+      color:#e5e7eb;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
       transition: background var(--transition-fast), border var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
     }
 
@@ -637,122 +538,69 @@
       box-shadow: 0 10px 22px rgba(15,23,42,0.8);
     }
 
-    .btn-ghost {
-      background: rgba(15,23,42,0.9);
-    }
+    .btn-ghost { background: rgba(15,23,42,0.9); }
 
     .player-frame {
-      margin-top: 2px;
-      border-radius: 18px;
-      border: 1px solid rgba(30,64,175,0.6);
-      overflow: hidden;
-      background: #020617;
-
-      /* taller game area */
+      margin-top:2px;
+      border-radius:18px;
+      border:1px solid rgba(30,64,175,0.6);
+      overflow:hidden;
+      background:#020617;
       height: 80vh;
       max-height: 800px;
     }
 
     .player-frame iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-      background: #020617;
+      width:100%;
+      height:100%;
+      border:none;
+      display:block;
+      background:#020617;
     }
 
     footer {
-      margin-top: 6px;
-      font-size: 0.7rem;
-      color: #6b7280;
-      display: flex;
-      justify-content: space-between;
-      gap: 4px;
-      flex-wrap: wrap;
+      margin-top:6px;
+      font-size:0.7rem;
+      color:#6b7280;
+      display:flex;
+      justify-content:space-between;
+      gap:4px;
+      flex-wrap:wrap;
     }
 
-    footer a {
-      color: #93c5fd;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a { color:#93c5fd; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
 
     footer .portal-link {
-      cursor: pointer;
+      cursor:pointer;
       text-decoration: underline;
       text-decoration-style: dotted;
     }
 
-    /* Portal (school-safe) mode – toggled by #portal hash */
-    body.portal-mode {
-      background: #f9fafb;
-      color: #111827;
-    }
+    body.portal-mode { background:#f9fafb; color:#111827; }
+    body.portal-mode::before, body.portal-mode::after { display:none; }
 
-    body.portal-mode::before,
-    body.portal-mode::after {
-      display: none;
-    }
-
-    body.portal-mode .app-shell {
-      background: #ffffff;
-      border-radius: 0;
-      border: 1px solid #e5e7eb;
-      box-shadow: none;
-    }
-
-    body.portal-mode .sidebar,
-    body.portal-mode .library {
-      background: #ffffff;
-      border-color: #e5e7eb;
-    }
-
-    body.portal-mode .game-card {
-      background: #f9fafb;
-      box-shadow: none;
-      border-color: #e5e7eb;
-    }
-
-    body.portal-mode .game-thumb {
-      background: #e5e7eb;
-    }
-
-    body.portal-mode .brand-logo {
-      box-shadow: none;
-    }
-
-    body.portal-mode .brand-logo-inner {
-      background: #f3f4f6;
-      color: #111827;
-    }
-
-    body.portal-mode .brand-text-main span:nth-child(2) {
-      color: #111827;
-    }
+    body.portal-mode .app-shell { background:#fff; border-radius:0; border:1px solid #e5e7eb; box-shadow:none; }
+    body.portal-mode .sidebar, body.portal-mode .library { background:#fff; border-color:#e5e7eb; }
+    body.portal-mode .game-card { background:#f9fafb; box-shadow:none; border-color:#e5e7eb; }
+    body.portal-mode .game-thumb { background:#e5e7eb; }
+    body.portal-mode .brand-logo { box-shadow:none; }
+    body.portal-mode .brand-logo-inner { background:#f3f4f6; color:#111827; }
+    body.portal-mode .brand-text-main span:nth-child(2) { color:#111827; }
 
     body.portal-mode .search-input,
     body.portal-mode .view-btn,
     body.portal-mode .filter-chip,
     body.portal-mode .btn {
-      background: #f9fafb;
-      border-color: #e5e7eb;
-      color: #374151;
-      box-shadow: none;
+      background:#f9fafb;
+      border-color:#e5e7eb;
+      color:#374151;
+      box-shadow:none;
     }
 
-    body.portal-mode .search-input:focus {
-      box-shadow: none;
-      border-color: #9ca3af;
-    }
+    body.portal-mode .search-input:focus { box-shadow:none; border-color:#9ca3af; }
 
-    /* ===========================
-       THEME OVERRIDES
-       =========================== */
-
-    /* Default: Nebula */
+    /* THEMES */
     :root[data-theme="nebula"] {
       --bg: #050816;
       --bg-elevated: #0b1020;
@@ -764,7 +612,6 @@
       --text-soft: #9ca3af;
     }
 
-    /* Midnight Dark */
     :root[data-theme="midnight"] {
       --bg: #010409;
       --bg-elevated: #0d1117;
@@ -776,7 +623,6 @@
       --text-soft: #8b949e;
     }
 
-    /* Bubblegum */
     :root[data-theme="bubblegum"] {
       --bg: #ffe4f1;
       --bg-elevated: #ffd6ec;
@@ -788,7 +634,6 @@
       --text-soft: #5f1a50;
     }
 
-    /* MATRIX */
     :root[data-theme="matrix"] {
       --bg: #000000;
       --bg-elevated: #020402;
@@ -800,171 +645,33 @@
       --text-soft: #71ff8e;
     }
 
-    /* ⭐ MINECRAFT THEME ⭐ */
     :root[data-theme="minecraft"] {
       --bg: #0b2e0b;
       --bg-elevated: #0f3d0f;
       --bg-soft: #145214;
-      --accent: #3c8527;      /* grass top */
+      --accent: #3c8527;
       --accent-soft: rgba(60,133,39,0.25);
-      --accent-strong: #8b5a2b; /* dirt block */
+      --accent-strong: #8b5a2b;
       --text: #d6f5d6;
       --text-soft: #a4c9a4;
     }
 
-    /* Panic button */
     .panic-btn {
-      background: #ef4444;
-      border: 1px solid #f87171;
-      color: white;
-      font-weight: 600;
-      border-radius: 12px;
-      padding: 6px 12px;
-      cursor: pointer;
-      transition: 0.15s ease;
+      background:#ef4444;
+      border:1px solid #f87171;
+      color:white;
+      font-weight:600;
+      border-radius:12px;
+      padding:6px 12px;
+      cursor:pointer;
+      transition:0.15s ease;
     }
 
     .panic-btn:hover {
-      background: #dc2626;
-      border-color: #fca5a5;
+      background:#dc2626;
+      border-color:#fca5a5;
     }
 
-    /* NebulaChat layout */
-    .chat-section {
-      margin-top: 18px;
-      background: radial-gradient(circle at top left, rgba(79,70,229,0.22), transparent 55%), var(--bg-elevated);
-      border-radius: 22px;
-      border: 1px solid rgba(148,163,184,0.35);
-      padding: 14px 16px 16px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .chat-header-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    .chat-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-    }
-
-    .chat-subtitle {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    .chat-pill {
-      padding: 4px 9px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      border: 1px solid rgba(129,140,248,0.8);
-      background: rgba(15,23,42,0.9);
-      color: #c7d2fe;
-    }
-
-    .chat-layout {
-      display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 900px) {
-      .chat-layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .chat-column {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .chat-column-wide {
-      min-height: 260px;
-    }
-
-    .chat-card {
-      background: var(--bg-soft);
-      border-radius: 16px;
-      border: 1px solid rgba(148,163,184,0.35);
-      padding: 10px 11px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .chat-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .chat-card-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-
-    .chat-card-text {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    .chat-input {
-      background: rgba(15,23,42,0.95);
-      border-radius: 10px;
-      border: 1px solid rgba(148,163,184,0.5);
-      color: var(--text);
-      font-size: 0.85rem;
-      padding: 6px 8px;
-      outline: none;
-      width: 100%;
-    }
-
-    .chat-input::placeholder {
-      color: #6b7280;
-    }
-
-    .chat-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(79,70,229,0.6);
-    }
-
-    .chat-btn-row {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-
-    .chat-messages-box {
-      height: 170px;
-      overflow-y: auto;
-      border-radius: 10px;
-      border: 1px solid rgba(30,64,175,0.7);
-      background: rgba(15,23,42,0.98);
-      padding: 6px 8px;
-      font-size: 0.8rem;
-    }
-
-    .chat-input-row {
-      display: flex;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    .flex-1 {
-      flex: 1;
-    }
-
-    /* Legal footer */
     .legal-footer {
       margin-top: 10px;
       font-size: 0.75rem;
@@ -975,99 +682,65 @@
       align-items: center;
     }
 
-    .legal-footer a {
-      color: #93c5fd;
-      text-decoration: none;
-    }
-
-    .legal-footer a:hover {
-      text-decoration: underline;
-    }
+    .legal-footer a { color:#93c5fd; text-decoration:none; }
+    .legal-footer a:hover { text-decoration:underline; }
   </style>
 </head>
+
 <body>
   <div class="app-shell">
-    <!-- Top bar -->
     <header class="top-bar">
       <div class="brand">
         <div class="brand-logo">
-          <div class="brand-logo-inner">
-            <span>NH</span>
-          </div>
+          <div class="brand-logo-inner"><span>NH</span></div>
         </div>
         <div>
           <div class="brand-text-main">
-            <span>NEBULA</span>
-            <span>HUB</span>
+            <span>NEBULA</span><span>HUB</span>
           </div>
-          <div class="brand-sub">
-            Games • Apps • Your cosmic escape 🌌
-          </div>
+          <div class="brand-sub">Games • Apps • Your cosmic escape 🌌</div>
         </div>
       </div>
+
       <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
         <div class="pill">
           <span class="pill-dot"></span>
           LIVE LIBRARY
         </div>
-        <!-- Theme Selector -->
-        <select id="themeSelector" class="theme-selector" style="padding:6px 10px; border-radius: 12px; background: var(--bg-soft); border:1px solid var(--accent-soft); color:var(--text);">
+
+        <select id="themeSelector" class="theme-selector"
+          style="padding:6px 10px; border-radius:12px; background:var(--bg-soft); border:1px solid var(--accent-soft); color:var(--text);">
           <option value="nebula">Nebula</option>
           <option value="midnight">Midnight</option>
           <option value="bubblegum">Bubblegum</option>
           <option value="matrix">Matrix</option>
           <option value="minecraft">Minecraft</option>
         </select>
-        <!-- Panic Button -->
+
         <button class="btn panic-btn" onclick="panicHide()">🚨 Panic</button>
       </div>
     </header>
 
-    <!-- Search + filters -->
     <section class="toolbar">
       <div class="search-wrapper">
         <span class="search-icon">🔍</span>
-        <input
-          id="searchInput"
-          class="search-input"
-          type="text"
+        <input id="searchInput" class="search-input" type="text"
           placeholder="Search games (eg. geometry, backrooms, shooter)..."
-          autocomplete="off"
-        />
+          autocomplete="off" />
         <button id="clearSearchBtn" class="clear-search" aria-label="Clear search">✕</button>
       </div>
 
       <div class="filters">
-        <button class="filter-chip active" data-category="all">
-          <span class="dot"></span>
-          All
-        </button>
-        <button class="filter-chip" data-category="arcade">
-          <span class="dot"></span>
-          Arcade
-        </button>
-        <button class="filter-chip" data-category="horror">
-          <span class="dot"></span>
-          Horror
-        </button>
-        <button class="filter-chip" data-category="fps">
-          <span class="dot"></span>
-          FPS
-        </button>
-        <button class="filter-chip" data-category="sandbox">
-          <span class="dot"></span>
-          Sandbox
-        </button>
-        <button class="filter-chip" data-category="movies">
-          <span class="dot"></span>
-          Movies
-        </button>
+        <button class="filter-chip active" data-category="all"><span class="dot"></span>All</button>
+        <button class="filter-chip" data-category="arcade"><span class="dot"></span>Arcade</button>
+        <button class="filter-chip" data-category="horror"><span class="dot"></span>Horror</button>
+        <button class="filter-chip" data-category="fps"><span class="dot"></span>FPS</button>
+        <button class="filter-chip" data-category="sandbox"><span class="dot"></span>Sandbox</button>
+        <button class="filter-chip" data-category="movies"><span class="dot"></span>Movies</button>
       </div>
     </section>
 
-    <!-- Main content -->
     <main class="content">
-      <!-- Sidebar -->
       <aside class="sidebar">
         <div>
           <div class="sidebar-title">Session info</div>
@@ -1094,18 +767,9 @@
         <div>
           <div class="sidebar-title">Stats</div>
           <div class="sidebar-card">
-            <div class="stat-row">
-              <span>Games loaded</span>
-              <strong id="statGames">0</strong>
-            </div>
-            <div class="stat-row">
-              <span>Filters</span>
-              <strong>Search + category</strong>
-            </div>
-            <div class="stat-row">
-              <span>Status</span>
-              <strong style="color: #bbf7d0;">Online</strong>
-            </div>
+            <div class="stat-row"><span>Games loaded</span><strong id="statGames">0</strong></div>
+            <div class="stat-row"><span>Filters</span><strong>Search + category</strong></div>
+            <div class="stat-row"><span>Status</span><strong style="color:#bbf7d0;">Online</strong></div>
             <p class="sidebar-card-text">
               All links are static. Nothing is stored server-side; it’s literally just HTML + JS.
             </p>
@@ -1113,7 +777,6 @@
         </div>
       </aside>
 
-      <!-- Library / Player -->
       <section class="library">
         <div class="library-header">
           <div class="library-title">
@@ -1127,7 +790,6 @@
         </div>
 
         <div class="library-body">
-          <!-- Library view -->
           <div id="libraryView">
             <div id="gameGrid" class="game-grid"></div>
             <div id="emptyState" class="empty-state" style="display:none;">
@@ -1136,7 +798,6 @@
             </div>
           </div>
 
-          <!-- Player view -->
           <div id="playerView" class="player-view">
             <div class="player-header">
               <div class="player-title">
@@ -1144,12 +805,8 @@
                 <span class="sub" id="playerGameMeta">Category • Opens in iframe</span>
               </div>
               <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button class="btn btn-ghost" id="openInNewTabBtn">
-                  🔗 Open in new tab
-                </button>
-                <button class="btn" id="backToLibraryBtn">
-                  ⬅ Back to library
-                </button>
+                <button class="btn btn-ghost" id="openInNewTabBtn">🔗 Open in new tab</button>
+                <button class="btn" id="backToLibraryBtn">⬅ Back to library</button>
               </div>
             </div>
             <div class="player-frame">
@@ -1159,146 +816,6 @@
         </div>
       </section>
     </main>
-
-    <!-- NebulaChat: separate social / chat section -->
-    <section id="nebulaChat" class="chat-section">
-      <div class="chat-header-row">
-        <div>
-          <h2 class="chat-title">NebulaChat</h2>
-          <p class="chat-subtitle">
-            Friends, DMs & group chats – separate from the game library.
-          </p>
-        </div>
-        <span class="chat-pill">BETA</span>
-      </div>
-
-      <div class="chat-layout">
-        <!-- LEFT COLUMN: account + friends + chats list -->
-        <div class="chat-column">
-          <!-- Account card -->
-          <div class="chat-card">
-            <div class="chat-card-header">
-              <div class="chat-card-title">
-                <span id="authStatusTitle">Not signed in</span>
-              </div>
-            </div>
-
-            <div id="authSignedOut">
-              <p class="chat-card-text">
-                Create an account to chat, add friends, and use DMs.
-              </p>
-              <input id="authEmail" type="email" placeholder="Email" class="chat-input">
-              <input id="authPassword" type="password" placeholder="Password" class="chat-input">
-              <input id="authUsername" type="text" placeholder="Username (display name)" class="chat-input">
-
-              <div class="chat-btn-row">
-                <button class="btn" id="authSignUpBtn">Sign up</button>
-                <button class="btn btn-ghost" id="authSignInBtn">Log in</button>
-              </div>
-            </div>
-
-            <div id="authSignedIn" style="display:none;">
-              <p class="chat-card-text">
-                Signed in as <strong id="authUserNameLabel"></strong>
-              </p>
-              <button class="btn btn-ghost" id="authSignOutBtn">Log out</button>
-            </div>
-          </div>
-
-          <!-- Friends list -->
-          <div class="chat-card">
-            <div class="chat-card-header">
-              <div class="chat-card-title">Friends</div>
-            </div>
-
-            <div id="friendsList"
-                 class="hint-list"
-                 style="max-height:150px;overflow-y:auto;margin-bottom:8px;">
-              <!-- filled by JS -->
-            </div>
-
-            <input id="friendUsernameInput"
-                   placeholder="Add friend by username"
-                   class="chat-input">
-            <button class="btn btn-ghost" id="addFriendBtn" style="width:100%;margin-top:6px;">
-              Add friend
-            </button>
-          </div>
-
-          <!-- Chats list -->
-          <div class="chat-card">
-            <div class="chat-card-header">
-              <div class="chat-card-title">Chats</div>
-            </div>
-            <div id="groupList"
-                 class="hint-list"
-                 style="max-height:160px;overflow-y:auto;">
-              <!-- filled by JS -->
-            </div>
-
-            <input id="newGroupName" placeholder="New group chat name" class="chat-input" />
-            <button class="btn" id="createGroupBtn" style="width:100%;margin-top:6px;">
-              Create group chat
-            </button>
-          </div>
-        </div>
-
-        <!-- RIGHT COLUMN: global chat + current thread -->
-        <div class="chat-column chat-column-wide">
-          <!-- Global chat -->
-          <div class="chat-card">
-            <div class="chat-card-header">
-              <div class="chat-card-title">Global chat</div>
-            </div>
-            <div id="chatMessages"
-                 class="chat-messages-box">
-              <!-- global messages -->
-            </div>
-            <div class="chat-input-row">
-              <input id="chatInput"
-                     type="text"
-                     placeholder="Say something to everyone..."
-                     class="chat-input flex-1">
-              <button class="btn" id="chatSendBtn">Send</button>
-            </div>
-            <p class="chat-card-text" id="chatHint" style="margin-top:4px;font-size:0.75rem;">
-              You must be signed in to chat.
-            </p>
-          </div>
-
-          <!-- Current DM / Group thread -->
-          <div class="chat-card">
-            <div class="chat-card-header">
-              <div class="chat-card-title" id="currentGroupName">No chat selected</div>
-            </div>
-
-            <div id="groupChatMessages"
-                 class="chat-messages-box">
-              <!-- group / DM messages -->
-            </div>
-
-            <div class="chat-input-row">
-              <input id="groupChatInput"
-                     type="text"
-                     placeholder="Message this chat..."
-                     class="chat-input flex-1">
-              <button class="btn" id="groupChatSendBtn">Send</button>
-            </div>
-
-            <!-- Add member to current group -->
-            <div class="chat-card-text" style="margin-top:6px;">
-              <input id="addMemberUsernameInput"
-                     placeholder="Add user to this chat by username"
-                     class="chat-input"
-                     style="margin-bottom:6px;">
-              <button class="btn btn-ghost" id="addMemberBtn" style="width:100%;">
-                Add to chat
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <footer>
       <span>NebulaHub • static HTML build</span>
@@ -1317,7 +834,7 @@
   </div>
 
   <script>
-    // 🔹 1. Game data – put your real URLs here
+    // ✅ Game data (FIXED: no broken quotes, no missing commas)
     const games = [
       {
         id: "geometry-dash",
@@ -1330,28 +847,27 @@
         id: "buckshot-roulette",
         name: "Buckshot Roulette",
         category: "horror",
-        tags: ["casino", "guns", "psych-horror"],
+        tags: ["casino", "psych-horror"],
         url: "games/Buckshot Roulette/Buckshot Roulette.html"
       },
       {
-  id: "minecraft",
-  name: "Minecraft Web",
-  category: "sandbox",
-  tags: ["minecraft", "survival", "blocks"],
-  url: "games/Minecraft/Minecraft 1.21.4.html" // <- change if your path is different
-},
-
+        id: "minecraft",
+        name: "Minecraft Web",
+        category: "sandbox",
+        tags: ["minecraft", "survival", "blocks"],
+        url: "games/Minecraft/Minecraft 1.21.4.html"
+      },
       {
         id: "basketball-random",
         name: "Basketball Random",
         category: "arcade",
         tags: ["sports", "2-player", "random"],
-        url: "games/Basketball Random/Basket Random.html"
+        url: "games/Basketball Random/Basketball Random.html"
       },
       {
         id: "hollow-knight",
         name: "Hollow Knight Web",
-        category: "adventure",
+        category: "sandbox",
         tags: ["metroidvania", "platformer", "indie"],
         url: "games/Hollow Knight/Hollow Knight.html"
       },
@@ -1359,7 +875,7 @@
         id: "ultrakill",
         name: "ULTRAKILL Web",
         category: "fps",
-        tags: ["movement", "retro", "violence"],
+        tags: ["movement", "retro"],
         url: "games/Ultrakill/ULTRAKILL.html"
       },
       {
@@ -1369,79 +885,76 @@
         tags: ["shooter", "valve", "classic"],
         url: "games/Half-Life/Half Life.html"
       },
-      {
-        id: "fnaf",
-        name: "Five Nights at Freddy's",
-        category: "horror",
-        tags: ["fnaf", "jumpscare", "survival"],
-        url: "games/FNAF/Five Nights at Freddy's"
-      },
-      {
-        id: "Nebula-Chat",
-        name: "Nebula Chat",
-        category: "chat",
-        tags: ["friends", "chatting", "messaging"],
-        url: "https://shinobiscripter.github.io/Nebula-Chat"
-      },
-       {
-        id: "Rust-Desk",
-        name: "Rust-Desk",
-        category: "Cloud Service",
-        tags: ["friends", "chatting", "messaging"],
-        url: "https://rustdesk.com/web/"
-      },
-      {
-        id: "FNAF 2",
-        name: "FNAF 2",
-        category: "Game",
-        tags: ["Horror", "Game", "Singleplayer"],
-        url: "games/Five Nights at Freddy's 2/Five Nights at Freddy's 2.html
-      },
-      {
-        id: "FNAF 3",
-        name: "FNAF 3",
-        category: "Game",
-        tags: ["Horror", "Game", "Singleplayer"],
-        url: "games/Five Nights at Freddy's 3/Five Nights at Freddy's 3.html
-      },
-      {
-        id: "FNAF 4",
-        name: "FNAF 4",
-        category: "Game",
-        tags: ["Horror", "Game", "Singleplayer"],
-        url: "games/Five Nights at Freddy's 4/Five Nights at Freddy's 4.html
-      },
-      {
-        id: "FNAF SL",
-        name: "FNAF SL",
-        category: "Game",
-        tags: ["Horror", "Game", "Singleplayer"],
-        url: "games/Five Nights at Freddy's SL/Five Nights at Freddy's_Sister Location.html
-      },
-      {
-        id: "FNAF Pizza Sim",
-        name: "FNAF Pizza Sim",
-        category: "Game",
-        tags: ["Horror", "Game", "Singleplayer"],
-        url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_Pizza Simulator.html
-      },
-      {
-        id: "FNAF UCN",
-        name: "FNAF UCN",
-        category: "Game",
-        tags: ["Horror", "Game", "Singleplayer"],
-        url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html
-      },
-      {
-        id: "FNAF World",
-        name: "FNAF World",
-        category: "Game",
-        tags: ["Horror", "Game", "Singleplayer"],
-        url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html
-      },
-    ];  
 
-    // 🔹 2. Get elements
+      /* FNAF pack (fixed strings) */
+      {
+        id: "fnaf1",
+        name: "FNAF 1",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/FNAF/Five Nights at Freddy's.html"
+      },
+      {
+        id: "fnaf2",
+        name: "FNAF 2",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/Five Nights at Freddy's 2/Five Nights at Freddy's 2.html"
+      },
+      {
+        id: "fnaf3",
+        name: "FNAF 3",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/Five Nights at Freddy's 3/Five Nights at Freddy's 3.html"
+      },
+      {
+        id: "fnaf4",
+        name: "FNAF 4",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/Five Nights at Freddy's 4/Five Nights at Freddy's 4.html"
+      },
+      {
+        id: "fnaf-sl",
+        name: "FNAF Sister Location",
+        category: "horror",
+        tags: ["fnaf", "sl"],
+        url: "games/Five Nights at Freddy's SL/Five Nights at Freddy's_Sister Location.html"
+      },
+      {
+        id: "fnaf-ps",
+        name: "FNAF Pizza Sim",
+        category: "horror",
+        tags: ["fnaf", "tycoon"],
+        url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_Pizza Simulator.html"
+      },
+      {
+        id: "fnaf-ucn",
+        name: "FNAF UCN",
+        category: "horror",
+        tags: ["fnaf", "custom"],
+        url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html"
+      },
+      {
+        id: "fnaf-world",
+        name: "FNAF World",
+        category: "horror",
+        tags: ["fnaf", "rpg"],
+        url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html"
+      },
+
+      /* optional app link (kept but categorized so it shows under All/Sandbox) */
+      {
+        id: "rustdesk",
+        name: "RustDesk Web",
+        category: "sandbox",
+        tags: ["remote", "desktop"],
+        url: "https://rustdesk.com/web/"
+      }
+    ];
+
+    // elements
     const gameGrid = document.getElementById("gameGrid");
     const emptyState = document.getElementById("emptyState");
     const searchInput = document.getElementById("searchInput");
@@ -1462,17 +975,16 @@
     const portalLink = document.getElementById("portalLink");
     const yearSpan = document.getElementById("yearSpan");
 
-    // 🔹 3. State
+    // state
     let activeCategory = "all";
     let activeSearch = "";
     let activeGame = null;
 
-    // 🔹 4. Render functions
     function renderGrid() {
       const query = activeSearch.trim().toLowerCase();
       const filtered = games.filter(game => {
         const matchesCategory = activeCategory === "all" || game.category === activeCategory;
-        const haystack = (game.name + " " + game.tags.join(" ")).toLowerCase();
+        const haystack = (game.name + " " + (game.tags || []).join(" ")).toLowerCase();
         const matchesSearch = query === "" || haystack.includes(query);
         return matchesCategory && matchesSearch;
       });
@@ -1486,7 +998,6 @@
         filtered.forEach(game => {
           const card = document.createElement("article");
           card.className = "game-card";
-          card.dataset.id = game.id;
 
           const initials = game.name
             .split(" ")
@@ -1495,13 +1006,11 @@
             .slice(0, 3);
 
           card.innerHTML = `
-            <div class="game-thumb">
-              <span>${initials}</span>
-            </div>
+            <div class="game-thumb"><span>${initials}</span></div>
             <div class="game-name" title="${game.name}">${game.name}</div>
             <div class="game-meta">
-              <span>${game.category.toUpperCase()}</span>
-              <span class="game-tag">${game.tags[0] || "game"}</span>
+              <span>${(game.category || "game").toUpperCase()}</span>
+              <span class="game-tag">${(game.tags && game.tags[0]) ? game.tags[0] : "game"}</span>
             </div>
           `;
 
@@ -1518,8 +1027,7 @@
     function openGame(game) {
       activeGame = game;
       playerGameName.textContent = game.name;
-      playerGameMeta.textContent =
-        (game.category || "game").toUpperCase() + " • Embedded player";
+      playerGameMeta.textContent = (game.category || "game").toUpperCase() + " • Embedded player";
       playerIframe.src = game.url;
       showPlayerView();
     }
@@ -1541,11 +1049,9 @@
       viewPlayerBtn.disabled = !activeGame;
     }
 
-    // 🔹 5. Event listeners
     searchInput.addEventListener("input", () => {
       activeSearch = searchInput.value;
-      clearSearchBtn.style.display =
-        activeSearch.trim().length > 0 ? "block" : "none";
+      clearSearchBtn.style.display = activeSearch.trim().length > 0 ? "block" : "none";
       renderGrid();
     });
 
@@ -1567,40 +1073,23 @@
     });
 
     viewLibraryBtn.addEventListener("click", showLibraryView);
-
-    viewPlayerBtn.addEventListener("click", () => {
-      if (activeGame) {
-        showPlayerView();
-      }
-    });
-
+    viewPlayerBtn.addEventListener("click", () => { if (activeGame) showPlayerView(); });
     backToLibraryBtn.addEventListener("click", showLibraryView);
 
     openInNewTabBtn.addEventListener("click", () => {
-      if (activeGame && activeGame.url) {
-        window.open(activeGame.url, "_blank");
-      }
+      if (activeGame && activeGame.url) window.open(activeGame.url, "_blank");
     });
 
-    // portal mode toggle
     portalLink.addEventListener("click", () => {
-      if (location.hash === "#portal") {
-        location.hash = "";
-      } else {
-        location.hash = "#portal";
-      }
+      location.hash = (location.hash === "#portal") ? "" : "#portal";
       location.reload();
     });
 
-    /* THEME SWITCHER JS */
     const themeSelector = document.getElementById("themeSelector");
-
-    // Load saved theme
     const savedTheme = localStorage.getItem("site-theme") || "nebula";
     document.documentElement.setAttribute("data-theme", savedTheme);
     themeSelector.value = savedTheme;
 
-    // Change theme
     themeSelector.addEventListener("change", () => {
       const newTheme = themeSelector.value;
       document.documentElement.setAttribute("data-theme", newTheme);
@@ -1611,20 +1100,11 @@
       window.location.href = "https://clever.com/in/dallasisd/student/portal";
     }
 
-    // 🔹 6. Init
     document.addEventListener("DOMContentLoaded", () => {
-      // enable portal mode if URL hash is #portal
-      if (location.hash === "#portal") {
-        document.body.classList.add("portal-mode");
-      }
-      if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-      }
+      if (location.hash === "#portal") document.body.classList.add("portal-mode");
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
       renderGrid();
     });
   </script>
-
-  <!-- Supabase chat logic -->
-  <script type="module" src="supabase-chat.js"></script>
 </body>
 </html>
