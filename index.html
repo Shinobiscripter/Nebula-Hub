@@ -599,6 +599,127 @@
     }
 
     body.portal-mode .search-input:focus { box-shadow:none; border-color:#9ca3af; }
+/* ===========================
+   iOS-style CUSTOMIZER
+   =========================== */
+
+/* These are the live values the sliders control */
+:root {
+  --ui-bg-h: 240;
+  --ui-bg-s: 55%;
+  --ui-bg-l: 12%;
+
+  --ui-accent-h: 255;
+  --ui-accent-s: 85%;
+  --ui-accent-l: 65%;
+
+  --ui-icon-h: 145;
+  --ui-icon-s: 70%;
+  --ui-icon-l: 50%;
+}
+
+/* Apply the custom values across the site */
+:root[data-custom="on"] {
+  --bg: hsl(var(--ui-bg-h) var(--ui-bg-s) var(--ui-bg-l));
+  --bg-elevated: hsl(var(--ui-bg-h) var(--ui-bg-s) calc(var(--ui-bg-l) + 6%));
+  --bg-soft: hsl(var(--ui-bg-h) var(--ui-bg-s) calc(var(--ui-bg-l) + 10%));
+
+  --accent: hsl(var(--ui-accent-h) var(--ui-accent-s) var(--ui-accent-l));
+  --accent-soft: hsla(var(--ui-accent-h) var(--ui-accent-s) var(--ui-accent-l) / 0.25);
+
+  /* Optional: make "accent-strong" follow the icon vibe */
+  --accent-strong: hsl(var(--ui-icon-h) var(--ui-icon-s) var(--ui-icon-l));
+}
+
+/* Make the top brand icon feel like “custom icons” */
+:root[data-custom="on"] .brand-logo {
+  background: conic-gradient(
+    from 200deg,
+    hsl(var(--ui-accent-h) var(--ui-accent-s) var(--ui-accent-l)),
+    hsl(var(--ui-icon-h) var(--ui-icon-s) var(--ui-icon-l)),
+    hsl(calc(var(--ui-accent-h) + 70) var(--ui-accent-s) var(--ui-accent-l)),
+    hsl(calc(var(--ui-icon-h) + 40) var(--ui-icon-s) var(--ui-icon-l)),
+    hsl(var(--ui-accent-h) var(--ui-accent-s) var(--ui-accent-l))
+  );
+}
+
+/* Game card thumbs also inherit the “icon color” vibe */
+:root[data-custom="on"] .game-thumb {
+  background:
+    radial-gradient(circle at 30% 20%,
+      hsl(var(--ui-icon-h) var(--ui-icon-s) var(--ui-icon-l)),
+      hsl(var(--ui-bg-h) var(--ui-bg-s) calc(var(--ui-bg-l) + 2%)) 65%),
+    radial-gradient(circle at 80% 90%,
+      hsla(var(--ui-accent-h) var(--ui-accent-s) var(--ui-accent-l) / 0.85),
+      transparent 60%);
+}
+
+/* The actual customizer panel */
+.customizer {
+  background: radial-gradient(circle at top left, rgba(79,70,229,0.18), transparent 55%), var(--bg-elevated);
+  border-radius: 22px;
+  border: 1px solid rgba(148,163,184,0.35);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.customizer .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.customizer h3 {
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.customizer .sub {
+  font-size: 0.78rem;
+  color: var(--text-soft);
+}
+
+.slider-row {
+  display: grid;
+  grid-template-columns: 160px minmax(0,1fr) 60px;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 560px) {
+  .slider-row { grid-template-columns: 1fr; }
+}
+
+.slider-row label {
+  font-size: 0.8rem;
+  color: var(--text-soft);
+}
+
+.slider-row input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.value-pill {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.4);
+  background: rgba(15,23,42,0.6);
+  color: var(--text);
+  text-align: center;
+  min-width: 56px;
+}
+
+.customizer .actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 
     /* THEMES */
     :root[data-theme="nebula"] {
@@ -739,6 +860,49 @@
         <button class="filter-chip" data-category="movies"><span class="dot"></span>Movies</button>
       </div>
     </section>
+<!-- iOS-style Customize Panel -->
+<section class="customizer" id="customizerPanel">
+  <div class="row">
+    <div>
+      <h3>Customize</h3>
+      <div class="sub">Background + accent + icon vibe (saved automatically)</div>
+    </div>
+
+    <label style="display:flex; gap:8px; align-items:center; font-size:0.8rem; color:var(--text-soft);">
+      <input type="checkbox" id="customEnable" />
+      Enable
+    </label>
+  </div>
+
+  <div class="slider-row">
+    <label for="bgHue">Background hue</label>
+    <input id="bgHue" type="range" min="0" max="360" value="240" />
+    <div class="value-pill" id="bgHueVal">240</div>
+  </div>
+
+  <div class="slider-row">
+    <label for="accentHue">Accent hue</label>
+    <input id="accentHue" type="range" min="0" max="360" value="255" />
+    <div class="value-pill" id="accentHueVal">255</div>
+  </div>
+
+  <div class="slider-row">
+    <label for="iconHue">Icon hue</label>
+    <input id="iconHue" type="range" min="0" max="360" value="145" />
+    <div class="value-pill" id="iconHueVal">145</div>
+  </div>
+
+  <div class="slider-row">
+    <label for="brightness">Brightness</label>
+    <input id="brightness" type="range" min="6" max="22" value="12" />
+    <div class="value-pill" id="brightnessVal">12</div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-ghost" id="customResetBtn" type="button">Reset</button>
+    <button class="btn" id="customRandomBtn" type="button">Random</button>
+  </div>
+</section>
 
     <main class="content">
       <aside class="sidebar">
@@ -1095,6 +1259,44 @@
       document.documentElement.setAttribute("data-theme", newTheme);
       localStorage.setItem("site-theme", newTheme);
     });
+/* CUSTOM COLOR CONTROLS (iOS-style) */
+const bgPicker = document.getElementById("bgColorPicker");
+const accentPicker = document.getElementById("accentColorPicker");
+const textPicker = document.getElementById("textColorPicker");
+
+// Load saved custom colors
+const savedBg = localStorage.getItem("custom-bg");
+const savedAccent = localStorage.getItem("custom-accent");
+const savedText = localStorage.getItem("custom-text");
+
+if (savedBg) {
+  document.documentElement.style.setProperty("--custom-bg", savedBg);
+  bgPicker.value = savedBg;
+}
+if (savedAccent) {
+  document.documentElement.style.setProperty("--custom-accent", savedAccent);
+  accentPicker.value = savedAccent;
+}
+if (savedText) {
+  document.documentElement.style.setProperty("--custom-text", savedText);
+  textPicker.value = savedText;
+}
+
+// Live updates
+bgPicker.addEventListener("input", e => {
+  document.documentElement.style.setProperty("--custom-bg", e.target.value);
+  localStorage.setItem("custom-bg", e.target.value);
+});
+
+accentPicker.addEventListener("input", e => {
+  document.documentElement.style.setProperty("--custom-accent", e.target.value);
+  localStorage.setItem("custom-accent", e.target.value);
+});
+
+textPicker.addEventListener("input", e => {
+  document.documentElement.style.setProperty("--custom-text", e.target.value);
+  localStorage.setItem("custom-text", e.target.value);
+});
 
     function panicHide() {
       window.location.href = "https://clever.com/in/dallasisd/student/portal";
