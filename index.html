@@ -16,6 +16,9 @@
   <!-- AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092" crossorigin="anonymous"></script>
 
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
@@ -42,6 +45,8 @@
       --custom-bg-grad-2: #111827;
       --custom-overlay-1: rgba(59,130,246,0.35);
       --custom-overlay-2: rgba(236,72,153,0.3);
+      --custom-chat-sent: #8b5cf6;
+      --custom-chat-bg: #0c1024;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1229,6 +1234,403 @@
       color: #059669;
       border-color: rgba(34,197,94,0.2);
     }
+
+    /* ==================== NEBULACHAT STYLES ==================== */
+    .chat-view {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeIn 0.3s ease;
+      height: 70vh;
+      min-height: 500px;
+    }
+
+    .chat-container {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px;
+      height: 100%;
+      background: var(--bg-elevated);
+      border-radius: 22px;
+      border: 1px solid rgba(148,163,184,0.3);
+      overflow: hidden;
+    }
+
+    .chat-sidebar {
+      background: var(--custom-chat-bg, var(--bg-soft));
+      border-right: 1px solid rgba(148,163,184,0.2);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .chat-room-btn {
+      width: 100%;
+      padding: 12px;
+      background: rgba(15,23,42,0.6);
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 12px;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .chat-room-btn:hover, .chat-room-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--custom-accent-color);
+      transform: translateX(4px);
+    }
+
+    .chat-room-btn .room-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--custom-accent-color), var(--custom-accent-strong));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .chat-main {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: radial-gradient(circle at top right, rgba(79,70,229,0.1), transparent 60%);
+    }
+
+    .chat-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(148,163,184,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--custom-accent-strong);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+    }
+
+    .message {
+      display: flex;
+      gap: 12px;
+      max-width: 80%;
+      animation: slideIn 0.2s ease;
+    }
+
+    .message.own {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--custom-accent-color), var(--custom-accent-strong));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .message-content {
+      background: var(--bg-soft);
+      padding: 12px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.3);
+      position: relative;
+    }
+
+    .message.own .message-content {
+      background: linear-gradient(135deg, var(--custom-chat-sent, var(--custom-accent-color)), var(--custom-accent-strong));
+      border-color: transparent;
+      color: white;
+    }
+
+    .message-header {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-bottom: 4px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .message.own .message-header {
+      color: rgba(255,255,255,0.8);
+      justify-content: flex-end;
+    }
+
+    .message-text {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .chat-input-area {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(148,163,184,0.2);
+      background: rgba(0,0,0,0.2);
+    }
+
+    .chat-input-wrapper {
+      display: flex;
+      gap: 10px;
+      background: var(--bg-soft);
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.3);
+      transition: all 0.15s ease;
+    }
+
+    .chat-input-wrapper:focus-within {
+      border-color: var(--custom-accent-color);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 10px 16px;
+      color: var(--text);
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .chat-send-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--custom-accent-color);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .chat-send-btn:hover {
+      background: var(--custom-accent-strong);
+      transform: scale(1.05);
+    }
+
+    .chat-send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Username Modal */
+    .username-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .username-modal.show {
+      display: flex;
+    }
+
+    .username-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent-soft);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .username-card h2 {
+      margin-bottom: 8px;
+      font-size: 1.5rem;
+    }
+
+    .username-card p {
+      color: var(--text-soft);
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+    }
+
+    .username-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .username-input-group input {
+      padding: 14px 18px;
+      background: var(--bg-soft);
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+
+    .username-input-group input:focus {
+      border-color: var(--custom-accent-color);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    /* Theme Specific Chat Adjustments */
+    :root[data-theme="bubblegum"] .message.own .message-content {
+      background: linear-gradient(135deg, #ff4fa3, #ff1e80);
+    }
+
+    :root[data-theme="matrix"] .chat-container {
+      border-color: #00ff41;
+      box-shadow: 0 0 20px rgba(0,255,65,0.1);
+    }
+
+    :root[data-theme="matrix"] .message-avatar {
+      background: #00ff41;
+      color: #000;
+    }
+
+    :root[data-theme="minecraft"] .message-avatar {
+      border-radius: 4px;
+      background: #5d8c47;
+    }
+
+    body.portal-mode .chat-container {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
+
+    body.portal-mode .chat-sidebar {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+    }
+
+    body.portal-mode .chat-room-btn {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      color: #374151;
+    }
+
+    body.portal-mode .message-content {
+      background: #f3f4f6;
+      border-color: #e5e7eb;
+      color: #111827;
+    }
+
+    body.portal-mode .message.own .message-content {
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      color: white;
+    }
+
+    @media (max-width: 850px) {
+      .chat-container {
+        grid-template-columns: 1fr;
+      }
+      .chat-sidebar {
+        display: none;
+      }
+    }
+
+    /* Chat Customization additions */
+    .customize-card.chat-colors {
+      grid-column: 1 / -1;
+    }
+
+    .chat-preview-box {
+      height: 120px;
+      background: var(--custom-chat-bg, var(--bg-soft));
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.3);
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .chat-preview-msg {
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      max-width: 140px;
+    }
+
+    .chat-preview-msg.received {
+      background: var(--bg-elevated);
+      color: var(--text);
+      border: 1px solid rgba(148,163,184,0.3);
+      align-self: flex-start;
+    }
+
+    .chat-preview-msg.sent {
+      background: var(--custom-chat-sent, var(--custom-accent-color));
+      color: white;
+      align-self: flex-end;
+    }
   </style>
 </head>
 
@@ -1333,6 +1735,7 @@
             <button class="view-btn" id="viewPlayerBtn" disabled>Player</button>
             <button class="view-btn" id="viewCustomizeBtn">Customize</button>
             <button class="view-btn" id="viewSettingsBtn">Settings</button>
+            <button class="view-btn" id="viewChatBtn">💬 Chat</button>
           </div>
         </div>
 
@@ -1434,6 +1837,29 @@
                   ✨ Custom theme active! Select a preset theme from the dropdown above to reset.
                 </div>
               </div>
+
+              <!-- Chat Customization -->
+              <div class="customize-card chat-colors">
+                <h3>💬 Chat Theme Colors</h3>
+                <div class="color-input-group">
+                  <label>Sent Message Bubble</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="chatSentPicker" value="#8b5cf6">
+                    <input type="text" id="chatSentText" value="#8b5cf6" placeholder="#8b5cf6">
+                  </div>
+                </div>
+                <div class="color-input-group">
+                  <label>Chat Background Tint</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="chatBgPicker" value="#0c1024">
+                    <input type="text" id="chatBgText" value="#0c1024" placeholder="#0c1024">
+                  </div>
+                </div>
+                <div class="chat-preview-box" id="chatPreviewBox">
+                  <div class="chat-preview-msg received">Hello there! 👋</div>
+                  <div class="chat-preview-msg sent">Hey! How's it going?</div>
+                </div>
+              </div>
             </div>
 
             <div class="customize-actions">
@@ -1499,6 +1925,69 @@
               </div>
             </div>
           </div>
+
+          <!-- Chat View -->
+          <div id="chatView" class="chat-view">
+            <div class="library-header">
+              <div class="library-title">
+                <span>💬 NebulaChat</span>
+                <span class="count" id="chatUserCount">Live</span>
+              </div>
+            </div>
+            
+            <div class="chat-container">
+              <div class="chat-sidebar" id="chatSidebar">
+                <div class="sidebar-title">Channels</div>
+                <button class="chat-room-btn active" data-room="general">
+                  <div class="room-icon">#</div>
+                  <div>
+                    <div style="font-weight:600;">general</div>
+                    <div style="font-size:0.75rem;opacity:0.7;">Public chat</div>
+                  </div>
+                </button>
+                <button class="chat-room-btn" data-room="gaming">
+                  <div class="room-icon">🎮</div>
+                  <div>
+                    <div style="font-weight:600;">gaming</div>
+                    <div style="font-size:0.75rem;opacity:0.7;">Game discussions</div>
+                  </div>
+                </button>
+                <button class="chat-room-btn" data-room="random">
+                  <div class="room-icon">💫</div>
+                  <div>
+                    <div style="font-weight:600;">random</div>
+                    <div style="font-size:0.75rem;opacity:0.7;">Off-topic</div>
+                  </div>
+                </button>
+              </div>
+              
+              <div class="chat-main">
+                <div class="chat-header">
+                  <div class="chat-header-title">
+                    <span>#</span>
+                    <span id="currentRoomName">general</span>
+                  </div>
+                  <div class="chat-status">
+                    <span class="status-dot"></span>
+                    <span id="connectionStatus">Connecting...</span>
+                  </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                  <!-- Messages populated dynamically -->
+                </div>
+                
+                <div class="chat-input-area">
+                  <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="messageInput" placeholder="Type a message..." maxlength="500">
+                    <button class="chat-send-btn" id="sendMessageBtn">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -1516,6 +2005,18 @@
       <a href="/about.html">About</a>
       <a href="/privacy.html">Privacy Policy</a>
       <a href="/terms.html">Terms of Use</a>
+    </div>
+  </div>
+
+  <!-- Username Setup Modal -->
+  <div id="usernameModal" class="username-modal">
+    <div class="username-card">
+      <h2>👋 Welcome to NebulaChat</h2>
+      <p>Choose a display name to join the conversation</p>
+      <div class="username-input-group">
+        <input type="text" id="usernameInput" placeholder="Enter username..." maxlength="20">
+      </div>
+      <button class="btn btn-primary" onclick="saveChatUser()" style="width:100%; justify-content:center;">Join Chat</button>
     </div>
   </div>
 
@@ -1543,300 +2044,70 @@
 
   <script>
     // ==================== UPDATE CONFIGURATION ====================
-    // EDIT THESE VALUES when you have new updates to announce
     const UPDATE_CONFIG = {
-      version: "2.1",  // Increment this to show the modal again
-      date: "January 27, 2026",
+      version: "2.2",
+      date: "January 28, 2026",
       title: "🚀 What's New in NebulaHub",
       changes: [
-        "✨ NEW: Settings tab with tab cloaking features!",
+        "💬 NEW: NebulaChat integration! Real-time chat with other users",
+        "🎨 Chat themes customizable in the Customize tab",
         "🕵️ Disguise your tab as Google, Classroom, Docs, or Slides",
         "🎨 Personalize icon colors, accent colors, and background effects",
         "💾 Themes are saved automatically to your browser",
-        "📢 Added this update notification system",
-        "🐛 Bug fixes and visual improvements",
-        "🎨 Surveys added at the buttom of the Library"
+        "📢 Added this update notification system"
       ],
-      showOnce: true // If true, respects 'Don't show again' checkbox
+      showOnce: true
     };
     // ==============================================================
 
     // Favicon Data URIs for tab cloaking
     const FAVICONS = {
       default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2322c55e"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">NH</text></svg>',
-      
       google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">G</text></svg>',
-      
       classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2324a865"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">C</text></svg>',
-      
       docs: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">D</text></svg>',
-      
       slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
     };
 
-    // ✅ Game data (FIXED: no broken quotes, no missing commas)
+    // ✅ Game data
     const games = [
-      {
-        id: "geometry-dash",
-        name: "Geometry Dash Lite",
-        category: "arcade",
-        tags: ["platformer", "rhythm", "gd"],
-        url: "games/Geometry Dash Lite/Geometry Dash Lite.html"
-      },
-      {
-        id: "Nautilus OS",
-        name: "NautilusOS",
-        category: "arcade",
-        tags: ["platformer", "rhythm", "gd"],
-        url: "https://frdhhfdhhhsfddsffds.vercel.app/"
-      },
-      {
-        id: "buckshot-roulette",
-        name: "Buckshot Roulette",
-        category: "horror",
-        tags: ["casino", "psych-horror"],
-        url: "games/Buckshot Roulette/Buckshot Roulette.html"
-      },
-      {
-        id: "minecraft",
-        name: "Minecraft Web",
-        category: "sandbox",
-        tags: ["minecraft", "survival", "blocks"],
-        url: "games/Minecraft/Minecraft 1.21.4.html"
-      },
-      {
-        id: "basketball-random",
-        name: "Basketball Random",
-        category: "arcade",
-        tags: ["sports", "2-player", "random"],
-        url: "games/Basketball Random/Basket Random.html"
-      },
-      {
-        id: "hollow-knight",
-        name: "Hollow Knight Web",
-        category: "sandbox",
-        tags: ["metroidvania", "platformer", "indie"],
-        url: "games/Hollow Knight/Hollow Knight.html"
-      },
-      {
-        id: "ultrakill",
-        name: "ULTRAKILL Web",
-        category: "fps",
-        tags: ["movement", "retro"],
-        url: "games/Ultrakill/ULTRAKILL.html"
-      },
-      {
-        id: "half-life",
-        name: "Half-Life Web",
-        category: "fps",
-        tags: ["shooter", "valve", "classic"],
-        url: "games/Half-Life/Half Life.html"
-      },
-
-      /* FNAF pack (fixed strings) */
-      {
-        id: "fnaf1",
-        name: "FNAF 1",
-        category: "horror",
-        tags: ["fnaf", "classic"],
-        url: "games/FNAF/Five Nights at Freddy's.html"
-      },
-      {
-        id: "fnaf2",
-        name: "FNAF 2",
-        category: "horror",
-        tags: ["fnaf", "classic"],
-        url: "games/Five Nights at Freddy's 2/Five Nights at Freddy's 2.html"
-      },
-      {
-        id: "fnaf3",
-        name: "FNAF 3",
-        category: "horror",
-        tags: ["fnaf", "classic"],
-        url: "games/Five Nights at Freddy's 3/Five Nights at Freddy's 3.html"
-      },
-      {
-        id: "fnaf4",
-        name: "FNAF 4",
-        category: "horror",
-        tags: ["fnaf", "classic"],
-        url: "games/Five Nights at Freddy's 4/Five Nights at Freddy's 4.html"
-      },
-      {
-        id: "fnaf-sl",
-        name: "FNAF Sister Location",
-        category: "horror",
-        tags: ["fnaf", "sl"],
-        url: "games/Five Nights at Freddy's SL/Five Nights at Freddy's_ Sister Location.html"
-      },
-      {
-        id: "fnaf-ps",
-        name: "FNAF Pizza Sim",
-        category: "horror",
-        tags: ["fnaf", "tycoon"],
-        url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_ Pizza Simulator.html"
-      },
-      {
-        id: "fnaf-ucn",
-        name: "FNAF UCN",
-        category: "horror",
-        tags: ["fnaf", "custom"],
-        url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html"
-      },
-      {
-        id: "fnaf-world",
-        name: "FNAF World",
-        category: "horror",
-        tags: ["fnaf", "rpg"],
-        url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html"
-      },
-      {
-        id: "rustdesk",
-        name: "RustDesk Web",
-        category: "sandbox",
-        tags: ["remote", "desktop"],
-        url: "https://rustdesk.com/web/"
-      },
-      {
-        id: "A Bite at Freddy's",
-        name: "A Bite at Freddy's",
-        category: "horror",
-        tags: ["fnaf", "pcgame"],
-        url: "games/A Bite at Freddy's/A Bite at Freddy's.html"
-      },
-       {
-        id: "Baldi's Basic",
-        name: "Baldi's Basic",
-        category: "arcade",
-        tags: ["horror"],
-        url: "games/Baldi's Basics/Baldi's Basics.html"
-      },
-      {
-        id: "Baldi's Basic Classic Remastered",
-        name: "Baldi's Basic Classic Remastered",
-        category: "arcade",
-        tags: ["horror"],
-        url: "games/Baldi's Basics/Baldi's Basics Classic Remastered.html"
-      },
-      {
-        id: "Baldi's Basic Plus",
-        name: "Baldi's Basic Plus",
-        category: "arcade",
-        tags: ["horror"],
-        url: "games/Baldi's Basics/Baldi's Basics Plus.html"
-      },
-      {
-        id: "Slope",
-        name: "Slope",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Slope/Slope.html"
-      },
-      {
-        id: "Terraria",
-        name: "Terraria",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Terraria/Terraria.html"
-      },
-      {
-        id: "Awesome Tanks 1",
-        name: "Awesome Tanks 1",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Awesome Tanks/Awesome Tanks.html"
-      },
-      {
-        id: "Awesome Tanks 2",
-        name: "Awesome Tanks 2",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Awesome Tanks/Awesome Tanks 2.html"
-      },
-      {
-        id: "Ball Blast",
-        name: "Ball Blast",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/BallBlast/Ball Blast.html"
-      },
-      {
-        id: "That's Not My Neighbor",
-        name: "That's Not My Neighbor",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/That's Not My Neighbor/That's Not My Neighbor.html"
-      },
-      {
-        id: "ChatBot",
-        name: "ChatBot",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/ChatBot/Chat Bot (A._.I).html"
-      },
-      {
-        id: "Crazy Cattle",
-        name: "Crazy Cattle",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Crazy Cattle Series/Crazy Cattle 3D.html"
-      },
-      {
-        id: "Crazy Chicken",
-        name: "Crazy Chicken",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Crazy Cattle Series/Crazy Chicken 3D.html"
-      },
-      {
-        id: "Crazy Kitty",
-        name: "Crazy Kitty",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Crazy Cattle Series/Crazy Kitty 3D.html"
-      },
-      {
-        id: "Karlson",
-        name: "Karlson",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Karlson/Karlson.html"
-      },
-      {
-        id: "People's Playground",
-        name: "People's Playground",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/People's Playground/People Playground.html"
-      },
-      {
-        id: "Midnight Shift",
-        name: "Midnight Shift",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Midnight Shift/Midnight Shift.html"
-      },
-      {
-        id: "Raft",
-        name: "Raft",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/Raft/Raft.html"
-      },
-      {
-        id: "0V0",
-        name: "0V0",
-        category: "arcade",
-        tags: ["fun"],
-        url: "games/0V0/OvO.html"
-      },
-      {
-        id: "Game Request Form/Bug Report Form",
-        name: "Game Request/Bug Report Form",
-        category: "Report",
-        tags: ["FeedBack"],
-        url: "https://forms.gle/2X5VTJaARrx95gtS8"
-      },
+      { id: "geometry-dash", name: "Geometry Dash Lite", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "games/Geometry Dash Lite/Geometry Dash Lite.html" },
+      { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/" },
+      { id: "buckshot-roulette", name: "Buckshot Roulette", category: "horror", tags: ["casino", "psych-horror"], url: "games/Buckshot Roulette/Buckshot Roulette.html" },
+      { id: "minecraft", name: "Minecraft Web", category: "sandbox", tags: ["minecraft", "survival", "blocks"], url: "games/Minecraft/Minecraft 1.21.4.html" },
+      { id: "basketball-random", name: "Basketball Random", category: "arcade", tags: ["sports", "2-player", "random"], url: "games/Basketball Random/Basket Random.html" },
+      { id: "hollow-knight", name: "Hollow Knight Web", category: "sandbox", tags: ["metroidvania", "platformer", "indie"], url: "games/Hollow Knight/Hollow Knight.html" },
+      { id: "ultrakill", name: "ULTRAKILL Web", category: "fps", tags: ["movement", "retro"], url: "games/Ultrakill/ULTRAKILL.html" },
+      { id: "half-life", name: "Half-Life Web", category: "fps", tags: ["shooter", "valve", "classic"], url: "games/Half-Life/Half Life.html" },
+      { id: "fnaf1", name: "FNAF 1", category: "horror", tags: ["fnaf", "classic"], url: "games/FNAF/Five Nights at Freddy's.html" },
+      { id: "fnaf2", name: "FNAF 2", category: "horror", tags: ["fnaf", "classic"], url: "games/Five Nights at Freddy's 2/Five Nights at Freddy's 2.html" },
+      { id: "fnaf3", name: "FNAF 3", category: "horror", tags: ["fnaf", "classic"], url: "games/Five Nights at Freddy's 3/Five Nights at Freddy's 3.html" },
+      { id: "fnaf4", name: "FNAF 4", category: "horror", tags: ["fnaf", "classic"], url: "games/Five Nights at Freddy's 4/Five Nights at Freddy's 4.html" },
+      { id: "fnaf-sl", name: "FNAF Sister Location", category: "horror", tags: ["fnaf", "sl"], url: "games/Five Nights at Freddy's SL/Five Nights at Freddy's_ Sister Location.html" },
+      { id: "fnaf-ps", name: "FNAF Pizza Sim", category: "horror", tags: ["fnaf", "tycoon"], url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_ Pizza Simulator.html" },
+      { id: "fnaf-ucn", name: "FNAF UCN", category: "horror", tags: ["fnaf", "custom"], url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html" },
+      { id: "fnaf-world", name: "FNAF World", category: "horror", tags: ["fnaf", "rpg"], url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html" },
+      { id: "rustdesk", name: "RustDesk Web", category: "sandbox", tags: ["remote", "desktop"], url: "https://rustdesk.com/web/" },
+      { id: "A Bite at Freddy's", name: "A Bite at Freddy's", category: "horror", tags: ["fnaf", "pcgame"], url: "games/A Bite at Freddy's/A Bite at Freddy's.html" },
+      { id: "Baldi's Basic", name: "Baldi's Basic", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics.html" },
+      { id: "Baldi's Basic Classic Remastered", name: "Baldi's Basic Classic Remastered", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics Classic Remastered.html" },
+      { id: "Baldi's Basic Plus", name: "Baldi's Basic Plus", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics Plus.html" },
+      { id: "Slope", name: "Slope", category: "arcade", tags: ["fun"], url: "games/Slope/Slope.html" },
+      { id: "Terraria", name: "Terraria", category: "arcade", tags: ["fun"], url: "games/Terraria/Terraria.html" },
+      { id: "Awesome Tanks 1", name: "Awesome Tanks 1", category: "arcade", tags: ["fun"], url: "games/Awesome Tanks/Awesome Tanks.html" },
+      { id: "Awesome Tanks 2", name: "Awesome Tanks 2", category: "arcade", tags: ["fun"], url: "games/Awesome Tanks/Awesome Tanks 2.html" },
+      { id: "Ball Blast", name: "Ball Blast", category: "arcade", tags: ["fun"], url: "games/BallBlast/Ball Blast.html" },
+      { id: "That's Not My Neighbor", name: "That's Not My Neighbor", category: "arcade", tags: ["fun"], url: "games/That's Not My Neighbor/That's Not My Neighbor.html" },
+      { id: "ChatBot", name: "ChatBot", category: "arcade", tags: ["fun"], url: "games/ChatBot/Chat Bot (A._.I).html" },
+      { id: "Crazy Cattle", name: "Crazy Cattle", category: "arcade", tags: ["fun"], url: "games/Crazy Cattle Series/Crazy Cattle 3D.html" },
+      { id: "Crazy Chicken", name: "Crazy Chicken", category: "arcade", tags: ["fun"], url: "games/Crazy Cattle Series/Crazy Chicken 3D.html" },
+      { id: "Crazy Kitty", name: "Crazy Kitty", category: "arcade", tags: ["fun"], url: "games/Crazy Cattle Series/Crazy Kitty 3D.html" },
+      { id: "Karlson", name: "Karlson", category: "arcade", tags: ["fun"], url: "games/Karlson/Karlson.html" },
+      { id: "People's Playground", name: "People's Playground", category: "arcade", tags: ["fun"], url: "games/People's Playground/People Playground.html" },
+      { id: "Midnight Shift", name: "Midnight Shift", category: "arcade", tags: ["fun"], url: "games/Midnight Shift/Midnight Shift.html" },
+      { id: "Raft", name: "Raft", category: "arcade", tags: ["fun"], url: "games/Raft/Raft.html" },
+      { id: "0V0", name: "0V0", category: "arcade", tags: ["fun"], url: "games/0V0/OvO.html" },
+      { id: "Game Request Form/Bug Report Form", name: "Game Request/Bug Report Form", category: "Report", tags: ["FeedBack"], url: "https://forms.gle/2X5VTJaARrx95gtS8" }
     ];
 
     // elements
@@ -1852,10 +2123,12 @@
     const playerView = document.getElementById("playerView");
     const customizeView = document.getElementById("customizeView");
     const settingsView = document.getElementById("settingsView");
+    const chatView = document.getElementById("chatView");
     const viewLibraryBtn = document.getElementById("viewLibraryBtn");
     const viewPlayerBtn = document.getElementById("viewPlayerBtn");
     const viewCustomizeBtn = document.getElementById("viewCustomizeBtn");
     const viewSettingsBtn = document.getElementById("viewSettingsBtn");
+    const viewChatBtn = document.getElementById("viewChatBtn");
     const playerGameName = document.getElementById("playerGameName");
     const playerGameMeta = document.getElementById("playerGameMeta");
     const playerIframe = document.getElementById("playerIframe");
@@ -1878,7 +2151,9 @@
       bgGrad1: '#1f2937',
       bgGrad2: '#111827',
       overlay1: 'rgba(59,130,246,0.35)',
-      overlay2: 'rgba(236,72,153,0.3)'
+      overlay2: 'rgba(236,72,153,0.3)',
+      chatSent: '#8b5cf6',
+      chatBg: '#0c1024'
     };
 
     function syncColorInputs() {
@@ -1893,13 +2168,18 @@
       document.getElementById('bgGrad2Picker').value = customColors.bgGrad2;
       document.getElementById('bgGrad2Text').value = customColors.bgGrad2;
       
-      // Handle rgba text inputs for overlays
       const hex1 = rgbToHex(customColors.overlay1) || '#3b82f6';
       const hex2 = rgbToHex(customColors.overlay2) || '#ec4899';
       document.getElementById('overlay1Picker').value = hex1;
       document.getElementById('overlay1Text').value = customColors.overlay1;
       document.getElementById('overlay2Picker').value = hex2;
       document.getElementById('overlay2Text').value = customColors.overlay2;
+
+      // Chat colors
+      document.getElementById('chatSentPicker').value = customColors.chatSent;
+      document.getElementById('chatSentText').value = customColors.chatSent;
+      document.getElementById('chatBgPicker').value = customColors.chatBg;
+      document.getElementById('chatBgText').value = customColors.chatBg;
     }
 
     function rgbToHex(rgba) {
@@ -1925,14 +2205,16 @@
       root.style.setProperty('--custom-bg-grad-2', customColors.bgGrad2);
       root.style.setProperty('--custom-overlay-1', customColors.overlay1);
       root.style.setProperty('--custom-overlay-2', customColors.overlay2);
-      
+      root.style.setProperty('--custom-chat-sent', customColors.chatSent);
+      root.style.setProperty('--custom-chat-bg', customColors.chatBg);
       document.getElementById('customActiveNotice').classList.add('show');
+      updateChatPreview();
     }
 
     function saveCustomTheme() {
       localStorage.setItem('nebulahub-custom-theme', JSON.stringify(customColors));
       localStorage.setItem('nebulahub-theme-type', 'custom');
-      document.getElementById('themeSelector').value = 'nebula'; // Reset preset selector
+      document.getElementById('themeSelector').value = 'nebula';
       alert('Theme saved! Your custom colors will persist across sessions.');
     }
 
@@ -1944,6 +2226,8 @@
       customColors.bgGrad2 = '#111827';
       customColors.overlay1 = 'rgba(59,130,246,0.35)';
       customColors.overlay2 = 'rgba(236,72,153,0.3)';
+      customColors.chatSent = '#8b5cf6';
+      customColors.chatBg = '#0c1024';
       syncColorInputs();
       applyCustomColors();
       localStorage.removeItem('nebulahub-custom-theme');
@@ -1957,12 +2241,12 @@
 
     function applyPreset(name) {
       const presets = {
-        ocean: { brand: '#0ea5e9', accent: '#0284c7', accentStrong: '#38bdf8', bgGrad1: '#0c4a6e', bgGrad2: '#082f49', overlay1: 'rgba(14,165,233,0.4)', overlay2: 'rgba(56,189,248,0.3)' },
-        sunset: { brand: '#f97316', accent: '#ea580c', accentStrong: '#fb923c', bgGrad1: '#7c2d12', bgGrad2: '#431407', overlay1: 'rgba(249,115,22,0.4)', overlay2: 'rgba(236,72,153,0.3)' },
-        forest: { brand: '#22c55e', accent: '#16a34a', accentStrong: '#4ade80', bgGrad1: '#14532d', bgGrad2: '#052e16', overlay1: 'rgba(34,197,94,0.4)', overlay2: 'rgba(101,163,13,0.3)' },
-        crimson: { brand: '#ef4444', accent: '#dc2626', accentStrong: '#f87171', bgGrad1: '#7f1d1d', bgGrad2: '#450a0a', overlay1: 'rgba(239,68,68,0.4)', overlay2: 'rgba(249,115,22,0.3)' },
-        gold: { brand: '#eab308', accent: '#ca8a04', accentStrong: '#facc15', bgGrad1: '#713f12', bgGrad2: '#422006', overlay1: 'rgba(234,179,8,0.4)', overlay2: 'rgba(251,191,36,0.3)' },
-        purple: { brand: '#a855f7', accent: '#9333ea', accentStrong: '#c084fc', bgGrad1: '#581c87', bgGrad2: '#3b0764', overlay1: 'rgba(168,85,247,0.4)', overlay2: 'rgba(192,132,252,0.3)' }
+        ocean: { brand: '#0ea5e9', accent: '#0284c7', accentStrong: '#38bdf8', bgGrad1: '#0c4a6e', bgGrad2: '#082f49', overlay1: 'rgba(14,165,233,0.4)', overlay2: 'rgba(56,189,248,0.3)', chatSent: '#0ea5e9', chatBg: '#082f49' },
+        sunset: { brand: '#f97316', accent: '#ea580c', accentStrong: '#fb923c', bgGrad1: '#7c2d12', bgGrad2: '#431407', overlay1: 'rgba(249,115,22,0.4)', overlay2: 'rgba(236,72,153,0.3)', chatSent: '#f97316', chatBg: '#431407' },
+        forest: { brand: '#22c55e', accent: '#16a34a', accentStrong: '#4ade80', bgGrad1: '#14532d', bgGrad2: '#052e16', overlay1: 'rgba(34,197,94,0.4)', overlay2: 'rgba(101,163,13,0.3)', chatSent: '#22c55e', chatBg: '#052e16' },
+        crimson: { brand: '#ef4444', accent: '#dc2626', accentStrong: '#f87171', bgGrad1: '#7f1d1d', bgGrad2: '#450a0a', overlay1: 'rgba(239,68,68,0.4)', overlay2: 'rgba(249,115,22,0.3)', chatSent: '#ef4444', chatBg: '#450a0a' },
+        gold: { brand: '#eab308', accent: '#ca8a04', accentStrong: '#facc15', bgGrad1: '#713f12', bgGrad2: '#422006', overlay1: 'rgba(234,179,8,0.4)', overlay2: 'rgba(251,191,36,0.3)', chatSent: '#eab308', chatBg: '#422006' },
+        purple: { brand: '#a855f7', accent: '#9333ea', accentStrong: '#c084fc', bgGrad1: '#581c87', bgGrad2: '#3b0764', overlay1: 'rgba(168,85,247,0.4)', overlay2: 'rgba(192,132,252,0.3)', chatSent: '#a855f7', chatBg: '#3b0764' }
       };
       
       if (presets[name]) {
@@ -1972,11 +2256,19 @@
       }
     }
 
+    function updateChatPreview() {
+      const box = document.getElementById('chatPreviewBox');
+      if (box) {
+        box.style.background = customColors.chatBg;
+        const sent = box.querySelector('.sent');
+        if (sent) sent.style.background = customColors.chatSent;
+      }
+    }
+
     // Color input listeners
-    ['brand', 'accent', 'accentStrong', 'bgGrad1', 'bgGrad2'].forEach(key => {
-      const picker = document.getElementById(key + 'ColorPicker') || document.getElementById(key + 'Picker');
-      const text = document.getElementById(key + 'ColorText') || document.getElementById(key + 'Text');
-      
+    ['brand', 'accent', 'accentStrong'].forEach(key => {
+      const picker = document.getElementById(key + 'ColorPicker');
+      const text = document.getElementById(key + 'ColorText');
       if (picker) {
         picker.addEventListener('input', (e) => {
           customColors[key] = e.target.value;
@@ -1991,7 +2283,17 @@
       }
     });
 
-    // Overlay listeners (handle rgba conversion)
+    ['bgGrad1', 'bgGrad2'].forEach(key => {
+      const picker = document.getElementById(key + 'Picker');
+      const text = document.getElementById(key + 'Text');
+      if (picker) {
+        picker.addEventListener('input', (e) => {
+          customColors[key] = e.target.value;
+          if (text) text.value = e.target.value;
+        });
+      }
+    });
+
     document.getElementById('overlay1Picker').addEventListener('input', (e) => {
       customColors.overlay1 = hexToRgba(e.target.value, 0.35);
       document.getElementById('overlay1Text').value = customColors.overlay1;
@@ -2001,9 +2303,21 @@
       document.getElementById('overlay2Text').value = customColors.overlay2;
     });
 
+    // Chat customization listeners
+    document.getElementById('chatSentPicker').addEventListener('input', (e) => {
+      customColors.chatSent = e.target.value;
+      document.getElementById('chatSentText').value = e.target.value;
+      document.documentElement.style.setProperty('--custom-chat-sent', e.target.value);
+      updateChatPreview();
+    });
+    document.getElementById('chatBgPicker').addEventListener('input', (e) => {
+      customColors.chatBg = e.target.value;
+      document.getElementById('chatBgText').value = e.target.value;
+      document.documentElement.style.setProperty('--custom-chat-bg', e.target.value);
+      updateChatPreview();
+    });
+
     // ==================== TAB CLOAKING SYSTEM ====================
-    
-    // Favicon button selection
     document.querySelectorAll('.favicon-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
@@ -2020,7 +2334,6 @@
         localStorage.setItem('nebulahub-cloak-title', title);
       }
       
-      // Create or update favicon
       let link = document.querySelector("link[rel*='icon']");
       if (!link) {
         link = document.createElement('link');
@@ -2032,7 +2345,6 @@
       
       localStorage.setItem('nebulahub-cloak-favicon', faviconType);
       
-      // Visual feedback
       const btn = document.querySelector('button[onclick="applyTabCloak()"]');
       const originalText = btn.innerHTML;
       btn.innerHTML = '✅ Applied!';
@@ -2045,15 +2357,12 @@
       document.title = 'NEBULAHUB';
       document.getElementById('tabTitleInput').value = '';
       
-      // Remove custom favicon
       let link = document.querySelector("link[rel*='icon']");
       if (link) link.remove();
       
-      // Reset UI
       document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
       document.querySelector('[data-favicon="default"]').classList.add('active');
       
-      // Clear storage
       localStorage.removeItem('nebulahub-cloak-title');
       localStorage.removeItem('nebulahub-cloak-favicon');
     }
@@ -2086,7 +2395,6 @@
         }
         link.href = FAVICONS[savedFavicon];
         
-        // Update UI
         document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
         const btn = document.querySelector(`[data-favicon="${savedFavicon}"]`);
         if (btn) btn.classList.add('active');
@@ -2099,7 +2407,7 @@
       const savedVersion = localStorage.getItem('nebulahub-update-version');
       
       if (UPDATE_CONFIG.showOnce && savedVersion === UPDATE_CONFIG.version && lastSeen === 'true') {
-        return; // User already saw this version
+        return;
       }
       
       document.getElementById('updateTitle').textContent = UPDATE_CONFIG.title;
@@ -2116,8 +2424,6 @@
       if (dontShow && UPDATE_CONFIG.showOnce) {
         localStorage.setItem('nebulahub-update-seen', 'true');
         localStorage.setItem('nebulahub-update-version', UPDATE_CONFIG.version);
-      } else if (!UPDATE_CONFIG.showOnce) {
-        localStorage.setItem('nebulahub-update-seen', 'false');
       }
       document.getElementById('updateModal').classList.remove('show');
     }
@@ -2179,10 +2485,12 @@
       libraryView.style.display = "none";
       customizeView.style.display = "none";
       settingsView.style.display = "none";
+      chatView.style.display = "none";
       playerView.style.display = "flex";
       viewLibraryBtn.classList.remove("active");
       viewCustomizeBtn.classList.remove("active");
       viewSettingsBtn.classList.remove("active");
+      viewChatBtn.classList.remove("active");
       viewPlayerBtn.classList.add("active");
       viewPlayerBtn.disabled = false;
     }
@@ -2192,11 +2500,13 @@
       playerView.style.display = "none";
       customizeView.style.display = "none";
       settingsView.style.display = "none";
+      chatView.style.display = "none";
       libraryView.style.display = "block";
       viewLibraryBtn.classList.add("active");
       viewPlayerBtn.classList.remove("active");
       viewCustomizeBtn.classList.remove("active");
       viewSettingsBtn.classList.remove("active");
+      viewChatBtn.classList.remove("active");
       viewPlayerBtn.disabled = !activeGame;
     }
 
@@ -2205,10 +2515,12 @@
       playerView.style.display = "none";
       libraryView.style.display = "none";
       settingsView.style.display = "none";
+      chatView.style.display = "none";
       customizeView.style.display = "flex";
       viewLibraryBtn.classList.remove("active");
       viewPlayerBtn.classList.remove("active");
       viewSettingsBtn.classList.remove("active");
+      viewChatBtn.classList.remove("active");
       viewCustomizeBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
     }
@@ -2218,12 +2530,31 @@
       playerView.style.display = "none";
       libraryView.style.display = "none";
       customizeView.style.display = "none";
+      chatView.style.display = "none";
       settingsView.style.display = "flex";
       viewLibraryBtn.classList.remove("active");
       viewPlayerBtn.classList.remove("active");
       viewCustomizeBtn.classList.remove("active");
+      viewChatBtn.classList.remove("active");
       viewSettingsBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
+    }
+
+    function showChatView() {
+      playerIframe.src = "";
+      playerView.style.display = "none";
+      libraryView.style.display = "none";
+      customizeView.style.display = "none";
+      settingsView.style.display = "none";
+      chatView.style.display = "flex";
+      viewLibraryBtn.classList.remove("active");
+      viewPlayerBtn.classList.remove("active");
+      viewCustomizeBtn.classList.remove("active");
+      viewSettingsBtn.classList.remove("active");
+      viewChatBtn.classList.add("active");
+      viewPlayerBtn.disabled = !activeGame;
+      
+      if (!supabaseClient) initSupabase();
     }
 
     searchInput.addEventListener("input", () => {
@@ -2253,6 +2584,7 @@
     viewPlayerBtn.addEventListener("click", () => { if (activeGame) showPlayerView(); });
     viewCustomizeBtn.addEventListener("click", showCustomizeView);
     viewSettingsBtn.addEventListener("click", showSettingsView);
+    viewChatBtn.addEventListener("click", showChatView);
     backToLibraryBtn.addEventListener("click", showLibraryView);
 
     openInNewTabBtn.addEventListener("click", () => {
@@ -2273,7 +2605,6 @@
       const newTheme = themeSelector.value;
       document.documentElement.setAttribute("data-theme", newTheme);
       localStorage.setItem("site-theme", newTheme);
-      // Disable custom theme when preset selected
       localStorage.removeItem('nebulahub-theme-type');
       document.getElementById('customActiveNotice').classList.remove('show');
     });
@@ -2282,7 +2613,6 @@
       window.location.href = panicUrl;
     }
 
-    // Load saved custom theme on startup
     function loadSavedCustomTheme() {
       const saved = localStorage.getItem('nebulahub-custom-theme');
       const themeType = localStorage.getItem('nebulahub-theme-type');
@@ -2300,15 +2630,193 @@
       }
     }
 
+    // ==================== NEBULACHAT SYSTEM ====================
+    const SUPABASE_CONFIG = {
+      url: 'https://eatwwxzrnsyxuzkfckal.supabase.co',
+      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhdHd3eHpybnN5eHV6a2Zja2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM0MjgsImV4cCI6MjA3OTQ5OTQyOH0.UZoqLR93nMHoK_zQAEndaSntx9F05CXLEKMNGDyi9qc'
+    };
+
+    let supabaseClient = null;
+    let currentUser = null;
+    let currentRoom = 'general';
+    let chatSubscription = null;
+
+    function initSupabase() {
+      if (window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+        document.getElementById('connectionStatus').textContent = 'Connected';
+        checkChatUser();
+      } else {
+        document.getElementById('connectionStatus').textContent = 'Error';
+      }
+    }
+
+    function checkChatUser() {
+      const saved = localStorage.getItem('nebulahub-chat-user');
+      if (saved) {
+        currentUser = JSON.parse(saved);
+        document.getElementById('usernameModal').classList.remove('show');
+        loadMessages();
+        subscribeToMessages();
+      } else {
+        document.getElementById('usernameModal').classList.add('show');
+      }
+    }
+
+    function saveChatUser() {
+      const username = document.getElementById('usernameInput').value.trim();
+      
+      if (!username || username.length < 2) {
+        alert('Please enter a username (2+ characters)');
+        return;
+      }
+      
+      currentUser = {
+        username: username,
+        display_name: username,
+        id: crypto.randomUUID(),
+        joined_at: new Date().toISOString()
+      };
+      
+      localStorage.setItem('nebulahub-chat-user', JSON.stringify(currentUser));
+      document.getElementById('usernameModal').classList.remove('show');
+      
+      supabaseClient.from('profiles').upsert({
+        id: currentUser.id,
+        username: currentUser.username,
+        display_name: currentUser.display_name,
+        avatar_url: null
+      });
+      
+      loadMessages();
+      subscribeToMessages();
+    }
+
+    async function loadMessages() {
+      const { data, error } = await supabaseClient
+        .from('messages')
+        .select('*')
+        .eq('chat_id', currentRoom)
+        .order('created_at', { ascending: true })
+        .limit(50);
+        
+      if (error) {
+        console.error('Error loading messages:', error);
+        return;
+      }
+      
+      const container = document.getElementById('chatMessages');
+      container.innerHTML = '';
+      
+      if (data) {
+        data.forEach(msg => renderMessage(msg));
+        scrollToBottom();
+      }
+    }
+
+    function subscribeToMessages() {
+      if (chatSubscription) {
+        chatSubscription.unsubscribe();
+      }
+      
+      chatSubscription = supabaseClient
+        .channel(`room:${currentRoom}`)
+        .on('postgres_changes', {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `chat_id=eq.${currentRoom}`
+        }, payload => {
+          renderMessage(payload.new, true);
+        })
+        .subscribe();
+    }
+
+    function renderMessage(msg, animate = false) {
+      const container = document.getElementById('chatMessages');
+      const isOwn = msg.user_id === currentUser?.id;
+      
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${isOwn ? 'own' : ''}`;
+      if (animate) msgDiv.style.animation = 'slideIn 0.3s ease';
+      
+      const avatarText = msg.display_name ? msg.display_name.charAt(0).toUpperCase() : '?';
+      const time = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+      msgDiv.innerHTML = `
+        <div class="message-avatar">${avatarText}</div>
+        <div class="message-content">
+          <div class="message-header">
+            <span>${msg.display_name || 'Anonymous'}</span>
+            <span style="opacity:0.6;">${time}</span>
+          </div>
+          <div class="message-text">${escapeHtml(msg.content)}</div>
+        </div>
+      `;
+      
+      container.appendChild(msgDiv);
+      if (animate) scrollToBottom();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const content = input.value.trim();
+      
+      if (!content || !currentUser) return;
+      
+      input.value = '';
+      
+      const { error } = await supabaseClient
+        .from('messages')
+        .insert({
+          chat_id: currentRoom,
+          user_id: currentUser.id,
+          display_name: currentUser.display_name,
+          content: content,
+          created_at: new Date().toISOString()
+        });
+        
+      if (error) {
+        console.error('Error sending message:', error);
+        alert('Failed to send message');
+      }
+    }
+
+    function scrollToBottom() {
+      const container = document.getElementById('chatMessages');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Room switching
+    document.querySelectorAll('.chat-room-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.chat-room-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRoom = btn.dataset.room;
+        document.getElementById('currentRoomName').textContent = currentRoom;
+        loadMessages();
+        subscribeToMessages();
+      });
+    });
+
+    document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
+    document.getElementById('messageInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
       if (location.hash === "#portal") document.body.classList.add("portal-mode");
       if (yearSpan) yearSpan.textContent = new Date().getFullYear();
       
-      // Load saved settings
       loadSavedCustomTheme();
       loadTabCloak();
       
-      // Load panic URL if saved
       const savedPanic = localStorage.getItem('nebulahub-panic-url');
       if (savedPanic) {
         panicUrl = savedPanic;
@@ -2316,8 +2824,6 @@
       }
       
       renderGrid();
-      
-      // Show update modal after slight delay
       setTimeout(showUpdateModal, 1000);
     });
   </script>
