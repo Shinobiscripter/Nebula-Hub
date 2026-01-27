@@ -1,2211 +1,2081 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>NEBULAHUB</title>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-886SN3349C"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-886SN3349C');
-    </script>
-    <!-- AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092" crossorigin="anonymous"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      :root {
-        --bg: #030014;
-        --bg-elevated: #06051c;
-        --bg-soft: #0c1024;
-        --accent: #8b5cf6;
-        --accent-soft: rgba(139, 92, 246, 0.25);
-        --accent-strong: #22c55e;
-        --text: #e5e7eb;
-        --text-soft: #9ca3af;
-        --danger: #f97373;
-        --radius-lg: 18px;
-        --radius-xl: 24px;
-        --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
-        --transition-fast: 0.15s ease-out;
-        /* Custom user overrides */
-        --custom-brand-color: #22c55e;
-        --custom-accent-color: #8b5cf6;
-        --custom-accent-strong: #22c55e;
-        --custom-bg-grad-1: #1f2937;
-        --custom-bg-grad-2: #111827;
-        --custom-overlay-1: rgba(59, 130, 246, 0.35);
-        --custom-overlay-2: rgba(236, 72, 153, 0.3);
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-        background:
-          radial-gradient(circle at top left, var(--custom-bg-grad-1) 0, transparent 55%),
-          radial-gradient(circle at bottom right, var(--custom-bg-grad-2) 0, transparent 55%),
-          radial-gradient(circle at top right, var(--custom-overlay-1), transparent 60%),
-          radial-gradient(circle at bottom left, var(--custom-overlay-2), transparent 60%),
-          var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      body::before,
-      body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        opacity: 0.55;
-        mix-blend-mode: screen;
-        z-index: -2;
-      }
-
-      body::before {
-        background-image:
-          radial-gradient(2px 2px at 10% 20%, rgba(255, 255, 255, 0.8) 0, transparent 60%),
-          radial-gradient(1.5px 1.5px at 80% 30%, rgba(244, 244, 245, 0.7) 0, transparent 55%),
-          radial-gradient(2px 2px at 50% 80%, rgba(248, 250, 252, 0.7) 0, transparent 60%),
-          radial-gradient(1px 1px at 30% 60%, rgba(255, 255, 255, 0.4) 0, transparent 55%);
-        animation: driftStars 38s linear infinite;
-      }
-
-      body::after {
-        background-image:
-          radial-gradient(circle at 20% 0%, rgba(59, 130, 246, 0.45), transparent 60%),
-          radial-gradient(circle at 80% 100%, rgba(236, 72, 153, 0.45), transparent 60%);
-        filter: blur(8px);
-        z-index: -3;
-        opacity: 0.8;
-      }
-
-      @keyframes driftStars {
-        0% {
-          transform: translate3d(0, 0, 0);
-        }
-
-        100% {
-          transform: translate3d(-40px, -60px, 0);
-        }
-      }
-
-      .app-shell {
-        width: 100%;
-        max-width: 1200px;
-        background: radial-gradient(circle at top left, rgba(129, 140, 248, 0.18), transparent 55%),
-          radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.16), transparent 55%),
-          linear-gradient(145deg, rgba(15, 23, 42, 0.97), rgba(3, 7, 18, 0.98));
-        border-radius: 28px;
-        box-shadow: var(--shadow-soft);
-        border: 1px solid rgba(129, 140, 248, 0.4);
-        padding: 18px 18px 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        backdrop-filter: blur(18px) saturate(1.2);
-      }
-
-      .top-bar {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .brand-logo {
-        width: 38px;
-        height: 38px;
-        border-radius: 14px;
-        background: conic-gradient(from 200deg, var(--custom-accent-color), var(--custom-accent-strong), #ec4899, #0ea5e9, var(--custom-accent-color));
-        padding: 2px;
-        box-shadow: 0 0 20px rgba(129, 140, 248, 0.8);
-      }
-
-      .brand-logo-inner {
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        background:
-          radial-gradient(circle at 30% 20%, var(--custom-brand-color), #040018 65%),
-          radial-gradient(circle at 80% 80%, rgba(96, 165, 250, 0.65), transparent 60%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: #e5e7eb;
-        letter-spacing: 0.08em;
-      }
-
-      .brand-text-main {
-        font-size: 1.25rem;
-        font-weight: 700;
-        letter-spacing: 0.09em;
-        text-transform: uppercase;
-        display: flex;
-        align-items: baseline;
-        gap: 4px;
-      }
-
-      .brand-text-main span:nth-child(2) {
-        color: var(--custom-accent-strong);
-        font-weight: 800;
-      }
-
-      .brand-sub {
-        font-size: 0.78rem;
-        color: var(--text-soft);
-      }
-
-      .pill {
-        border-radius: 999px;
-        padding: 6px 10px;
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        background: rgba(15, 23, 42, 0.9);
-        border: 1px solid rgba(148, 163, 184, 0.5);
-        color: var(--text-soft);
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        white-space: nowrap;
-      }
-
-      .pill-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: var(--custom-accent-strong);
-        box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
-      }
-
-      .toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        align-items: center;
-        justify-content: space-between;
-      }
-
-      .search-wrapper {
-        flex: 1 1 220px;
-        position: relative;
-        max-width: 420px;
-      }
-
-      .search-input {
-        width: 100%;
-        padding: 10px 34px 10px 32px;
-        background: rgba(15, 23, 42, 0.95);
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.55);
-        color: var(--text);
-        outline: none;
-        font-size: 0.9rem;
-        transition: border var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
-      }
-
-      .search-input::placeholder {
-        color: #6b7280;
-      }
-
-      .search-input:focus {
-        border-color: var(--custom-accent-color);
-        box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.75), 0 0 24px rgba(59, 130, 246, 0.45);
-        background: rgba(15, 23, 42, 0.98);
-        transform: translateY(-1px);
-      }
-
-      .search-icon {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 0.9rem;
-        color: #6b7280;
-        pointer-events: none;
-      }
-
-      .clear-search {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        border: none;
-        background: transparent;
-        color: #6b7280;
-        cursor: pointer;
-        font-size: 0.8rem;
-        padding: 0;
-        display: none;
-      }
-
-      .filters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: flex-end;
-      }
-
-      .filter-chip {
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        background: rgba(15, 23, 42, 0.96);
-        padding: 6px 11px;
-        font-size: 0.78rem;
-        color: var(--text-soft);
-        cursor: pointer;
-        transition: background var(--transition-fast), border var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .filter-chip span.dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: rgba(148, 163, 184, 0.8);
-      }
-
-      .filter-chip.active {
-        background: var(--accent-soft);
-        border-color: var(--custom-accent-color);
-        color: #e5e7eb;
-        transform: translateY(-1px);
-      }
-
-      .filter-chip.active span.dot {
-        background: var(--custom-accent-strong);
-        box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
-      }
-
-      .content {
-        margin-top: 4px;
-        display: grid;
-        grid-template-columns: 260px minmax(0, 1fr);
-        gap: 14px;
-      }
-
-      @media (max-width: 850px) {
-        .content {
-          grid-template-columns: minmax(0, 1fr);
-        }
-      }
-
-      .sidebar {
-        background: radial-gradient(circle at top left, rgba(51, 65, 85, 0.5), transparent 60%), var(--bg-elevated);
-        border-radius: 22px;
-        border: 1px solid rgba(148, 163, 184, 0.35);
-        padding: 13px 13px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .sidebar-title {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: var(--text-soft);
-        margin-bottom: 4px;
-      }
-
-      .sidebar-card {
-        background: var(--bg-soft);
-        border-radius: 16px;
-        padding: 10px 11px;
-        border: 1px solid rgba(148, 163, 184, 0.28);
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .sidebar-card-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-      }
-
-      .badge {
-        font-size: 0.72rem;
-        padding: 3px 7px;
-        border-radius: 999px;
-        background: rgba(34, 197, 94, 0.16);
-        color: #bbf7d0;
-        border: 1px solid rgba(34, 197, 94, 0.6);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-
-      .sidebar-card-title {
-        font-size: 0.9rem;
-        font-weight: 600;
-      }
-
-      .sidebar-card-text {
-        font-size: 0.78rem;
-        color: var(--text-soft);
-        line-height: 1.45;
-      }
-
-      .hint-list {
-        font-size: 0.75rem;
-        color: var(--text-soft);
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-        margin-top: 4px;
-      }
-
-      .hint-list span {
-        opacity: 0.95;
-      }
-
-      .stat-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        font-size: 0.78rem;
-        margin-top: 6px;
-        color: var(--text-soft);
-      }
-
-      .stat-row strong {
-        font-size: 0.9rem;
-        color: #e5e7eb;
-      }
-
-      .small-link {
-        font-size: 0.75rem;
-        color: #93c5fd;
-        text-decoration: none;
-        margin-top: 4px;
-        align-self: flex-start;
-      }
-
-      .small-link:hover {
-        text-decoration: underline;
-      }
-
-      .library {
-        background: radial-gradient(circle at top right, rgba(79, 70, 229, 0.24), transparent 60%), var(--bg-elevated);
-        border-radius: 22px;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        padding: 14px 14px 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        min-height: 260px;
-      }
-
-      .library-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 6px;
-        flex-wrap: wrap;
-      }
-
-      .library-title {
-        font-size: 0.97rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .library-title span.count {
-        font-size: 0.75rem;
-        color: var(--text-soft);
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-      }
-
-      .view-toggle {
-        display: flex;
-        gap: 6px;
-        font-size: 0.75rem;
-      }
-
-      .view-btn {
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        background: rgba(15, 23, 42, 0.9);
-        padding: 4px 9px;
-        color: var(--text-soft);
-        cursor: pointer;
-        transition: background var(--transition-fast), border var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
-      }
-
-      .view-btn.active {
-        background: rgba(15, 23, 42, 0.9);
-        border-color: var(--custom-accent-color);
-        color: #e5e7eb;
-        transform: translateY(-1px);
-      }
-
-      .view-btn:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      .library-body {
-        margin-top: 2px;
-        border-radius: 18px;
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(30, 64, 175, 0.5);
-        padding: 10px;
-      }
-
-      .game-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 10px;
-      }
-
-      @media (max-width:600px) {
-        .game-grid {
-          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        }
-      }
-
-      .game-card {
-        background: radial-gradient(circle at top left, rgba(22, 163, 74, 0.32), transparent 58%),
-          linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.85));
-        border-radius: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.45);
-        padding: 8px 9px;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        cursor: pointer;
-        transition: transform var(--transition-fast), box-shadow var(--transition-fast), border var(--transition-fast), background var(--transition-fast);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .game-card::before {
-        content: "";
-        position: absolute;
-        inset: -40%;
-        background: radial-gradient(circle at top, rgba(129, 140, 248, 0.45), transparent 60%);
-        opacity: 0;
-        transition: opacity var(--transition-fast);
-        pointer-events: none;
-      }
-
-      .game-card:hover::before {
-        opacity: 0.65;
-      }
-
-      .game-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 18px 32px rgba(15, 23, 42, 0.9);
-        border-color: rgba(129, 140, 248, 0.9);
-      }
-
-      .game-thumb {
-        height: 80px;
-        border-radius: 11px;
-        background:
-          radial-gradient(circle at 30% 20%, var(--custom-brand-color), #0b1020),
-          radial-gradient(circle at 80% 90%, rgba(56, 189, 248, 0.9), transparent 60%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #e5e7eb;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .game-thumb span {
-        position: relative;
-        z-index: 1;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-      }
-
-      .game-thumb::after {
-        content: "";
-        position: absolute;
-        inset: -30%;
-        background: radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.6), transparent 60%);
-        mix-blend-mode: screen;
-        opacity: 0.7;
-      }
-
-      .game-name {
-        font-size: 0.88rem;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .game-meta {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        font-size: 0.75rem;
-        color: var(--text-soft);
-      }
-
-      .game-tag {
-        font-size: 0.7rem;
-        padding: 3px 7px;
-        border-radius: 999px;
-        background: rgba(37, 99, 235, 0.25);
-        border: 1px solid rgba(129, 140, 248, 0.7);
-      }
-
-      .empty-state {
-        padding: 24px 10px;
-        text-align: center;
-        font-size: 0.85rem;
-        color: var(--text-soft);
-      }
-
-      .empty-state strong {
-        color: #e5e7eb;
-      }
-
-      .player-view {
-        display: none;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .player-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 6px;
-        flex-wrap: wrap;
-      }
-
-      .player-title {
-        font-size: 0.93rem;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      .player-title span.main {
-        font-weight: 600;
-      }
-
-      .player-title span.sub {
-        font-size: 0.76rem;
-        color: var(--text-soft);
-      }
-
-      .btn {
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.8);
-        background: rgba(15, 23, 42, 0.96);
-        padding: 6px 11px;
-        font-size: 0.78rem;
-        color: #e5e7eb;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        transition: background var(--transition-fast), border var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
-      }
-
-      .btn:hover {
-        background: rgba(30, 64, 175, 0.9);
-        border-color: rgba(129, 140, 248, 0.95);
-        transform: translateY(-1px);
-        box-shadow: 0 10px 22px rgba(15, 23, 42, 0.8);
-      }
-
-      .btn-ghost {
-        background: rgba(15, 23, 42, 0.9);
-      }
-
-      .player-frame {
-        margin-top: 2px;
-        border-radius: 18px;
-        border: 1px solid rgba(30, 64, 175, 0.6);
-        overflow: hidden;
-        background: #020617;
-        height: 80vh;
-        max-height: 800px;
-      }
-
-      .player-frame iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        display: block;
-        background: #020617;
-      }
-
-      footer {
-        margin-top: 6px;
-        font-size: 0.7rem;
-        color: #6b7280;
-        display: flex;
-        justify-content: space-between;
-        gap: 4px;
-        flex-wrap: wrap;
-      }
-
-      footer a {
-        color: #93c5fd;
-        text-decoration: none;
-      }
-
-      footer a:hover {
-        text-decoration: underline;
-      }
-
-      footer .portal-link {
-        cursor: pointer;
-        text-decoration: underline;
-        text-decoration-style: dotted;
-      }
-
-      /* Customize View Styles */
-      .customize-view {
-        display: none;
-        flex-direction: column;
-        gap: 20px;
-        animation: fadeIn 0.3s ease;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .customize-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 16px;
-      }
-
-      .customize-card {
-        background: var(--bg-soft);
-        border-radius: 16px;
-        padding: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.28);
-      }
-
-      .customize-card h3 {
-        font-size: 0.9rem;
-        margin-bottom: 12px;
-        color: var(--text);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .color-input-group {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-bottom: 12px;
-      }
-
-      .color-input-group label {
-        font-size: 0.78rem;
-        color: var(--text-soft);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .color-picker-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .color-picker-wrapper input[type="color"] {
-        width: 50px;
-        height: 36px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        background: none;
-      }
-
-      .color-picker-wrapper input[type="text"] {
-        flex: 1;
-        padding: 6px 10px;
-        background: rgba(15, 23, 42, 0.95);
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        border-radius: 8px;
-        color: var(--text);
-        font-size: 0.8rem;
-        font-family: monospace;
-      }
-
-      .customize-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 10px;
-      }
-
-      .btn-primary {
-        background: var(--custom-accent-color);
-        border-color: var(--custom-accent-color);
-        color: white;
-      }
-
-      .btn-primary:hover {
-        background: var(--custom-accent-strong);
-        border-color: var(--custom-accent-strong);
-      }
-
-      .btn-secondary {
-        background: rgba(148, 163, 184, 0.2);
-        border-color: rgba(148, 163, 184, 0.4);
-      }
-
-      .preset-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-        margin-top: 8px;
-      }
-
-      .preset-btn {
-        padding: 8px;
-        border-radius: 8px;
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        background: rgba(15, 23, 42, 0.6);
-        color: var(--text-soft);
-        cursor: pointer;
-        font-size: 0.75rem;
-        transition: all 0.15s ease;
-      }
-
-      .preset-btn:hover {
-        border-color: var(--custom-accent-color);
-        color: var(--text);
-      }
-
-      /* Settings View Styles */
-      .settings-view {
-        display: none;
-        flex-direction: column;
-        gap: 20px;
-        animation: fadeIn 0.3s ease;
-      }
-
-      .settings-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 16px;
-      }
-
-      .settings-card {
-        background: var(--bg-soft);
-        border-radius: 16px;
-        padding: 20px;
-        border: 1px solid rgba(148, 163, 184, 0.28);
-      }
-
-      .settings-card h3 {
-        font-size: 1rem;
-        margin-bottom: 6px;
-        color: var(--text);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .settings-desc {
-        font-size: 0.8rem;
-        color: var(--text-soft);
-        margin-bottom: 16px;
-      }
-
-      .input-group {
-        margin-bottom: 16px;
-      }
-
-      .input-group label {
-        display: block;
-        font-size: 0.8rem;
-        color: var(--text-soft);
-        margin-bottom: 8px;
-        font-weight: 500;
-      }
-
-      .input-group input[type="text"] {
-        width: 100%;
-        padding: 10px 14px;
-        background: rgba(15, 23, 42, 0.95);
-        border: 1px solid rgba(148, 163, 184, 0.4);
-        border-radius: 10px;
-        color: var(--text);
-        font-size: 0.9rem;
-        transition: all 0.15s ease;
-      }
-
-      .input-group input[type="text"]:focus {
-        outline: none;
-        border-color: var(--custom-accent-color);
-        box-shadow: 0 0 0 3px var(--accent-soft);
-      }
-
-      .favicon-options {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 10px;
-      }
-
-      .favicon-btn {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        padding: 12px;
-        border-radius: 12px;
-        border: 2px solid transparent;
-        background: rgba(15, 23, 42, 0.6);
-        cursor: pointer;
-        transition: all 0.15s ease;
-      }
-
-      .favicon-btn:hover {
-        background: rgba(15, 23, 42, 0.9);
-        transform: translateY(-2px);
-      }
-
-      .favicon-btn.active {
-        border-color: var(--custom-accent-color);
-        background: var(--accent-soft);
-      }
-
-      .favicon-preview {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 1.1rem;
-        color: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      }
-
-      .favicon-preview.default {
-        background: linear-gradient(135deg, #22c55e, #16a34a);
-      }
-
-      .favicon-preview.google {
-        background: #4285F4;
-      }
-
-      .favicon-preview.classroom {
-        background: linear-gradient(135deg, #24a865, #1e8a53);
-      }
-
-      .favicon-preview.docs {
-        background: #4285F4;
-      }
-
-      .favicon-preview.slides {
-        background: #fbbc04;
-      }
-
-      .favicon-btn span:last-child {
-        font-size: 0.75rem;
-        color: var(--text-soft);
-      }
-
-      .favicon-btn.active span:last-child {
-        color: var(--text);
-        font-weight: 600;
-      }
-
-      /* Update Modal Styles - THEME AWARE */
-      .update-modal {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(8px);
-        z-index: 1000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        animation: fadeIn 0.3s ease;
-      }
-
-      .update-modal.show {
-        display: flex;
-      }
-
-      .update-card {
-        background: var(--bg-elevated);
-        border-radius: 24px;
-        border: 1px solid var(--accent-soft);
-        max-width: 480px;
-        width: 100%;
-        max-height: 85vh;
-        overflow-y: auto;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-        animation: slideUp 0.3s ease;
-        color: var(--text);
-      }
-
-      @keyframes slideUp {
-        from {
-          transform: translateY(20px);
-          opacity: 0;
-        }
-
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      .update-header {
-        background: linear-gradient(135deg, rgba(129, 140, 248, 0.1), transparent 60%);
-        padding: 24px 24px 16px;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-        border-radius: 24px 24px 0 0;
-      }
-
-      .update-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-        background: linear-gradient(135deg, var(--custom-accent-color), var(--custom-accent-strong));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .update-date {
-        font-size: 0.8rem;
-        color: var(--text-soft);
-      }
-
-      .update-body {
-        padding: 20px 24px;
-        background: var(--bg-elevated);
-      }
-
-      .update-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin: 0;
-        padding: 0;
-      }
-
-      .update-list li {
-        font-size: 0.9rem;
-        color: var(--text);
-        padding-left: 24px;
-        position: relative;
-        line-height: 1.5;
-      }
-
-      .update-list li::before {
-        content: "→";
-        position: absolute;
-        left: 0;
-        color: var(--custom-accent-strong);
-        font-weight: bold;
-        font-size: 1.1rem;
-      }
-
-      .update-footer {
-        padding: 16px 24px 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        border-top: 1px solid rgba(148, 163, 184, 0.2);
-        background: var(--bg-elevated);
-        border-radius: 0 0 24px 24px;
-      }
-
-      .checkbox-label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.75rem;
-        color: var(--text-soft);
-        cursor: pointer;
-      }
-
-      .checkbox-label input[type="checkbox"] {
-        accent-color: var(--custom-accent-color);
-        width: 16px;
-        height: 16px;
-        cursor: pointer;
-      }
-
-      /* THEME SPECIFIC MODAL ADJUSTMENTS */
-      /* Portal Mode (Light) */
-      body.portal-mode .update-modal {
-        background: rgba(255, 255, 255, 0.9);
-      }
-
-      body.portal-mode .update-card {
-        background: #ffffff;
-        border-color: #e5e7eb;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-      }
-
-      body.portal-mode .update-header {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), transparent 60%);
-        border-bottom-color: #e5e7eb;
-      }
-
-      body.portal-mode .update-title {
-        background: linear-gradient(135deg, #4f46e5, #22c55e);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      body.portal-mode .update-body,
-      body.portal-mode .update-footer {
-        background: #ffffff;
-      }
-
-      body.portal-mode .update-list li {
-        color: #111827;
-      }
-
-      body.portal-mode .update-date,
-      body.portal-mode .checkbox-label {
-        color: #6b7280;
-      }
-
-      body.portal-mode .update-footer {
-        border-top-color: #e5e7eb;
-      }
-
-      /* Bubblegum Theme */
-      :root[data-theme="bubblegum"] .update-modal {
-        background: rgba(255, 228, 241, 0.95);
-      }
-
-      :root[data-theme="bubblegum"] .update-card {
-        background: #ffd6ec;
-        border-color: #ff4fa3;
-      }
-
-      :root[data-theme="bubblegum"] .update-header {
-        background: linear-gradient(135deg, rgba(255, 79, 163, 0.2), transparent 60%);
-        border-bottom-color: rgba(255, 79, 163, 0.3);
-      }
-
-      :root[data-theme="bubblegum"] .update-list li {
-        color: #3a0035;
-      }
-
-      :root[data-theme="bubblegum"] .update-date,
-      :root[data-theme="bubblegum"] .checkbox-label {
-        color: #5f1a50;
-      }
-
-      :root[data-theme="bubblegum"] .update-footer {
-        border-top-color: rgba(255, 79, 163, 0.3);
-      }
-
-      /* Matrix Theme */
-      :root[data-theme="matrix"] .update-modal {
-        background: rgba(0, 0, 0, 0.95);
-      }
-
-      :root[data-theme="matrix"] .update-card {
-        background: #001100;
-        border-color: #00ff41;
-        box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
-      }
-
-      :root[data-theme="matrix"] .update-header {
-        background: linear-gradient(135deg, rgba(0, 255, 65, 0.15), transparent 60%);
-        border-bottom-color: rgba(0, 255, 65, 0.3);
-      }
-
-      :root[data-theme="matrix"] .update-title {
-        background: linear-gradient(135deg, #00ff41, #d9ffd9);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      :root[data-theme="matrix"] .update-list li::before {
-        color: #00ff41;
-      }
-
-      :root[data-theme="matrix"] .update-footer {
-        border-top-color: rgba(0, 255, 65, 0.3);
-      }
-
-      /* Minecraft Theme */
-      :root[data-theme="minecraft"] .update-card {
-        background: #0f3d0f;
-        border-color: #3c8527;
-        border-width: 2px;
-        border-style: solid;
-      }
-
-      :root[data-theme="minecraft"] .update-header {
-        background: linear-gradient(135deg, rgba(60, 133, 39, 0.2), transparent 60%);
-        border-bottom-color: rgba(60, 133, 39, 0.4);
-      }
-
-      :root[data-theme="minecraft"] .update-list li::before {
-        color: #8b5a2b;
-      }
-
-      :root[data-theme="minecraft"] .update-footer {
-        border-top-color: rgba(60, 133, 39, 0.4);
-      }
-
-      body.portal-mode {
-        background: #f9fafb;
-        color: #111827;
-      }
-
-      body.portal-mode::before,
-      body.portal-mode::after {
-        display: none;
-      }
-
-      body.portal-mode .app-shell {
-        background: #fff;
-        border-radius: 0;
-        border: 1px solid #e5e7eb;
-        box-shadow: none;
-      }
-
-      body.portal-mode .sidebar,
-      body.portal-mode .library {
-        background: #fff;
-        border-color: #e5e7eb;
-      }
-
-      body.portal-mode .game-card {
-        background: #f9fafb;
-        box-shadow: none;
-        border-color: #e5e7eb;
-      }
-
-      body.portal-mode .game-thumb {
-        background: #e5e7eb;
-      }
-
-      body.portal-mode .brand-logo {
-        box-shadow: none;
-      }
-
-      body.portal-mode .brand-logo-inner {
-        background: #f3f4f6;
-        color: #111827;
-      }
-
-      body.portal-mode .brand-text-main span:nth-child(2) {
-        color: #111827;
-      }
-
-      body.portal-mode .search-input,
-      body.portal-mode .view-btn,
-      body.portal-mode .filter-chip,
-      body.portal-mode .btn {
-        background: #f9fafb;
-        border-color: #e5e7eb;
-        color: #374151;
-        box-shadow: none;
-      }
-
-      body.portal-mode .search-input:focus {
-        box-shadow: none;
-        border-color: #9ca3af;
-      }
-
-      body.portal-mode .customize-card,
-      body.portal-mode .settings-card {
-        background: #f9fafb;
-        border-color: #e5e7eb;
-      }
-
-      body.portal-mode .color-picker-wrapper input[type="text"],
-      body.portal-mode .input-group input[type="text"] {
-        background: #ffffff;
-        border-color: #e5e7eb;
-        color: #111827;
-      }
-
-      body.portal-mode .preset-btn,
-      body.portal-mode .favicon-btn {
-        background: #ffffff;
-        border-color: #e5e7eb;
-        color: #374151;
-      }
-
-      body.portal-mode .favicon-btn.active {
-        background: rgba(99, 102, 241, 0.1);
-        border-color: #4f46e5;
-      }
-
-      /* THEMES */
-      :root[data-theme="nebula"] {
-        --bg: #050816;
-        --bg-elevated: #0b1020;
-        --bg-soft: #11182a;
-        --accent: #4f46e5;
-        --accent-soft: rgba(79, 70, 229, 0.25);
-        --accent-strong: #22c55e;
-        --text: #e5e7eb;
-        --text-soft: #9ca3af;
-      }
-
-      :root[data-theme="midnight"] {
-        --bg: #010409;
-        --bg-elevated: #0d1117;
-        --bg-soft: #161b22;
-        --accent: #58a6ff;
-        --accent-soft: rgba(88, 166, 255, 0.23);
-        --accent-strong: #238636;
-        --text: #c9d1d9;
-        --text-soft: #8b949e;
-      }
-
-      :root[data-theme="bubblegum"] {
-        --bg: #ffe4f1;
-        --bg-elevated: #ffd6ec;
-        --bg-soft: #ffcae6;
-        --accent: #ff4fa3;
-        --accent-soft: rgba(255, 79, 163, 0.23);
-        --accent-strong: #ff1e80;
-        --text: #3a0035;
-        --text-soft: #5f1a50;
-      }
-
-      :root[data-theme="matrix"] {
-        --bg: #000000;
-        --bg-elevated: #020402;
-        --bg-soft: #001100;
-        --accent: #00ff41;
-        --accent-soft: rgba(0, 255, 65, 0.15);
-        --accent-strong: #00ff41;
-        --text: #d9ffd9;
-        --text-soft: #71ff8e;
-      }
-
-      :root[data-theme="minecraft"] {
-        --bg: #0b2e0b;
-        --bg-elevated: #0f3d0f;
-        --bg-soft: #145214;
-        --accent: #3c8527;
-        --accent-soft: rgba(60, 133, 39, 0.25);
-        --accent-strong: #8b5a2b;
-        --text: #d6f5d6;
-        --text-soft: #a4c9a4;
-      }
-
-      .panic-btn {
-        background: #ef4444;
-        border: 1px solid #f87171;
-        color: white;
-        font-weight: 600;
-        border-radius: 12px;
-        padding: 6px 12px;
-        cursor: pointer;
-        transition: 0.15s ease;
-      }
-
-      .panic-btn:hover {
-        background: #dc2626;
-        border-color: #fca5a5;
-      }
-
-      .legal-footer {
-        margin-top: 10px;
-        font-size: 0.75rem;
-        color: #9ca3af;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .legal-footer a {
-        color: #93c5fd;
-        text-decoration: none;
-      }
-
-      .legal-footer a:hover {
-        text-decoration: underline;
-      }
-
-      .theme-active-notice {
-        font-size: 0.75rem;
-        color: var(--custom-accent-strong);
-        margin-top: 8px;
-        padding: 8px;
-        background: rgba(34, 197, 94, 0.1);
-        border-radius: 8px;
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        display: none;
-      }
-
-      .theme-active-notice.show {
-        display: block;
-      }
-
-      body.portal-mode .theme-active-notice {
-        background: rgba(34, 197, 94, 0.05);
-        color: #059669;
-        border-color: rgba(34, 197, 94, 0.2);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="app-shell">
-      <header class="top-bar">
-        <div class="brand">
-          <div class="brand-logo">
-            <div class="brand-logo-inner">
-              <span>NH</span>
+<head>
+  <meta charset="UTF-8" />
+  <title>NEBULAHUB</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-886SN3349C"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-886SN3349C');
+  </script>
+
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092" crossorigin="anonymous"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #030014;
+      --bg-elevated: #06051c;
+      --bg-soft: #0c1024;
+      --accent: #8b5cf6;
+      --accent-soft: rgba(139, 92, 246, 0.25);
+      --accent-strong: #22c55e;
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+      --danger: #f97373;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.6);
+      --transition-fast: 0.15s ease-out;
+      
+      /* Custom user overrides */
+      --custom-brand-color: #22c55e;
+      --custom-accent-color: #8b5cf6;
+      --custom-accent-strong: #22c55e;
+      --custom-bg-grad-1: #1f2937;
+      --custom-bg-grad-2: #111827;
+      --custom-overlay-1: rgba(59,130,246,0.35);
+      --custom-overlay-2: rgba(236,72,153,0.3);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, var(--custom-bg-grad-1) 0, transparent 55%),
+        radial-gradient(circle at bottom right, var(--custom-bg-grad-2) 0, transparent 55%),
+        radial-gradient(circle at top right, var(--custom-overlay-1), transparent 60%),
+        radial-gradient(circle at bottom left, var(--custom-overlay-2), transparent 60%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      z-index: -2;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.8) 0, transparent 60%),
+        radial-gradient(1.5px 1.5px at 80% 30%, rgba(244,244,245,0.7) 0, transparent 55%),
+        radial-gradient(2px 2px at 50% 80%, rgba(248,250,252,0.7) 0, transparent 60%),
+        radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.4) 0, transparent 55%);
+      animation: driftStars 38s linear infinite;
+    }
+
+    body::after {
+      background-image:
+        radial-gradient(circle at 20% 0%, rgba(59,130,246,0.45), transparent 60%),
+        radial-gradient(circle at 80% 100%, rgba(236,72,153,0.45), transparent 60%);
+      filter: blur(8px);
+      z-index: -3;
+      opacity: 0.8;
+    }
+
+    @keyframes driftStars {
+      0% { transform: translate3d(0,0,0); }
+      100% { transform: translate3d(-40px, -60px, 0); }
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1200px;
+      background: radial-gradient(circle at top left, rgba(129,140,248,0.18), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(236,72,153,0.16), transparent 55%),
+                  linear-gradient(145deg, rgba(15,23,42,0.97), rgba(3,7,18,0.98));
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(129,140,248,0.4);
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      backdrop-filter: blur(18px) saturate(1.2);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .brand { display:flex; align-items:center; gap:10px; }
+
+    .brand-logo {
+      width: 38px; height: 38px; border-radius: 14px;
+      background: conic-gradient(from 200deg, var(--custom-accent-color), var(--custom-accent-strong), #ec4899, #0ea5e9, var(--custom-accent-color));
+      padding: 2px;
+      box-shadow: 0 0 20px rgba(129,140,248,0.8);
+    }
+
+    .brand-logo-inner {
+      width: 100%; height: 100%; border-radius: 12px;
+      background:
+        radial-gradient(circle at 30% 20%, var(--custom-brand-color), #040018 65%),
+        radial-gradient(circle at 80% 80%, rgba(96,165,250,0.65), transparent 60%);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:700; font-size:1.1rem; color:#e5e7eb; letter-spacing:0.08em;
+    }
+
+    .brand-text-main {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .brand-text-main span:nth-child(2) { color: var(--custom-accent-strong); font-weight: 800; }
+    .brand-sub { font-size: 0.78rem; color: var(--text-soft); }
+
+    .pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.5);
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .pill-dot {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--custom-accent-strong);
+      box-shadow: 0 0 10px rgba(34,197,94,0.8);
+    }
+
+    .toolbar {
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center; justify-content:space-between;
+    }
+
+    .search-wrapper { flex:1 1 220px; position:relative; max-width:420px; }
+
+    .search-input {
+      width:100%;
+      padding:10px 34px 10px 32px;
+      background: rgba(15,23,42,0.95);
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.55);
+      color:var(--text);
+      outline:none;
+      font-size:0.9rem;
+      transition: border var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .search-input::placeholder { color:#6b7280; }
+
+    .search-input:focus {
+      border-color: var(--custom-accent-color);
+      box-shadow: 0 0 0 1px rgba(139,92,246,0.75), 0 0 24px rgba(59,130,246,0.45);
+      background: rgba(15,23,42,0.98);
+      transform: translateY(-1px);
+    }
+
+    .search-icon {
+      position:absolute; left:10px; top:50%;
+      transform:translateY(-50%);
+      font-size:0.9rem; color:#6b7280; pointer-events:none;
+    }
+
+    .clear-search {
+      position:absolute; right:10px; top:50%;
+      transform:translateY(-50%);
+      border:none; background:transparent;
+      color:#6b7280; cursor:pointer;
+      font-size:0.8rem; padding:0;
+      display:none;
+    }
+
+    .filters {
+      display:flex; flex-wrap:wrap;
+      gap:8px; justify-content:flex-end;
+    }
+
+    .filter-chip {
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.96);
+      padding:6px 11px;
+      font-size:0.78rem;
+      color:var(--text-soft);
+      cursor:pointer;
+      transition: background var(--transition-fast), border var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+      display:inline-flex; align-items:center; gap:6px;
+    }
+
+    .filter-chip span.dot {
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(148,163,184,0.8);
+    }
+
+    .filter-chip.active {
+      background: var(--accent-soft);
+      border-color: var(--custom-accent-color);
+      color:#e5e7eb;
+      transform: translateY(-1px);
+    }
+
+    .filter-chip.active span.dot {
+      background: var(--custom-accent-strong);
+      box-shadow: 0 0 10px rgba(34,197,94,0.9);
+    }
+
+    .content {
+      margin-top: 4px;
+      display:grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap:14px;
+    }
+
+    @media (max-width: 850px) {
+      .content { grid-template-columns: minmax(0,1fr); }
+    }
+
+    .sidebar {
+      background: radial-gradient(circle at top left, rgba(51,65,85,0.5), transparent 60%), var(--bg-elevated);
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,0.35);
+      padding:13px 13px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .sidebar-title {
+      font-size:0.8rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      color:var(--text-soft);
+      margin-bottom:4px;
+    }
+
+    .sidebar-card {
+      background: var(--bg-soft);
+      border-radius:16px;
+      padding:10px 11px;
+      border:1px solid rgba(148,163,184,0.28);
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .sidebar-card-header { display:flex; align-items:center; justify-content:space-between; gap:6px; }
+
+    .badge {
+      font-size:0.72rem;
+      padding:3px 7px;
+      border-radius:999px;
+      background: rgba(34,197,94,0.16);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,0.6);
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+    }
+
+    .sidebar-card-title { font-size:0.9rem; font-weight:600; }
+    .sidebar-card-text { font-size:0.78rem; color:var(--text-soft); line-height:1.45; }
+
+    .hint-list {
+      font-size:0.75rem;
+      color:var(--text-soft);
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      margin-top:4px;
+    }
+
+    .hint-list span { opacity:0.95; }
+
+    .stat-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      font-size:0.78rem;
+      margin-top:6px;
+      color:var(--text-soft);
+    }
+
+    .stat-row strong { font-size:0.9rem; color:#e5e7eb; }
+
+    .small-link {
+      font-size:0.75rem;
+      color:#93c5fd;
+      text-decoration:none;
+      margin-top:4px;
+      align-self:flex-start;
+    }
+
+    .small-link:hover { text-decoration:underline; }
+
+    .library {
+      background: radial-gradient(circle at top right, rgba(79,70,229,0.24), transparent 60%), var(--bg-elevated);
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,0.3);
+      padding:14px 14px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:260px;
+    }
+
+    .library-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .library-title {
+      font-size:0.97rem;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    .library-title span.count {
+      font-size:0.75rem;
+      color:var(--text-soft);
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+    }
+
+    .view-toggle { display:flex; gap:6px; font-size:0.75rem; }
+
+    .view-btn {
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      padding:4px 9px;
+      color:var(--text-soft);
+      cursor:pointer;
+      transition: background var(--transition-fast), border var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .view-btn.active {
+      background: rgba(15,23,42,0.9);
+      border-color: var(--custom-accent-color);
+      color:#e5e7eb;
+      transform: translateY(-1px);
+    }
+
+    .view-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .library-body {
+      margin-top:2px;
+      border-radius:18px;
+      background: rgba(15,23,42,0.7);
+      border:1px solid rgba(30,64,175,0.5);
+      padding:10px;
+    }
+
+    .game-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap:10px;
+    }
+
+    @media (max-width:600px) {
+      .game-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
+
+    .game-card {
+      background: radial-gradient(circle at top left, rgba(22,163,74,0.32), transparent 58%),
+                  linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.85));
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.45);
+      padding:8px 9px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      cursor:pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border var(--transition-fast), background var(--transition-fast);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .game-card::before {
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle at top, rgba(129,140,248,0.45), transparent 60%);
+      opacity:0;
+      transition: opacity var(--transition-fast);
+      pointer-events:none;
+    }
+
+    .game-card:hover::before { opacity:0.65; }
+
+    .game-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(15,23,42,0.9);
+      border-color: rgba(129,140,248,0.9);
+    }
+
+    .game-thumb {
+      height:80px;
+      border-radius:11px;
+      background:
+        radial-gradient(circle at 30% 20%, var(--custom-brand-color), #0b1020),
+        radial-gradient(circle at 80% 90%, rgba(56,189,248,0.9), transparent 60%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#e5e7eb;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .game-thumb span {
+      position:relative;
+      z-index:1;
+      font-weight:700;
+      letter-spacing:0.12em;
+      font-size:0.9rem;
+      text-transform:uppercase;
+    }
+
+    .game-thumb::after {
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background: radial-gradient(circle at bottom right, rgba(56,189,248,0.6), transparent 60%);
+      mix-blend-mode: screen;
+      opacity:0.7;
+    }
+
+    .game-name {
+      font-size:0.88rem;
+      font-weight:600;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .game-meta {
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      font-size:0.75rem;
+      color:var(--text-soft);
+    }
+
+    .game-tag {
+      font-size:0.7rem;
+      padding:3px 7px;
+      border-radius:999px;
+      background: rgba(37,99,235,0.25);
+      border:1px solid rgba(129,140,248,0.7);
+    }
+
+    .empty-state {
+      padding:24px 10px;
+      text-align:center;
+      font-size:0.85rem;
+      color:var(--text-soft);
+    }
+
+    .empty-state strong { color:#e5e7eb; }
+
+    .player-view { display:none; flex-direction:column; gap:8px; }
+
+    .player-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    .player-title {
+      font-size:0.93rem;
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .player-title span.main { font-weight:600; }
+    .player-title span.sub { font-size:0.76rem; color:var(--text-soft); }
+
+    .btn {
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.8);
+      background: rgba(15,23,42,0.96);
+      padding:6px 11px;
+      font-size:0.78rem;
+      color:#e5e7eb;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      transition: background var(--transition-fast), border var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .btn:hover {
+      background: rgba(30,64,175,0.9);
+      border-color: rgba(129,140,248,0.95);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(15,23,42,0.8);
+    }
+
+    .btn-ghost { background: rgba(15,23,42,0.9); }
+
+    .player-frame {
+      margin-top:2px;
+      border-radius:18px;
+      border:1px solid rgba(30,64,175,0.6);
+      overflow:hidden;
+      background:#020617;
+      height: 80vh;
+      max-height: 800px;
+    }
+
+    .player-frame iframe {
+      width:100%;
+      height:100%;
+      border:none;
+      display:block;
+      background:#020617;
+    }
+
+    footer {
+      margin-top:6px;
+      font-size:0.7rem;
+      color:#6b7280;
+      display:flex;
+      justify-content:space-between;
+      gap:4px;
+      flex-wrap:wrap;
+    }
+
+    footer a { color:#93c5fd; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+
+    footer .portal-link {
+      cursor:pointer;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
+
+    /* Customize View Styles */
+    .customize-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .customize-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .customize-card {
+      background: var(--bg-soft);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid rgba(148,163,184,0.28);
+    }
+
+    .customize-card h3 {
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .color-input-group label {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .color-picker-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .color-picker-wrapper input[type="color"] {
+      width: 50px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: none;
+    }
+
+    .color-picker-wrapper input[type="text"] {
+      flex: 1;
+      padding: 6px 10px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.4);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.8rem;
+      font-family: monospace;
+    }
+
+    .customize-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      background: var(--custom-accent-color);
+      border-color: var(--custom-accent-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--custom-accent-strong);
+      border-color: var(--custom-accent-strong);
+    }
+
+    .btn-secondary {
+      background: rgba(148,163,184,0.2);
+      border-color: rgba(148,163,184,0.4);
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .preset-btn {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(15,23,42,0.6);
+      color: var(--text-soft);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.15s ease;
+    }
+
+    .preset-btn:hover {
+      border-color: var(--custom-accent-color);
+      color: var(--text);
+    }
+
+    /* Settings View Styles */
+    .settings-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .settings-card {
+      background: var(--bg-soft);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(148,163,184,0.28);
+    }
+
+    .settings-card h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .settings-desc {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 16px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .input-group input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.4);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: all 0.15s ease;
+    }
+
+    .input-group input[type="text"]:focus {
+      outline: none;
+      border-color: var(--custom-accent-color);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .favicon-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+    }
+
+    .favicon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      background: rgba(15,23,42,0.6);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .favicon-btn:hover {
+      background: rgba(15,23,42,0.9);
+      transform: translateY(-2px);
+    }
+
+    .favicon-btn.active {
+      border-color: var(--custom-accent-color);
+      background: var(--accent-soft);
+    }
+
+    .favicon-preview {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .favicon-preview.default { background: linear-gradient(135deg, #22c55e, #16a34a); }
+    .favicon-preview.google { background: #4285F4; }
+    .favicon-preview.classroom { background: linear-gradient(135deg, #24a865, #1e8a53); }
+    .favicon-preview.docs { background: #4285F4; }
+    .favicon-preview.slides { background: #fbbc04; }
+
+    .favicon-btn span:last-child {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .favicon-btn.active span:last-child {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Update Modal Styles - THEME AWARE */
+    .update-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .update-modal.show {
+      display: flex;
+    }
+
+    .update-card {
+      background: var(--bg-elevated);
+      border-radius: 24px;
+      border: 1px solid var(--accent-soft);
+      max-width: 480px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      animation: slideUp 0.3s ease;
+      color: var(--text);
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .update-header {
+      background: linear-gradient(135deg, rgba(129,140,248,0.1), transparent 60%);
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid rgba(148,163,184,0.2);
+      border-radius: 24px 24px 0 0;
+    }
+
+    .update-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      background: linear-gradient(135deg, var(--custom-accent-color), var(--custom-accent-strong));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .update-date {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .update-body {
+      padding: 20px 24px;
+      background: var(--bg-elevated);
+    }
+
+    .update-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .update-list li {
+      font-size: 0.9rem;
+      color: var(--text);
+      padding-left: 24px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .update-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--custom-accent-strong);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .update-footer {
+      padding: 16px 24px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-top: 1px solid rgba(148,163,184,0.2);
+      background: var(--bg-elevated);
+      border-radius: 0 0 24px 24px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      cursor: pointer;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      accent-color: var(--custom-accent-color);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* THEME SPECIFIC MODAL ADJUSTMENTS */
+    
+    /* Portal Mode (Light) */
+    body.portal-mode .update-modal {
+      background: rgba(255,255,255,0.9);
+    }
+
+    body.portal-mode .update-card {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    }
+
+    body.portal-mode .update-header {
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), transparent 60%);
+      border-bottom-color: #e5e7eb;
+    }
+
+    body.portal-mode .update-title {
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    body.portal-mode .update-body,
+    body.portal-mode .update-footer {
+      background: #ffffff;
+    }
+
+    body.portal-mode .update-list li {
+      color: #111827;
+    }
+
+    body.portal-mode .update-date,
+    body.portal-mode .checkbox-label {
+      color: #6b7280;
+    }
+
+    body.portal-mode .update-footer {
+      border-top-color: #e5e7eb;
+    }
+
+    /* Bubblegum Theme */
+    :root[data-theme="bubblegum"] .update-modal {
+      background: rgba(255,228,241,0.95);
+    }
+
+    :root[data-theme="bubblegum"] .update-card {
+      background: #ffd6ec;
+      border-color: #ff4fa3;
+    }
+
+    :root[data-theme="bubblegum"] .update-header {
+      background: linear-gradient(135deg, rgba(255,79,163,0.2), transparent 60%);
+      border-bottom-color: rgba(255,79,163,0.3);
+    }
+
+    :root[data-theme="bubblegum"] .update-list li {
+      color: #3a0035;
+    }
+
+    :root[data-theme="bubblegum"] .update-date,
+    :root[data-theme="bubblegum"] .checkbox-label {
+      color: #5f1a50;
+    }
+
+    :root[data-theme="bubblegum"] .update-footer {
+      border-top-color: rgba(255,79,163,0.3);
+    }
+
+    /* Matrix Theme */
+    :root[data-theme="matrix"] .update-modal {
+      background: rgba(0,0,0,0.95);
+    }
+
+    :root[data-theme="matrix"] .update-card {
+      background: #001100;
+      border-color: #00ff41;
+      box-shadow: 0 0 30px rgba(0,255,65,0.2);
+    }
+
+    :root[data-theme="matrix"] .update-header {
+      background: linear-gradient(135deg, rgba(0,255,65,0.15), transparent 60%);
+      border-bottom-color: rgba(0,255,65,0.3);
+    }
+
+    :root[data-theme="matrix"] .update-title {
+      background: linear-gradient(135deg, #00ff41, #d9ffd9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    :root[data-theme="matrix"] .update-list li::before {
+      color: #00ff41;
+    }
+
+    :root[data-theme="matrix"] .update-footer {
+      border-top-color: rgba(0,255,65,0.3);
+    }
+
+    /* Minecraft Theme */
+    :root[data-theme="minecraft"] .update-card {
+      background: #0f3d0f;
+      border-color: #3c8527;
+      border-width: 2px;
+      border-style: solid;
+    }
+
+    :root[data-theme="minecraft"] .update-header {
+      background: linear-gradient(135deg, rgba(60,133,39,0.2), transparent 60%);
+      border-bottom-color: rgba(60,133,39,0.4);
+    }
+
+    :root[data-theme="minecraft"] .update-list li::before {
+      color: #8b5a2b;
+    }
+
+    :root[data-theme="minecraft"] .update-footer {
+      border-top-color: rgba(60,133,39,0.4);
+    }
+
+    body.portal-mode { background:#f9fafb; color:#111827; }
+    body.portal-mode::before, body.portal-mode::after { display:none; }
+
+    body.portal-mode .app-shell { background:#fff; border-radius:0; border:1px solid #e5e7eb; box-shadow:none; }
+    body.portal-mode .sidebar, body.portal-mode .library { background:#fff; border-color:#e5e7eb; }
+    body.portal-mode .game-card { background:#f9fafb; box-shadow:none; border-color:#e5e7eb; }
+    body.portal-mode .game-thumb { background:#e5e7eb; }
+    body.portal-mode .brand-logo { box-shadow:none; }
+    body.portal-mode .brand-logo-inner { background:#f3f4f6; color:#111827; }
+    body.portal-mode .brand-text-main span:nth-child(2) { color:#111827; }
+
+    body.portal-mode .search-input,
+    body.portal-mode .view-btn,
+    body.portal-mode .filter-chip,
+    body.portal-mode .btn {
+      background:#f9fafb;
+      border-color:#e5e7eb;
+      color:#374151;
+      box-shadow:none;
+    }
+
+    body.portal-mode .search-input:focus { box-shadow:none; border-color:#9ca3af; }
+
+    body.portal-mode .customize-card,
+    body.portal-mode .settings-card {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+    }
+
+    body.portal-mode .color-picker-wrapper input[type="text"],
+    body.portal-mode .input-group input[type="text"] {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      color: #111827;
+    }
+
+    body.portal-mode .preset-btn,
+    body.portal-mode .favicon-btn {
+      background: #ffffff;
+      border-color: #e5e7eb;
+      color: #374151;
+    }
+    
+    body.portal-mode .favicon-btn.active {
+      background: rgba(99,102,241,0.1);
+      border-color: #4f46e5;
+    }
+
+    /* THEMES */
+    :root[data-theme="nebula"] {
+      --bg: #050816;
+      --bg-elevated: #0b1020;
+      --bg-soft: #11182a;
+      --accent: #4f46e5;
+      --accent-soft: rgba(79, 70, 229, 0.25);
+      --accent-strong: #22c55e;
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+    }
+
+    :root[data-theme="midnight"] {
+      --bg: #010409;
+      --bg-elevated: #0d1117;
+      --bg-soft: #161b22;
+      --accent: #58a6ff;
+      --accent-soft: rgba(88,166,255,0.23);
+      --accent-strong: #238636;
+      --text: #c9d1d9;
+      --text-soft: #8b949e;
+    }
+
+    :root[data-theme="bubblegum"] {
+      --bg: #ffe4f1;
+      --bg-elevated: #ffd6ec;
+      --bg-soft: #ffcae6;
+      --accent: #ff4fa3;
+      --accent-soft: rgba(255, 79, 163, 0.23);
+      --accent-strong: #ff1e80;
+      --text: #3a0035;
+      --text-soft: #5f1a50;
+    }
+
+    :root[data-theme="matrix"] {
+      --bg: #000000;
+      --bg-elevated: #020402;
+      --bg-soft: #001100;
+      --accent: #00ff41;
+      --accent-soft: rgba(0,255,65,0.15);
+      --accent-strong: #00ff41;
+      --text: #d9ffd9;
+      --text-soft: #71ff8e;
+    }
+
+    :root[data-theme="minecraft"] {
+      --bg: #0b2e0b;
+      --bg-elevated: #0f3d0f;
+      --bg-soft: #145214;
+      --accent: #3c8527;
+      --accent-soft: rgba(60,133,39,0.25);
+      --accent-strong: #8b5a2b;
+      --text: #d6f5d6;
+      --text-soft: #a4c9a4;
+    }
+
+    .panic-btn {
+      background:#ef4444;
+      border:1px solid #f87171;
+      color:white;
+      font-weight:600;
+      border-radius:12px;
+      padding:6px 12px;
+      cursor:pointer;
+      transition:0.15s ease;
+    }
+
+    .panic-btn:hover {
+      background:#dc2626;
+      border-color:#fca5a5;
+    }
+
+    .legal-footer {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .legal-footer a { color:#93c5fd; text-decoration:none; }
+    .legal-footer a:hover { text-decoration:underline; }
+
+    .theme-active-notice {
+      font-size: 0.75rem;
+      color: var(--custom-accent-strong);
+      margin-top: 8px;
+      padding: 8px;
+      background: rgba(34,197,94,0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(34,197,94,0.3);
+      display: none;
+    }
+
+    .theme-active-notice.show {
+      display: block;
+    }
+
+    body.portal-mode .theme-active-notice {
+      background: rgba(34,197,94,0.05);
+      color: #059669;
+      border-color: rgba(34,197,94,0.2);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-logo">
+          <div class="brand-logo-inner"><span>NH</span></div>
+        </div>
+        <div>
+          <div class="brand-text-main">
+            <span>NEBULA</span><span>HUB</span>
+          </div>
+          <div class="brand-sub">Games • Apps • Your cosmic escape 🌌</div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          LIVE LIBRARY
+        </div>
+
+        <select id="themeSelector" class="theme-selector"
+          style="padding:6px 10px; border-radius:12px; background:var(--bg-soft); border:1px solid var(--accent-soft); color:var(--text);">
+          <option value="nebula">Nebula</option>
+          <option value="midnight">Midnight</option>
+          <option value="bubblegum">Bubblegum</option>
+          <option value="matrix">Matrix</option>
+          <option value="minecraft">Minecraft</option>
+        </select>
+
+        <button class="btn panic-btn" onclick="panicHide()">🚨 Panic</button>
+      </div>
+    </header>
+
+    <section class="toolbar">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input id="searchInput" class="search-input" type="text"
+          placeholder="Search games (eg. geometry, backrooms, shooter)..."
+          autocomplete="off" />
+        <button id="clearSearchBtn" class="clear-search" aria-label="Clear search">✕</button>
+      </div>
+
+      <div class="filters">
+        <button class="filter-chip active" data-category="all"><span class="dot"></span>All</button>
+        <button class="filter-chip" data-category="arcade"><span class="dot"></span>Arcade</button>
+        <button class="filter-chip" data-category="horror"><span class="dot"></span>Horror</button>
+        <button class="filter-chip" data-category="fps"><span class="dot"></span>FPS</button>
+        <button class="filter-chip" data-category="sandbox"><span class="dot"></span>Sandbox</button>
+        <button class="filter-chip" data-category="movies"><span class="dot"></span>Movies</button>
+      </div>
+    </section>
+
+    <main class="content">
+      <aside class="sidebar">
+        <div>
+          <div class="sidebar-title">Session info</div>
+          <div class="sidebar-card">
+            <div class="sidebar-card-header">
+              <div class="sidebar-card-title">Stealth mode tips</div>
+              <span class="badge">School safe*</span>
+            </div>
+            <p class="sidebar-card-text">
+              Rename this tab, change the favicon, and host from a boring-looking URL
+              so it blends in with "homework" tabs.
+            </p>
+            <div class="hint-list">
+              <span>• Name suggestion: <strong>Algebra Notes</strong></span>
+              <span>• Use a subpage like: <strong>#portal</strong></span>
+              <span>• Keep volume low 💀</span>
+            </div>
+            <a class="small-link" href="https://github.com" target="_blank" rel="noreferrer">
+              Manage on GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="sidebar-title">Stats</div>
+          <div class="sidebar-card">
+            <div class="stat-row"><span>Games loaded</span><strong id="statGames">0</strong></div>
+            <div class="stat-row"><span>Filters</span><strong>Search + category</strong></div>
+            <div class="stat-row"><span>Status</span><strong style="color:#bbf7d0;">Online</strong></div>
+            <p class="sidebar-card-text">
+              All links are static. Nothing is stored server-side; it's literally just HTML + JS.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <section class="library">
+        <div class="library-header">
+          <div class="library-title">
+            <span>Library</span>
+            <span class="count" id="resultCountLabel">0 RESULTS</span>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn active" id="viewLibraryBtn">Library</button>
+            <button class="view-btn" id="viewPlayerBtn" disabled>Player</button>
+            <button class="view-btn" id="viewCustomizeBtn">Customize</button>
+            <button class="view-btn" id="viewSettingsBtn">Settings</button>
+          </div>
+        </div>
+
+        <div class="library-body">
+          <div id="libraryView">
+            <div id="gameGrid" class="game-grid"></div>
+            <div id="emptyState" class="empty-state" style="display:none;">
+              <strong>No matches.</strong><br />
+              Try clearing the search or switching categories.
             </div>
           </div>
-          <div>
-            <div class="brand-text-main">
-              <span>NEBULA</span>
-              <span>HUB</span>
+
+          <div id="playerView" class="player-view">
+            <div class="player-header">
+              <div class="player-title">
+                <span class="main" id="playerGameName">Game name</span>
+                <span class="sub" id="playerGameMeta">Category • Opens in iframe</span>
+              </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button class="btn btn-ghost" id="openInNewTabBtn">🔗 Open in new tab</button>
+                <button class="btn" id="backToLibraryBtn">⬅ Back to library</button>
+              </div>
             </div>
-            <div class="brand-sub">Games • Apps • Your cosmic escape 🌌</div>
+            <div class="player-frame">
+              <iframe id="playerIframe" src=""></iframe>
+            </div>
           </div>
-        </div>
-        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <div class="pill">
-            <span class="pill-dot"></span> LIVE LIBRARY
+
+          <div id="customizeView" class="customize-view">
+            <div class="customize-grid">
+              <div class="customize-card">
+                <h3>🎨 Icon & Brand Colors</h3>
+                <div class="color-input-group">
+                  <label>Logo Primary Color</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="brandColorPicker" value="#22c55e">
+                    <input type="text" id="brandColorText" value="#22c55e" placeholder="#22c55e">
+                  </div>
+                </div>
+                <div class="color-input-group">
+                  <label>Accent Color</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="accentColorPicker" value="#8b5cf6">
+                    <input type="text" id="accentColorText" value="#8b5cf6" placeholder="#8b5cf6">
+                  </div>
+                </div>
+                <div class="color-input-group">
+                  <label>Strong Accent (Highlights)</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="accentStrongPicker" value="#22c55e">
+                    <input type="text" id="accentStrongText" value="#22c55e" placeholder="#22c55e">
+                  </div>
+                </div>
+              </div>
+
+              <div class="customize-card">
+                <h3>🌌 Background Gradients</h3>
+                <div class="color-input-group">
+                  <label>Gradient Top-Left</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="bgGrad1Picker" value="#1f2937">
+                    <input type="text" id="bgGrad1Text" value="#1f2937" placeholder="#1f2937">
+                  </div>
+                </div>
+                <div class="color-input-group">
+                  <label>Gradient Bottom-Right</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="bgGrad2Picker" value="#111827">
+                    <input type="text" id="bgGrad2Text" value="#111827" placeholder="#111827">
+                  </div>
+                </div>
+                <div class="color-input-group">
+                  <label>Overlay Tint 1 (Blue-ish)</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="overlay1Picker" value="#3b82f6">
+                    <input type="text" id="overlay1Text" value="rgba(59,130,246,0.35)" placeholder="rgba(59,130,246,0.35)">
+                  </div>
+                </div>
+                <div class="color-input-group">
+                  <label>Overlay Tint 2 (Pink-ish)</label>
+                  <div class="color-picker-wrapper">
+                    <input type="color" id="overlay2Picker" value="#ec4899">
+                    <input type="text" id="overlay2Text" value="rgba(236,72,153,0.3)" placeholder="rgba(236,72,153,0.3)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="customize-card">
+                <h3>⚡ Quick Presets</h3>
+                <div class="preset-grid">
+                  <button class="preset-btn" onclick="applyPreset('ocean')">Ocean</button>
+                  <button class="preset-btn" onclick="applyPreset('sunset')">Sunset</button>
+                  <button class="preset-btn" onclick="applyPreset('forest')">Forest</button>
+                  <button class="preset-btn" onclick="applyPreset('crimson')">Crimson</button>
+                  <button class="preset-btn" onclick="applyPreset('gold')">Gold</button>
+                  <button class="preset-btn" onclick="applyPreset('purple')">Purple</button>
+                </div>
+                <div class="theme-active-notice" id="customActiveNotice">
+                  ✨ Custom theme active! Select a preset theme from the dropdown above to reset.
+                </div>
+              </div>
+            </div>
+
+            <div class="customize-actions">
+              <button class="btn btn-primary" onclick="saveCustomTheme()">💾 Save Theme</button>
+              <button class="btn btn-secondary" onclick="resetCustomTheme()">↩ Reset to Default</button>
+              <button class="btn btn-secondary" onclick="previewTheme()">👁 Preview</button>
+            </div>
           </div>
-          <select id="themeSelector" class="theme-selector" style="padding:6px 10px; border-radius:12px; background:var(--bg-soft); border:1px solid var(--accent-soft); color:var(--text);">
-            <option value="nebula">Nebula</option>
-            <option value="midnight">Midnight</option>
-            <option value="bubblegum">Bubblegum</option>
-            <option value="matrix">Matrix</option>
-            <option value="minecraft">Minecraft</option>
-          </select>
-          <button class="btn panic-btn" onclick="panicHide()">🚨 Panic</button>
-        </div>
-      </header>
-      <section class="toolbar">
-        <div class="search-wrapper">
-          <span class="search-icon">🔍</span>
-          <input id="searchInput" class="search-input" type="text" placeholder="Search games (eg. geometry, backrooms, shooter)..." autocomplete="off" />
-          <button id="clearSearchBtn" class="clear-search" aria-label="Clear search">✕</button>
-        </div>
-        <div class="filters">
-          <button class="filter-chip active" data-category="all">
-            <span class="dot"></span>All </button>
-          <button class="filter-chip" data-category="arcade">
-            <span class="dot"></span>Arcade </button>
-          <button class="filter-chip" data-category="horror">
-            <span class="dot"></span>Horror </button>
-          <button class="filter-chip" data-category="fps">
-            <span class="dot"></span>FPS </button>
-          <button class="filter-chip" data-category="sandbox">
-            <span class="dot"></span>Sandbox </button>
-          <button class="filter-chip" data-category="movies">
-            <span class="dot"></span>Movies </button>
+
+          <div id="settingsView" class="settings-view">
+            <div class="settings-grid">
+              <div class="settings-card">
+                <h3>🕵️ Tab Cloaking</h3>
+                <p class="settings-desc">Disguise this site to look like a different tab</p>
+                
+                <div class="input-group">
+                  <label>Tab Title</label>
+                  <input type="text" id="tabTitleInput" placeholder="e.g. Algebra Notes, Google Docs, My Drive" maxlength="50">
+                </div>
+                
+                <div class="input-group">
+                  <label>Tab Icon</label>
+                  <div class="favicon-options">
+                    <button class="favicon-btn active" data-favicon="default">
+                      <span class="favicon-preview default">NH</span>
+                      <span>Default</span>
+                    </button>
+                    <button class="favicon-btn" data-favicon="google">
+                      <span class="favicon-preview google">G</span>
+                      <span>Google</span>
+                    </button>
+                    <button class="favicon-btn" data-favicon="classroom">
+                      <span class="favicon-preview classroom">C</span>
+                      <span>Classroom</span>
+                    </button>
+                    <button class="favicon-btn" data-favicon="docs">
+                      <span class="favicon-preview docs">D</span>
+                      <span>Docs</span>
+                    </button>
+                    <button class="favicon-btn" data-favicon="slides">
+                      <span class="favicon-preview slides">S</span>
+                      <span>Slides</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="customize-actions">
+                  <button class="btn btn-primary" onclick="applyTabCloak()">🔄 Apply Cloak</button>
+                  <button class="btn btn-secondary" onclick="resetTabCloak()">↩ Reset</button>
+                </div>
+              </div>
+
+              <div class="settings-card">
+                <h3>⚠️ Panic Button</h3>
+                <p class="settings-desc">Configure the panic button redirect destination</p>
+                
+                <div class="input-group">
+                  <label>Panic URL (where 🚨 takes you)</label>
+                  <input type="text" id="panicUrlInput" placeholder="https://classroom.google.com" value="https://clever.com/in/dallasisd/student/portal">
+                </div>
+                
+                <button class="btn btn-primary" onclick="savePanicUrl()" style="margin-top: 8px;">💾 Save Panic URL</button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      <main class="content">
-        <aside class="sidebar">
-          <div>
-            <div class="sidebar-title">Session info</div>
-            <div class="sidebar-card">
-              <div class="sidebar-card-header">
-                <div class="sidebar-card-title">Stealth mode tips</div>
-                <span class="badge">School safe*</span>
-              </div>
-              <p class="sidebar-card-text"> Rename this tab, change the favicon, and host from a boring-looking URL so it blends in with "homework" tabs. </p>
-              <div class="hint-list">
-                <span>• Name suggestion: <strong>Algebra Notes</strong>
-                </span>
-                <span>• Use a subpage like: <strong>#portal</strong>
-                </span>
-                <span>• Keep volume low 💀</span>
-              </div>
-              <a class="small-link" href="https://github.com" target="_blank" rel="noreferrer"> Manage on GitHub ↗ </a>
-            </div>
-          </div>
-          <div>
-            <div class="sidebar-title">Stats</div>
-            <div class="sidebar-card">
-              <div class="stat-row">
-                <span>Games loaded</span>
-                <strong id="statGames">0</strong>
-              </div>
-              <div class="stat-row">
-                <span>Filters</span>
-                <strong>Search + category</strong>
-              </div>
-              <div class="stat-row">
-                <span>Status</span>
-                <strong style="color:#bbf7d0;">Online</strong>
-              </div>
-              <p class="sidebar-card-text"> All links are static. Nothing is stored server-side; it's literally just HTML + JS. </p>
-            </div>
-          </div>
-        </aside>
-        <section class="library">
-          <div class="library-header">
-            <div class="library-title">
-              <span>Library</span>
-              <span class="count" id="resultCountLabel">0 RESULTS</span>
-            </div>
-            <div class="view-toggle">
-              <button class="view-btn active" id="viewLibraryBtn">Library</button>
-              <button class="view-btn" id="viewPlayerBtn" disabled>Player</button>
-              <button class="view-btn" id="viewCustomizeBtn">Customize</button>
-              <button class="view-btn" id="viewSettingsBtn">Settings</button>
-            </div>
-          </div>
-          <div class="library-body">
-            <div id="libraryView">
-              <div id="gameGrid" class="game-grid"></div>
-              <div id="emptyState" class="empty-state" style="display:none;">
-                <strong>No matches.</strong>
-                <br /> Try clearing the search or switching categories.
-              </div>
-            </div>
-            <div id="playerView" class="player-view">
-              <div class="player-header">
-                <div class="player-title">
-                  <span class="main" id="playerGameName">Game name</span>
-                  <span class="sub" id="playerGameMeta">Category • Opens in iframe</span>
-                </div>
-                <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                  <button class="btn btn-ghost" id="openInNewTabBtn">🔗 Open in new tab</button>
-                  <button class="btn" id="backToLibraryBtn">⬅ Back to library</button>
-                </div>
-              </div>
-              <div class="player-frame">
-                <iframe id="playerIframe" src=""></iframe>
-              </div>
-            </div>
-            <div id="customizeView" class="customize-view">
-              <div class="customize-grid">
-                <div class="customize-card">
-                  <h3>🎨 Icon & Brand Colors</h3>
-                  <div class="color-input-group">
-                    <label>Logo Primary Color</label>
-                    <div class="color-picker-wrapper">
-                      <input type="color" id="brandColorPicker" value="#22c55e">
-                      <input type="text" id="brandColorText" value="#22c55e" placeholder="#22c55e">
-                    </div>
-                  </div>
-                  <div class="color-input-group">
-                    <label>Accent Color</label>
-                    <div class="color-picker-wrapper">
-                      <input type="color" id="accentColorPicker" value="#8b5cf6">
-                      <input type="text" id="accentColorText" value="#8b5cf6" placeholder="#8b5cf6">
-                    </div>
-                  </div>
-                  <div class="color-input-group">
-                    <label>Strong Accent (Highlights)</label>
-                    <div class="color-picker-wrapper">
-                      <input type="color" id="accentStrongPicker" value="#22c55e">
-                      <input type="text" id="accentStrongText" value="#22c55e" placeholder="#22c55e">
-                    </div>
-                  </div>
-                </div>
-                <div class="customize-card">
-                  <h3>🌌 Background Gradients</h3>
-                  <div class="color-input-group">
-                    <label>Gradient Top-Left</label>
-                    <div class="color-picker-wrapper">
-                      <input type="color" id="bgGrad1Picker" value="#1f2937">
-                      <input type="text" id="bgGrad1Text" value="#1f2937" placeholder="#1f2937">
-                    </div>
-                  </div>
-                  <div class="color-input-group">
-                    <label>Gradient Bottom-Right</label>
-                    <div class="color-picker-wrapper">
-                      <input type="color" id="bgGrad2Picker" value="#111827">
-                      <input type="text" id="bgGrad2Text" value="#111827" placeholder="#111827">
-                    </div>
-                  </div>
-                  <div class="color-input-group">
-                    <label>Overlay Tint 1 (Blue-ish)</label>
-                    <div class="color-picker-wrapper">
-                      <input type="color" id="overlay1Picker" value="#3b82f6">
-                      <input type="text" id="overlay1Text" value="rgba(59,130,246,0.35)" placeholder="rgba(59,130,246,0.35)">
-                    </div>
-                  </div>
-                  <div class="color-input-group">
-                    <label>Overlay Tint 2 (Pink-ish)</label>
-                    <div class="color-picker-wrapper">
-                      <input type="color" id="overlay2Picker" value="#ec4899">
-                      <input type="text" id="overlay2Text" value="rgba(236,72,153,0.3)" placeholder="rgba(236,72,153,0.3)">
-                    </div>
-                  </div>
-                </div>
-                <div class="customize-card">
-                  <h3>⚡ Quick Presets</h3>
-                  <div class="preset-grid">
-                    <button class="preset-btn" onclick="applyPreset('ocean')">Ocean</button>
-                    <button class="preset-btn" onclick="applyPreset('sunset')">Sunset</button>
-                    <button class="preset-btn" onclick="applyPreset('forest')">Forest</button>
-                    <button class="preset-btn" onclick="applyPreset('crimson')">Crimson</button>
-                    <button class="preset-btn" onclick="applyPreset('gold')">Gold</button>
-                    <button class="preset-btn" onclick="applyPreset('purple')">Purple</button>
-                  </div>
-                  <div class="theme-active-notice" id="customActiveNotice"> ✨ Custom theme active! Select a preset theme from the dropdown above to reset. </div>
-                </div>
-              </div>
-              <div class="customize-actions">
-                <button class="btn btn-primary" onclick="saveCustomTheme()">💾 Save Theme</button>
-                <button class="btn btn-secondary" onclick="resetCustomTheme()">↩ Reset to Default</button>
-                <button class="btn btn-secondary" onclick="previewTheme()">👁 Preview</button>
-              </div>
-            </div>
-            <div id="settingsView" class="settings-view">
-              <div class="settings-grid">
-                <div class="settings-card">
-                  <h3>🕵️ Tab Cloaking</h3>
-                  <p class="settings-desc">Disguise this site to look like a different tab</p>
-                  <div class="input-group">
-                    <label>Tab Title</label>
-                    <input type="text" id="tabTitleInput" placeholder="e.g. Algebra Notes, Google Docs, My Drive" maxlength="50">
-                  </div>
-                  <div class="input-group">
-                    <label>Tab Icon</label>
-                    <div class="favicon-options">
-                      <button class="favicon-btn active" data-favicon="default">
-                        <span class="favicon-preview default">NH</span>
-                        <span>Default</span>
-                      </button>
-                      <button class="favicon-btn" data-favicon="google">
-                        <span class="favicon-preview google">G</span>
-                        <span>Google</span>
-                      </button>
-                      <button class="favicon-btn" data-favicon="classroom">
-                        <span class="favicon-preview classroom">C</span>
-                        <span>Classroom</span>
-                      </button>
-                      <button class="favicon-btn" data-favicon="docs">
-                        <span class="favicon-preview docs">D</span>
-                        <span>Docs</span>
-                      </button>
-                      <button class="favicon-btn" data-favicon="slides">
-                        <span class="favicon-preview slides">S</span>
-                        <span>Slides</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="customize-actions">
-                    <button class="btn btn-primary" onclick="applyTabCloak()">🔄 Apply Cloak</button>
-                    <button class="btn btn-secondary" onclick="resetTabCloak()">↩ Reset</button>
-                  </div>
-                </div>
-                <div class="settings-card">
-                  <h3>⚠️ Panic Button</h3>
-                  <p class="settings-desc">Configure the panic button redirect destination</p>
-                  <div class="input-group">
-                    <label>Panic URL (where 🚨 takes you)</label>
-                    <input type="text" id="panicUrlInput" placeholder="https://classroom.google.com" value="https://clever.com/in/dallasisd/student/portal">
-                  </div>
-                  <button class="btn btn-primary" onclick="savePanicUrl()" style="margin-top: 8px;">💾 Save Panic URL</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer>
-        <span>NebulaHub • static HTML build</span>
-        <span> Host this on <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>. <span class="portal-link" id="portalLink">Portal mode</span>
-        </span>
-      </footer>
-      <div class="legal-footer">
-        <span>© <span id="yearSpan"></span> NebulaHub </span>
-        <a href="/about.html">About</a>
-        <a href="/privacy.html">Privacy Policy</a>
-        <a href="/terms.html">Terms of Use</a>
+    </main>
+
+    <footer>
+      <span>NebulaHub • static HTML build</span>
+      <span>
+        Host this on <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>.
+        <span class="portal-link" id="portalLink">Portal mode</span>
+      </span>
+    </footer>
+
+    <div class="legal-footer">
+      <span>© <span id="yearSpan"></span> NebulaHub</span>
+      <a href="/about.html">About</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Use</a>
+    </div>
+  </div>
+
+  <!-- Update Modal -->
+  <div id="updateModal" class="update-modal">
+    <div class="update-card">
+      <div class="update-header">
+        <div class="update-title" id="updateTitle">🚀 What's New</div>
+        <div class="update-date" id="updateDate">January 28, 2026</div>
+      </div>
+      <div class="update-body">
+        <ul class="update-list" id="updateList">
+          <!-- Changes injected here -->
+        </ul>
+      </div>
+      <div class="update-footer">
+        <label class="checkbox-label">
+          <input type="checkbox" id="dontShowAgain">
+          Don't show again until next update
+        </label>
+        <button class="btn btn-primary" onclick="closeUpdateModal()">Got it!</button>
       </div>
     </div>
-    <!-- Update Modal -->
-    <div id="updateModal" class="update-modal">
-      <div class="update-card">
-        <div class="update-header">
-          <div class="update-title" id="updateTitle">🚀 What's New</div>
-          <div class="update-date" id="updateDate">January 28, 2026</div>
-        </div>
-        <div class="update-body">
-          <ul class="update-list" id="updateList">
-            <!-- Changes injected here -->
-          </ul>
-        </div>
-        <div class="update-footer">
-          <label class="checkbox-label">
-            <input type="checkbox" id="dontShowAgain"> Don't show again until next update </label>
-          <button class="btn btn-primary" onclick="closeUpdateModal()">Got it!</button>
-        </div>
-      </div>
-    </div>
-    <script>
-      // ==================== UPDATE CONFIGURATION ====================
-      // EDIT THESE VALUES when you have new updates to announce
-      const UPDATE_CONFIG = {
-        version: "2.1", // Increment this to show the modal again
-        date: "January 28, 2026",
-        title: "🚀 What's New in NebulaHub",
-        changes: ["✨ NEW: Settings tab with tab cloaking features!", "🕵️ Disguise your tab as Google, Classroom, Docs, or Slides", "🎨 Personalize icon colors, accent colors, and background effects", "💾 Themes are saved automatically to your browser", "📢 Added this update notification system", "🐛 Bug fixes and visual improvements"],
-        showOnce: true // If true, respects 'Don't show again' checkbox
+  </div>
+
+  <script>
+    // ==================== UPDATE CONFIGURATION ====================
+    // EDIT THESE VALUES when you have new updates to announce
+    const UPDATE_CONFIG = {
+      version: "2.1",  // Increment this to show the modal again
+      date: "January 28, 2026",
+      title: "🚀 What's New in NebulaHub",
+      changes: [
+        "✨ NEW: Settings tab with tab cloaking features!",
+        "🕵️ Disguise your tab as Google, Classroom, Docs, or Slides",
+        "🎨 Personalize icon colors, accent colors, and background effects",
+        "💾 Themes are saved automatically to your browser",
+        "📢 Added this update notification system",
+        "🐛 Bug fixes and visual improvements"
+      ],
+      showOnce: true // If true, respects 'Don't show again' checkbox
+    };
+    // ==============================================================
+
+    // Favicon Data URIs for tab cloaking
+    const FAVICONS = {
+      default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2322c55e"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">NH</text></svg>',
+      
+      google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">G</text></svg>',
+      
+      classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2324a865"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">C</text></svg>',
+      
+      docs: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">D</text></svg>',
+      
+      slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
+    };
+
+    // ✅ Game data (FIXED: no broken quotes, no missing commas)
+    const games = [
+      {
+        id: "geometry-dash",
+        name: "Geometry Dash Lite",
+        category: "arcade",
+        tags: ["platformer", "rhythm", "gd"],
+        url: "games/Geometry Dash Lite/Geometry Dash Lite.html"
+      },
+      {
+        id: "Nautilus OS",
+        name: "NautilusOS",
+        category: "arcade",
+        tags: ["platformer", "rhythm", "gd"],
+        url: "https://frdhhfdhhhsfddsffds.vercel.app/"
+      },
+      {
+        id: "buckshot-roulette",
+        name: "Buckshot Roulette",
+        category: "horror",
+        tags: ["casino", "psych-horror"],
+        url: "games/Buckshot Roulette/Buckshot Roulette.html"
+      },
+      {
+        id: "minecraft",
+        name: "Minecraft Web",
+        category: "sandbox",
+        tags: ["minecraft", "survival", "blocks"],
+        url: "games/Minecraft/Minecraft 1.21.4.html"
+      },
+      {
+        id: "basketball-random",
+        name: "Basketball Random",
+        category: "arcade",
+        tags: ["sports", "2-player", "random"],
+        url: "games/Basketball Random/Basket Random.html"
+      },
+      {
+        id: "hollow-knight",
+        name: "Hollow Knight Web",
+        category: "sandbox",
+        tags: ["metroidvania", "platformer", "indie"],
+        url: "games/Hollow Knight/Hollow Knight.html"
+      },
+      {
+        id: "ultrakill",
+        name: "ULTRAKILL Web",
+        category: "fps",
+        tags: ["movement", "retro"],
+        url: "games/Ultrakill/ULTRAKILL.html"
+      },
+      {
+        id: "half-life",
+        name: "Half-Life Web",
+        category: "fps",
+        tags: ["shooter", "valve", "classic"],
+        url: "games/Half-Life/Half Life.html"
+      },
+
+      /* FNAF pack (fixed strings) */
+      {
+        id: "fnaf1",
+        name: "FNAF 1",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/FNAF/Five Nights at Freddy's.html"
+      },
+      {
+        id: "fnaf2",
+        name: "FNAF 2",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/Five Nights at Freddy's 2/Five Nights at Freddy's 2.html"
+      },
+      {
+        id: "fnaf3",
+        name: "FNAF 3",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/Five Nights at Freddy's 3/Five Nights at Freddy's 3.html"
+      },
+      {
+        id: "fnaf4",
+        name: "FNAF 4",
+        category: "horror",
+        tags: ["fnaf", "classic"],
+        url: "games/Five Nights at Freddy's 4/Five Nights at Freddy's 4.html"
+      },
+      {
+        id: "fnaf-sl",
+        name: "FNAF Sister Location",
+        category: "horror",
+        tags: ["fnaf", "sl"],
+        url: "games/Five Nights at Freddy's SL/Five Nights at Freddy's_ Sister Location.html"
+      },
+      {
+        id: "fnaf-ps",
+        name: "FNAF Pizza Sim",
+        category: "horror",
+        tags: ["fnaf", "tycoon"],
+        url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_ Pizza Simulator.html"
+      },
+      {
+        id: "fnaf-ucn",
+        name: "FNAF UCN",
+        category: "horror",
+        tags: ["fnaf", "custom"],
+        url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html"
+      },
+      {
+        id: "fnaf-world",
+        name: "FNAF World",
+        category: "horror",
+        tags: ["fnaf", "rpg"],
+        url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html"
+      },
+      {
+        id: "rustdesk",
+        name: "RustDesk Web",
+        category: "sandbox",
+        tags: ["remote", "desktop"],
+        url: "https://rustdesk.com/web/"
+      },
+      {
+        id: "A Bite at Freddy's",
+        name: "A Bite at Freddy's",
+        category: "horror",
+        tags: ["fnaf", "pcgame"],
+        url: "games/A Bite at Freddy's/A Bite at Freddy's.html"
+      },
+       {
+        id: "Baldi's Basic",
+        name: "Baldi's Basic",
+        category: "arcade",
+        tags: ["horror"],
+        url: "games/Baldi's Basics/Baldi's Basics.html"
+      },
+      {
+        id: "Baldi's Basic Classic Remastered",
+        name: "Baldi's Basic Classic Remastered",
+        category: "arcade",
+        tags: ["horror"],
+        url: "games/Baldi's Basics/Baldi's Basics Classic Remastered.html"
+      },
+      {
+        id: "Baldi's Basic Plus",
+        name: "Baldi's Basic Plus",
+        category: "arcade",
+        tags: ["horror"],
+        url: "games/Baldi's Basics/Baldi's Basics Plus.html"
+      },
+      {
+        id: "Slope",
+        name: "Slope",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Slope/Slope.html"
+      },
+      {
+        id: "Terraria",
+        name: "Terraria",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Terraria/Terraria.html"
+      },
+      {
+        id: "Awesome Tanks 1",
+        name: "Awesome Tanks 1",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Awesome Tanks/Awesome Tanks.html"
+      },
+      {
+        id: "Awesome Tanks 2",
+        name: "Awesome Tanks 2",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Awesome Tanks/Awesome Tanks 2.html"
+      },
+      {
+        id: "Ball Blast",
+        name: "Ball Blast",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/BallBlast/Ball Blast.html"
+      },
+      {
+        id: "That's Not My Neighbor",
+        name: "That's Not My Neighbor",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/That's Not My Neighbor/That's Not My Neighbor.html"
+      },
+      {
+        id: "ChatBot",
+        name: "ChatBot",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/ChatBot/Chat Bot (A._.I).html"
+      },
+      {
+        id: "Crazy Cattle",
+        name: "Crazy Cattle",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Crazy Cattle Series/Crazy Cattle 3D.html"
+      },
+      {
+        id: "Crazy Chicken",
+        name: "Crazy Chicken",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Crazy Cattle Series/Crazy Chicken 3D.html"
+      },
+      {
+        id: "Crazy Kitty",
+        name: "Crazy Kitty",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Crazy Cattle Series/Crazy Kitty 3D.html"
+      },
+      {
+        id: "Karlson",
+        name: "Karlson",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Karlson/Karlson.html"
+      },
+      {
+        id: "People's Playground",
+        name: "People's Playground",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/People's Playground/People Playground.html"
+      },
+      {
+        id: "Midnight Shift",
+        name: "Midnight Shift",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Midnight Shift/Midnight Shift.html"
+      },
+      {
+        id: "Raft",
+        name: "Raft",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/Raft/Raft.html"
+      },
+      {
+        id: "0V0",
+        name: "0V0",
+        category: "arcade",
+        tags: ["fun"],
+        url: "games/0V0/OvO.html"
+      },
+      {
+        id: "Game Request Form/Bug Report Form",
+        name: "Game Request/Bug Report Form",
+        category: "Report",
+        tags: ["FeedBack"],
+        url: "https://forms.gle/2X5VTJaARrx95gtS8"
+      },
+    ];
+
+    // elements
+    const gameGrid = document.getElementById("gameGrid");
+    const emptyState = document.getElementById("emptyState");
+    const searchInput = document.getElementById("searchInput");
+    const clearSearchBtn = document.getElementById("clearSearchBtn");
+    const filterChips = document.querySelectorAll(".filter-chip");
+    const statGames = document.getElementById("statGames");
+    const resultCountLabel = document.getElementById("resultCountLabel");
+
+    const libraryView = document.getElementById("libraryView");
+    const playerView = document.getElementById("playerView");
+    const customizeView = document.getElementById("customizeView");
+    const settingsView = document.getElementById("settingsView");
+    const viewLibraryBtn = document.getElementById("viewLibraryBtn");
+    const viewPlayerBtn = document.getElementById("viewPlayerBtn");
+    const viewCustomizeBtn = document.getElementById("viewCustomizeBtn");
+    const viewSettingsBtn = document.getElementById("viewSettingsBtn");
+    const playerGameName = document.getElementById("playerGameName");
+    const playerGameMeta = document.getElementById("playerGameMeta");
+    const playerIframe = document.getElementById("playerIframe");
+    const backToLibraryBtn = document.getElementById("backToLibraryBtn");
+    const openInNewTabBtn = document.getElementById("openInNewTabBtn");
+    const portalLink = document.getElementById("portalLink");
+    const yearSpan = document.getElementById("yearSpan");
+
+    // state
+    let activeCategory = "all";
+    let activeSearch = "";
+    let activeGame = null;
+    let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal";
+
+    // ==================== CUSTOMIZATION SYSTEM ====================
+    const customColors = {
+      brand: '#22c55e',
+      accent: '#8b5cf6',
+      accentStrong: '#22c55e',
+      bgGrad1: '#1f2937',
+      bgGrad2: '#111827',
+      overlay1: 'rgba(59,130,246,0.35)',
+      overlay2: 'rgba(236,72,153,0.3)'
+    };
+
+    function syncColorInputs() {
+      document.getElementById('brandColorPicker').value = customColors.brand;
+      document.getElementById('brandColorText').value = customColors.brand;
+      document.getElementById('accentColorPicker').value = customColors.accent;
+      document.getElementById('accentColorText').value = customColors.accent;
+      document.getElementById('accentStrongPicker').value = customColors.accentStrong;
+      document.getElementById('accentStrongText').value = customColors.accentStrong;
+      document.getElementById('bgGrad1Picker').value = customColors.bgGrad1;
+      document.getElementById('bgGrad1Text').value = customColors.bgGrad1;
+      document.getElementById('bgGrad2Picker').value = customColors.bgGrad2;
+      document.getElementById('bgGrad2Text').value = customColors.bgGrad2;
+      
+      // Handle rgba text inputs for overlays
+      const hex1 = rgbToHex(customColors.overlay1) || '#3b82f6';
+      const hex2 = rgbToHex(customColors.overlay2) || '#ec4899';
+      document.getElementById('overlay1Picker').value = hex1;
+      document.getElementById('overlay1Text').value = customColors.overlay1;
+      document.getElementById('overlay2Picker').value = hex2;
+      document.getElementById('overlay2Text').value = customColors.overlay2;
+    }
+
+    function rgbToHex(rgba) {
+      if (!rgba || !rgba.includes('rgb')) return null;
+      const parts = rgba.match(/\d+/g);
+      if (!parts || parts.length < 3) return null;
+      return "#" + ((1 << 24) + (parseInt(parts[0]) << 16) + (parseInt(parts[1]) << 8) + parseInt(parts[2])).toString(16).slice(1);
+    }
+
+    function hexToRgba(hex, alpha = 0.35) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function applyCustomColors() {
+      const root = document.documentElement;
+      root.style.setProperty('--custom-brand-color', customColors.brand);
+      root.style.setProperty('--custom-accent-color', customColors.accent);
+      root.style.setProperty('--custom-accent-strong', customColors.accentStrong);
+      root.style.setProperty('--custom-bg-grad-1', customColors.bgGrad1);
+      root.style.setProperty('--custom-bg-grad-2', customColors.bgGrad2);
+      root.style.setProperty('--custom-overlay-1', customColors.overlay1);
+      root.style.setProperty('--custom-overlay-2', customColors.overlay2);
+      
+      document.getElementById('customActiveNotice').classList.add('show');
+    }
+
+    function saveCustomTheme() {
+      localStorage.setItem('nebulahub-custom-theme', JSON.stringify(customColors));
+      localStorage.setItem('nebulahub-theme-type', 'custom');
+      document.getElementById('themeSelector').value = 'nebula'; // Reset preset selector
+      alert('Theme saved! Your custom colors will persist across sessions.');
+    }
+
+    function resetCustomTheme() {
+      customColors.brand = '#22c55e';
+      customColors.accent = '#8b5cf6';
+      customColors.accentStrong = '#22c55e';
+      customColors.bgGrad1 = '#1f2937';
+      customColors.bgGrad2 = '#111827';
+      customColors.overlay1 = 'rgba(59,130,246,0.35)';
+      customColors.overlay2 = 'rgba(236,72,153,0.3)';
+      syncColorInputs();
+      applyCustomColors();
+      localStorage.removeItem('nebulahub-custom-theme');
+      localStorage.removeItem('nebulahub-theme-type');
+      document.getElementById('customActiveNotice').classList.remove('show');
+    }
+
+    function previewTheme() {
+      applyCustomColors();
+    }
+
+    function applyPreset(name) {
+      const presets = {
+        ocean: { brand: '#0ea5e9', accent: '#0284c7', accentStrong: '#38bdf8', bgGrad1: '#0c4a6e', bgGrad2: '#082f49', overlay1: 'rgba(14,165,233,0.4)', overlay2: 'rgba(56,189,248,0.3)' },
+        sunset: { brand: '#f97316', accent: '#ea580c', accentStrong: '#fb923c', bgGrad1: '#7c2d12', bgGrad2: '#431407', overlay1: 'rgba(249,115,22,0.4)', overlay2: 'rgba(236,72,153,0.3)' },
+        forest: { brand: '#22c55e', accent: '#16a34a', accentStrong: '#4ade80', bgGrad1: '#14532d', bgGrad2: '#052e16', overlay1: 'rgba(34,197,94,0.4)', overlay2: 'rgba(101,163,13,0.3)' },
+        crimson: { brand: '#ef4444', accent: '#dc2626', accentStrong: '#f87171', bgGrad1: '#7f1d1d', bgGrad2: '#450a0a', overlay1: 'rgba(239,68,68,0.4)', overlay2: 'rgba(249,115,22,0.3)' },
+        gold: { brand: '#eab308', accent: '#ca8a04', accentStrong: '#facc15', bgGrad1: '#713f12', bgGrad2: '#422006', overlay1: 'rgba(234,179,8,0.4)', overlay2: 'rgba(251,191,36,0.3)' },
+        purple: { brand: '#a855f7', accent: '#9333ea', accentStrong: '#c084fc', bgGrad1: '#581c87', bgGrad2: '#3b0764', overlay1: 'rgba(168,85,247,0.4)', overlay2: 'rgba(192,132,252,0.3)' }
       };
-      // ==============================================================
-      // Favicon Data URIs for tab cloaking
-      const FAVICONS = {
-        default: 'data:image/svg+xml, < svg
-        xmlns = "http://www.w3.org/2000/svg"
-        viewBox = "0 0 100 100" > < rect width = "100"
-        height = "100"
-        rx = "20"
-        fill = "%2322c55e" / > < text x = "50"
-        y = "70"
-        font - size = "50"
-        fill = "white"
-        text - anchor = "middle"
-        font - family = "Arial"
-        font - weight = "bold" > NH < /text> < /svg>',
-        google: 'data:image/svg+xml, < svg
-        xmlns = "http://www.w3.org/2000/svg"
-        viewBox = "0 0 100 100" > < rect width = "100"
-        height = "100"
-        fill = "%234285F4" / > < text x = "50"
-        y = "70"
-        font - size = "50"
-        fill = "white"
-        text - anchor = "middle"
-        font - family = "Arial"
-        font - weight = "bold" > G < /text> < /svg>',
-        classroom: 'data:image/svg+xml, < svg
-        xmlns = "http://www.w3.org/2000/svg"
-        viewBox = "0 0 100 100" > < rect width = "100"
-        height = "100"
-        fill = "%2324a865" / > < text x = "50"
-        y = "70"
-        font - size = "50"
-        fill = "white"
-        text - anchor = "middle"
-        font - family = "Arial"
-        font - weight = "bold" > C < /text> < /svg>',
-        docs: 'data:image/svg+xml, < svg
-        xmlns = "http://www.w3.org/2000/svg"
-        viewBox = "0 0 100 100" > < rect width = "100"
-        height = "100"
-        fill = "%234285F4" / > < text x = "50"
-        y = "70"
-        font - size = "50"
-        fill = "white"
-        text - anchor = "middle"
-        font - family = "Arial"
-        font - weight = "bold" > D < /text> < /svg>',
-        slides: 'data:image/svg+xml, < svg
-        xmlns = "http://www.w3.org/2000/svg"
-        viewBox = "0 0 100 100" > < rect width = "100"
-        height = "100"
-        fill = "%23fbbc04" / > < text x = "50"
-        y = "70"
-        font - size = "50"
-        fill = "white"
-        text - anchor = "middle"
-        font - family = "Arial"
-        font - weight = "bold" > S < /text> < /svg>'
-      };
-      // ✅ Game data (FIXED: no broken quotes, no missing commas)
-      const games = [{
-          id: "geometry-dash",
-          name: "Geometry Dash Lite",
-          category: "arcade",
-          tags: ["platformer", "rhythm", "gd"],
-          url: "games/Geometry Dash Lite/Geometry Dash Lite.html"
-        }, {
-          id: "Nautilus OS",
-          name: "NautilusOS",
-          category: "arcade",
-          tags: ["platformer", "rhythm", "gd"],
-          url: "https://frdhhfdhhhsfddsffds.vercel.app/"
-        }, {
-          id: "buckshot-roulette",
-          name: "Buckshot Roulette",
-          category: "horror",
-          tags: ["casino", "psych-horror"],
-          url: "games/Buckshot Roulette/Buckshot Roulette.html"
-        }, {
-          id: "minecraft",
-          name: "Minecraft Web",
-          category: "sandbox",
-          tags: ["minecraft", "survival", "blocks"],
-          url: "games/Minecraft/Minecraft 1.21.4.html"
-        }, {
-          id: "basketball-random",
-          name: "Basketball Random",
-          category: "arcade",
-          tags: ["sports", "2-player", "random"],
-          url: "games/Basketball Random/Basket Random.html"
-        }, {
-          id: "hollow-knight",
-          name: "Hollow Knight Web",
-          category: "sandbox",
-          tags: ["metroidvania", "platformer", "indie"],
-          url: "games/Hollow Knight/Hollow Knight.html"
-        }, {
-          id: "ultrakill",
-          name: "ULTRAKILL Web",
-          category: "fps",
-          tags: ["movement", "retro"],
-          url: "games/Ultrakill/ULTRAKILL.html"
-        }, {
-          id: "half-life",
-          name: "Half-Life Web",
-          category: "fps",
-          tags: ["shooter", "valve", "classic"],
-          url: "games/Half-Life/Half Life.html"
-        },
-        /* FNAF pack (fixed strings) */
-        {
-          id: "fnaf1",
-          name: "FNAF 1",
-          category: "horror",
-          tags: ["fnaf", "classic"],
-          url: "games/FNAF/Five Nights at Freddy's.html"
-        }, {
-          id: "fnaf2",
-          name: "FNAF 2",
-          category: "horror",
-          tags: ["fnaf", "classic"],
-          url: "games/Five Nights at Freddy's 2/Five Nights at Freddy's 2.html"
-        }, {
-          id: "fnaf3",
-          name: "FNAF 3",
-          category: "horror",
-          tags: ["fnaf", "classic"],
-          url: "games/Five Nights at Freddy's 3/Five Nights at Freddy's 3.html"
-        }, {
-          id: "fnaf4",
-          name: "FNAF 4",
-          category: "horror",
-          tags: ["fnaf", "classic"],
-          url: "games/Five Nights at Freddy's 4/Five Nights at Freddy's 4.html"
-        }, {
-          id: "fnaf-sl",
-          name: "FNAF Sister Location",
-          category: "horror",
-          tags: ["fnaf", "sl"],
-          url: "games/Five Nights at Freddy's SL/Five Nights at Freddy's_ Sister Location.html"
-        }, {
-          id: "fnaf-ps",
-          name: "FNAF Pizza Sim",
-          category: "horror",
-          tags: ["fnaf", "tycoon"],
-          url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_ Pizza Simulator.html"
-        }, {
-          id: "fnaf-ucn",
-          name: "FNAF UCN",
-          category: "horror",
-          tags: ["fnaf", "custom"],
-          url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html"
-        }, {
-          id: "fnaf-world",
-          name: "FNAF World",
-          category: "horror",
-          tags: ["fnaf", "rpg"],
-          url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html"
-        }, {
-          id: "rustdesk",
-          name: "RustDesk Web",
-          category: "sandbox",
-          tags: ["remote", "desktop"],
-          url: "https://rustdesk.com/web/"
-        }, {
-          id: "A Bite at Freddy's",
-          name: "A Bite at Freddy's",
-          category: "horror",
-          tags: ["fnaf", "pcgame"],
-          url: "games/A Bite at Freddy's/A Bite at Freddy's.html"
-        }, {
-          id: "Baldi's Basic",
-          name: "Baldi's Basic",
-          category: "arcade",
-          tags: ["horror"],
-          url: "games/Baldi's Basics/Baldi's Basics.html"
-        }, {
-          id: "Baldi's Basic Classic Remastered",
-          name: "Baldi's Basic Classic Remastered",
-          category: "arcade",
-          tags: ["horror"],
-          url: "games/Baldi's Basics/Baldi's Basics Classic Remastered.html"
-        }, {
-          id: "Baldi's Basic Plus",
-          name: "Baldi's Basic Plus",
-          category: "arcade",
-          tags: ["horror"],
-          url: "games/Baldi's Basics/Baldi's Basics Plus.html"
-        }, {
-          id: "Slope",
-          name: "Slope",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Slope/Slope.html"
-        }, {
-          id: "Terraria",
-          name: "Terraria",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Terraria/Terraria.html"
-        }, {
-          id: "Awesome Tanks 1",
-          name: "Awesome Tanks 1",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Awesome Tanks/Awesome Tanks.html"
-        }, {
-          id: "Awesome Tanks 2",
-          name: "Awesome Tanks 2",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Awesome Tanks/Awesome Tanks 2.html"
-        }, {
-          id: "Ball Blast",
-          name: "Ball Blast",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/BallBlast/Ball Blast.html"
-        }, {
-          id: "That's Not My Neighbor",
-          name: "That's Not My Neighbor",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/That's Not My Neighbor/That's Not My Neighbor.html"
-        }, {
-          id: "ChatBot",
-          name: "ChatBot",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/ChatBot/Chat Bot (A._.I).html"
-        }, {
-          id: "Crazy Cattle",
-          name: "Crazy Cattle",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Crazy Cattle Series/Crazy Cattle 3D.html"
-        }, {
-          id: "Crazy Chicken",
-          name: "Crazy Chicken",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Crazy Cattle Series/Crazy Chicken 3D.html"
-        }, {
-          id: "Crazy Kitty",
-          name: "Crazy Kitty",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Crazy Cattle Series/Crazy Kitty 3D.html"
-        }, {
-          id: "Karlson",
-          name: "Karlson",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Karlson/Karlson.html"
-        }, {
-          id: "People's Playground",
-          name: "People's Playground",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/People's Playground/People Playground.html"
-        }, {
-          id: "Midnight Shift",
-          name: "Midnight Shift",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Midnight Shift/Midnight Shift.html"
-        }, {
-          id: "Raft",
-          name: "Raft",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/Raft/Raft.html"
-        }, {
-          id: "0V0",
-          name: "0V0",
-          category: "arcade",
-          tags: ["fun"],
-          url: "games/0V0/OvO.html"
-        }, {
-          id: "Game Request Form/Bug Report Form",
-          name: "Game Request/Bug Report Form",
-          category: "Report",
-          tags: ["FeedBack"],
-          url: "https://forms.gle/2X5VTJaARrx95gtS8"
-        },
-      ];
-      // elements
-      const gameGrid = document.getElementById("gameGrid");
-      const emptyState = document.getElementById("emptyState");
-      const searchInput = document.getElementById("searchInput");
-      const clearSearchBtn = document.getElementById("clearSearchBtn");
-      const filterChips = document.querySelectorAll(".filter-chip");
-      const statGames = document.getElementById("statGames");
-      const resultCountLabel = document.getElementById("resultCountLabel");
-      const libraryView = document.getElementById("libraryView");
-      const playerView = document.getElementById("playerView");
-      const customizeView = document.getElementById("customizeView");
-      const settingsView = document.getElementById("settingsView");
-      const viewLibraryBtn = document.getElementById("viewLibraryBtn");
-      const viewPlayerBtn = document.getElementById("viewPlayerBtn");
-      const viewCustomizeBtn = document.getElementById("viewCustomizeBtn");
-      const viewSettingsBtn = document.getElementById("viewSettingsBtn");
-      const playerGameName = document.getElementById("playerGameName");
-      const playerGameMeta = document.getElementById("playerGameMeta");
-      const playerIframe = document.getElementById("playerIframe");
-      const backToLibraryBtn = document.getElementById("backToLibraryBtn");
-      const openInNewTabBtn = document.getElementById("openInNewTabBtn");
-      const portalLink = document.getElementById("portalLink");
-      const yearSpan = document.getElementById("yearSpan");
-      // state
-      let activeCategory = "all";
-      let activeSearch = "";
-      let activeGame = null;
-      let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal";
-      // ==================== CUSTOMIZATION SYSTEM ====================
-      const customColors = {
-        brand: '#22c55e',
-        accent: '#8b5cf6',
-        accentStrong: '#22c55e',
-        bgGrad1: '#1f2937',
-        bgGrad2: '#111827',
-        overlay1: 'rgba(59,130,246,0.35)',
-        overlay2: 'rgba(236,72,153,0.3)'
-      };
-
-      function syncColorInputs() {
-        document.getElementById('brandColorPicker').value = customColors.brand;
-        document.getElementById('brandColorText').value = customColors.brand;
-        document.getElementById('accentColorPicker').value = customColors.accent;
-        document.getElementById('accentColorText').value = customColors.accent;
-        document.getElementById('accentStrongPicker').value = customColors.accentStrong;
-        document.getElementById('accentStrongText').value = customColors.accentStrong;
-        document.getElementById('bgGrad1Picker').value = customColors.bgGrad1;
-        document.getElementById('bgGrad1Text').value = customColors.bgGrad1;
-        document.getElementById('bgGrad2Picker').value = customColors.bgGrad2;
-        document.getElementById('bgGrad2Text').value = customColors.bgGrad2;
-        // Handle rgba text inputs for overlays
-        const hex1 = rgbToHex(customColors.overlay1) || '#3b82f6';
-        const hex2 = rgbToHex(customColors.overlay2) || '#ec4899';
-        document.getElementById('overlay1Picker').value = hex1;
-        document.getElementById('overlay1Text').value = customColors.overlay1;
-        document.getElementById('overlay2Picker').value = hex2;
-        document.getElementById('overlay2Text').value = customColors.overlay2;
-      }
-
-      function rgbToHex(rgba) {
-        if (!rgba || !rgba.includes('rgb')) return null;
-        const parts = rgba.match(/\d+/g);
-        if (!parts || parts.length < 3) return null;
-        return "#" + ((1 << 24) + (parseInt(parts[0]) << 16) + (parseInt(parts[1]) << 8) + parseInt(parts[2])).toString(16).slice(1);
-      }
-
-      function hexToRgba(hex, alpha = 0.35) {
-        const r = parseInt(hex.slice(1, 3), 16);
-        const g = parseInt(hex.slice(3, 5), 16);
-        const b = parseInt(hex.slice(5, 7), 16);
-        return `rgba(${r},${g},${b},${alpha})`;
-      }
-
-      function applyCustomColors() {
-        const root = document.documentElement;
-        root.style.setProperty('--custom-brand-color', customColors.brand);
-        root.style.setProperty('--custom-accent-color', customColors.accent);
-        root.style.setProperty('--custom-accent-strong', customColors.accentStrong);
-        root.style.setProperty('--custom-bg-grad-1', customColors.bgGrad1);
-        root.style.setProperty('--custom-bg-grad-2', customColors.bgGrad2);
-        root.style.setProperty('--custom-overlay-1', customColors.overlay1);
-        root.style.setProperty('--custom-overlay-2', customColors.overlay2);
-        document.getElementById('customActiveNotice').classList.add('show');
-      }
-
-      function saveCustomTheme() {
-        localStorage.setItem('nebulahub-custom-theme', JSON.stringify(customColors));
-        localStorage.setItem('nebulahub-theme-type', 'custom');
-        document.getElementById('themeSelector').value = 'nebula'; // Reset preset selector
-        alert('Theme saved! Your custom colors will persist across sessions.');
-      }
-
-      function resetCustomTheme() {
-        customColors.brand = '#22c55e';
-        customColors.accent = '#8b5cf6';
-        customColors.accentStrong = '#22c55e';
-        customColors.bgGrad1 = '#1f2937';
-        customColors.bgGrad2 = '#111827';
-        customColors.overlay1 = 'rgba(59,130,246,0.35)';
-        customColors.overlay2 = 'rgba(236,72,153,0.3)';
+      
+      if (presets[name]) {
+        Object.assign(customColors, presets[name]);
         syncColorInputs();
         applyCustomColors();
-        localStorage.removeItem('nebulahub-custom-theme');
-        localStorage.removeItem('nebulahub-theme-type');
-        document.getElementById('customActiveNotice').classList.remove('show');
       }
+    }
 
-      function previewTheme() {
-        applyCustomColors();
-      }
-
-      function applyPreset(name) {
-        const presets = {
-          ocean: {
-            brand: '#0ea5e9',
-            accent: '#0284c7',
-            accentStrong: '#38bdf8',
-            bgGrad1: '#0c4a6e',
-            bgGrad2: '#082f49',
-            overlay1: 'rgba(14,165,233,0.4)',
-            overlay2: 'rgba(56,189,248,0.3)'
-          },
-          sunset: {
-            brand: '#f97316',
-            accent: '#ea580c',
-            accentStrong: '#fb923c',
-            bgGrad1: '#7c2d12',
-            bgGrad2: '#431407',
-            overlay1: 'rgba(249,115,22,0.4)',
-            overlay2: 'rgba(236,72,153,0.3)'
-          },
-          forest: {
-            brand: '#22c55e',
-            accent: '#16a34a',
-            accentStrong: '#4ade80',
-            bgGrad1: '#14532d',
-            bgGrad2: '#052e16',
-            overlay1: 'rgba(34,197,94,0.4)',
-            overlay2: 'rgba(101,163,13,0.3)'
-          },
-          crimson: {
-            brand: '#ef4444',
-            accent: '#dc2626',
-            accentStrong: '#f87171',
-            bgGrad1: '#7f1d1d',
-            bgGrad2: '#450a0a',
-            overlay1: 'rgba(239,68,68,0.4)',
-            overlay2: 'rgba(249,115,22,0.3)'
-          },
-          gold: {
-            brand: '#eab308',
-            accent: '#ca8a04',
-            accentStrong: '#facc15',
-            bgGrad1: '#713f12',
-            bgGrad2: '#422006',
-            overlay1: 'rgba(234,179,8,0.4)',
-            overlay2: 'rgba(251,191,36,0.3)'
-          },
-          purple: {
-            brand: '#a855f7',
-            accent: '#9333ea',
-            accentStrong: '#c084fc',
-            bgGrad1: '#581c87',
-            bgGrad2: '#3b0764',
-            overlay1: 'rgba(168,85,247,0.4)',
-            overlay2: 'rgba(192,132,252,0.3)'
-          }
-        };
-        if (presets[name]) {
-          Object.assign(customColors, presets[name]);
-          syncColorInputs();
-          applyCustomColors();
-        }
-      }
-      // Color input listeners
-      ['brand', 'accent', 'accentStrong', 'bgGrad1', 'bgGrad2'].forEach(key => {
-        const picker = document.getElementById(key + 'ColorPicker') || document.getElementById(key + 'Picker');
-        const text = document.getElementById(key + 'ColorText') || document.getElementById(key + 'Text');
-        if (picker) {
-          picker.addEventListener('input', (e) => {
-            customColors[key] = e.target.value;
-            if (text) text.value = e.target.value;
-          });
-        }
-        if (text) {
-          text.addEventListener('change', (e) => {
-            customColors[key] = e.target.value;
-            if (picker) picker.value = e.target.value;
-          });
-        }
-      });
-      // Overlay listeners (handle rgba conversion)
-      document.getElementById('overlay1Picker').addEventListener('input', (e) => {
-        customColors.overlay1 = hexToRgba(e.target.value, 0.35);
-        document.getElementById('overlay1Text').value = customColors.overlay1;
-      });
-      document.getElementById('overlay2Picker').addEventListener('input', (e) => {
-        customColors.overlay2 = hexToRgba(e.target.value, 0.3);
-        document.getElementById('overlay2Text').value = customColors.overlay2;
-      });
-      // ==================== TAB CLOAKING SYSTEM ====================
-      // Favicon button selection
-      document.querySelectorAll('.favicon-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+    // Color input listeners
+    ['brand', 'accent', 'accentStrong', 'bgGrad1', 'bgGrad2'].forEach(key => {
+      const picker = document.getElementById(key + 'ColorPicker') || document.getElementById(key + 'Picker');
+      const text = document.getElementById(key + 'ColorText') || document.getElementById(key + 'Text');
+      
+      if (picker) {
+        picker.addEventListener('input', (e) => {
+          customColors[key] = e.target.value;
+          if (text) text.value = e.target.value;
         });
-      });
+      }
+      if (text) {
+        text.addEventListener('change', (e) => {
+          customColors[key] = e.target.value;
+          if (picker) picker.value = e.target.value;
+        });
+      }
+    });
 
-      function applyTabCloak() {
-        const title = document.getElementById('tabTitleInput').value.trim();
-        const faviconType = document.querySelector('.favicon-btn.active').dataset.favicon;
-        if (title) {
-          document.title = title;
-          localStorage.setItem('nebulahub-cloak-title', title);
-        }
-        // Create or update favicon
+    // Overlay listeners (handle rgba conversion)
+    document.getElementById('overlay1Picker').addEventListener('input', (e) => {
+      customColors.overlay1 = hexToRgba(e.target.value, 0.35);
+      document.getElementById('overlay1Text').value = customColors.overlay1;
+    });
+    document.getElementById('overlay2Picker').addEventListener('input', (e) => {
+      customColors.overlay2 = hexToRgba(e.target.value, 0.3);
+      document.getElementById('overlay2Text').value = customColors.overlay2;
+    });
+
+    // ==================== TAB CLOAKING SYSTEM ====================
+    
+    // Favicon button selection
+    document.querySelectorAll('.favicon-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    function applyTabCloak() {
+      const title = document.getElementById('tabTitleInput').value.trim();
+      const faviconType = document.querySelector('.favicon-btn.active').dataset.favicon;
+      
+      if (title) {
+        document.title = title;
+        localStorage.setItem('nebulahub-cloak-title', title);
+      }
+      
+      // Create or update favicon
+      let link = document.querySelector("link[rel*='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'shortcut icon';
+        link.type = 'image/svg+xml';
+        document.head.appendChild(link);
+      }
+      link.href = FAVICONS[faviconType];
+      
+      localStorage.setItem('nebulahub-cloak-favicon', faviconType);
+      
+      // Visual feedback
+      const btn = document.querySelector('button[onclick="applyTabCloak()"]');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '✅ Applied!';
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+      }, 1500);
+    }
+
+    function resetTabCloak() {
+      document.title = 'NEBULAHUB';
+      document.getElementById('tabTitleInput').value = '';
+      
+      // Remove custom favicon
+      let link = document.querySelector("link[rel*='icon']");
+      if (link) link.remove();
+      
+      // Reset UI
+      document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-favicon="default"]').classList.add('active');
+      
+      // Clear storage
+      localStorage.removeItem('nebulahub-cloak-title');
+      localStorage.removeItem('nebulahub-cloak-favicon');
+    }
+
+    function savePanicUrl() {
+      const url = document.getElementById('panicUrlInput').value.trim();
+      if (url) {
+        panicUrl = url;
+        localStorage.setItem('nebulahub-panic-url', url);
+        alert('Panic button URL saved!');
+      }
+    }
+
+    function loadTabCloak() {
+      const savedTitle = localStorage.getItem('nebulahub-cloak-title');
+      const savedFavicon = localStorage.getItem('nebulahub-cloak-favicon');
+      
+      if (savedTitle) {
+        document.title = savedTitle;
+        document.getElementById('tabTitleInput').value = savedTitle;
+      }
+      
+      if (savedFavicon && FAVICONS[savedFavicon]) {
         let link = document.querySelector("link[rel*='icon']");
         if (!link) {
           link = document.createElement('link');
@@ -2213,264 +2083,242 @@
           link.type = 'image/svg+xml';
           document.head.appendChild(link);
         }
-        link.href = FAVICONS[faviconType];
-        localStorage.setItem('nebulahub-cloak-favicon', faviconType);
-        // Visual feedback
-        const btn = document.querySelector('button[onclick="applyTabCloak()"]');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '✅ Applied!';
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-        }, 1500);
-      }
-
-      function resetTabCloak() {
-        document.title = 'NEBULAHUB';
-        document.getElementById('tabTitleInput').value = '';
-        // Remove custom favicon
-        let link = document.querySelector("link[rel*='icon']");
-        if (link) link.remove();
-        // Reset UI
+        link.href = FAVICONS[savedFavicon];
+        
+        // Update UI
         document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-favicon="default"]').classList.add('active');
-        // Clear storage
-        localStorage.removeItem('nebulahub-cloak-title');
-        localStorage.removeItem('nebulahub-cloak-favicon');
+        const btn = document.querySelector(`[data-favicon="${savedFavicon}"]`);
+        if (btn) btn.classList.add('active');
       }
+    }
 
-      function savePanicUrl() {
-        const url = document.getElementById('panicUrlInput').value.trim();
-        if (url) {
-          panicUrl = url;
-          localStorage.setItem('nebulahub-panic-url', url);
-          alert('Panic button URL saved!');
-        }
+    // ==================== UPDATE MODAL SYSTEM ====================
+    function showUpdateModal() {
+      const lastSeen = localStorage.getItem('nebulahub-update-seen');
+      const savedVersion = localStorage.getItem('nebulahub-update-version');
+      
+      if (UPDATE_CONFIG.showOnce && savedVersion === UPDATE_CONFIG.version && lastSeen === 'true') {
+        return; // User already saw this version
       }
+      
+      document.getElementById('updateTitle').textContent = UPDATE_CONFIG.title;
+      document.getElementById('updateDate').textContent = UPDATE_CONFIG.date;
+      
+      const list = document.getElementById('updateList');
+      list.innerHTML = UPDATE_CONFIG.changes.map(change => `<li>${change}</li>`).join('');
+      
+      document.getElementById('updateModal').classList.add('show');
+    }
 
-      function loadTabCloak() {
-        const savedTitle = localStorage.getItem('nebulahub-cloak-title');
-        const savedFavicon = localStorage.getItem('nebulahub-cloak-favicon');
-        if (savedTitle) {
-          document.title = savedTitle;
-          document.getElementById('tabTitleInput').value = savedTitle;
-        }
-        if (savedFavicon && FAVICONS[savedFavicon]) {
-          let link = document.querySelector("link[rel*='icon']");
-          if (!link) {
-            link = document.createElement('link');
-            link.rel = 'shortcut icon';
-            link.type = 'image/svg+xml';
-            document.head.appendChild(link);
-          }
-          link.href = FAVICONS[savedFavicon];
-          // Update UI
-          document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
-          const btn = document.querySelector(`[data-favicon="${savedFavicon}"]`);
-          if (btn) btn.classList.add('active');
-        }
+    function closeUpdateModal() {
+      const dontShow = document.getElementById('dontShowAgain').checked;
+      if (dontShow && UPDATE_CONFIG.showOnce) {
+        localStorage.setItem('nebulahub-update-seen', 'true');
+        localStorage.setItem('nebulahub-update-version', UPDATE_CONFIG.version);
+      } else if (!UPDATE_CONFIG.showOnce) {
+        localStorage.setItem('nebulahub-update-seen', 'false');
       }
-      // ==================== UPDATE MODAL SYSTEM ====================
-      function showUpdateModal() {
-        const lastSeen = localStorage.getItem('nebulahub-update-seen');
-        const savedVersion = localStorage.getItem('nebulahub-update-version');
-        if (UPDATE_CONFIG.showOnce && savedVersion === UPDATE_CONFIG.version && lastSeen === 'true') {
-          return; // User already saw this version
-        }
-        document.getElementById('updateTitle').textContent = UPDATE_CONFIG.title;
-        document.getElementById('updateDate').textContent = UPDATE_CONFIG.date;
-        const list = document.getElementById('updateList');
-        list.innerHTML = UPDATE_CONFIG.changes.map(change => `
-																				<li>${change}</li>`).join('');
-        document.getElementById('updateModal').classList.add('show');
-      }
+      document.getElementById('updateModal').classList.remove('show');
+    }
 
-      function closeUpdateModal() {
-        const dontShow = document.getElementById('dontShowAgain').checked;
-        if (dontShow && UPDATE_CONFIG.showOnce) {
-          localStorage.setItem('nebulahub-update-seen', 'true');
-          localStorage.setItem('nebulahub-update-version', UPDATE_CONFIG.version);
-        } else if (!UPDATE_CONFIG.showOnce) {
-          localStorage.setItem('nebulahub-update-seen', 'false');
-        }
-        document.getElementById('updateModal').classList.remove('show');
-      }
-      // ==================== CORE FUNCTIONS ====================
-      function renderGrid() {
-        const query = activeSearch.trim().toLowerCase();
-        const filtered = games.filter(game => {
-          const matchesCategory = activeCategory === "all" || game.category === activeCategory;
-          const haystack = (game.name + " " + (game.tags || []).join(" ")).toLowerCase();
-          const matchesSearch = query === "" || haystack.includes(query);
-          return matchesCategory && matchesSearch;
-        });
-        gameGrid.innerHTML = "";
-        if (filtered.length === 0) {
-          emptyState.style.display = "block";
-        } else {
-          emptyState.style.display = "none";
-          filtered.forEach(game => {
-            const card = document.createElement("article");
-            card.className = "game-card";
-            const initials = game.name.split(" ").map(w => w[0]?.toUpperCase() || "").join("").slice(0, 3);
-            card.innerHTML = `
-            
-																				<div class="game-thumb">
-																					<span>${initials}</span>
-																				</div>
-																				<div class="game-name" title="${game.name}">${game.name}</div>
-																				<div class="game-meta">
-																					<span>${(game.category || "game").toUpperCase()}</span>
-																					<span class="game-tag">${(game.tags && game.tags[0]) ? game.tags[0] : "game"}</span>
-																				</div>
+    // ==================== CORE FUNCTIONS ====================
+    function renderGrid() {
+      const query = activeSearch.trim().toLowerCase();
+      const filtered = games.filter(game => {
+        const matchesCategory = activeCategory === "all" || game.category === activeCategory;
+        const haystack = (game.name + " " + (game.tags || []).join(" ")).toLowerCase();
+        const matchesSearch = query === "" || haystack.includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      gameGrid.innerHTML = "";
+
+      if (filtered.length === 0) {
+        emptyState.style.display = "block";
+      } else {
+        emptyState.style.display = "none";
+        filtered.forEach(game => {
+          const card = document.createElement("article");
+          card.className = "game-card";
+
+          const initials = game.name
+            .split(" ")
+            .map(w => w[0]?.toUpperCase() || "")
+            .join("")
+            .slice(0, 3);
+
+          card.innerHTML = `
+            <div class="game-thumb"><span>${initials}</span></div>
+            <div class="game-name" title="${game.name}">${game.name}</div>
+            <div class="game-meta">
+              <span>${(game.category || "game").toUpperCase()}</span>
+              <span class="game-tag">${(game.tags && game.tags[0]) ? game.tags[0] : "game"}</span>
+            </div>
           `;
-            card.addEventListener("click", () => openGame(game));
-            gameGrid.appendChild(card);
-          });
-        }
-        statGames.textContent = games.length;
-        resultCountLabel.textContent = filtered.length + " RESULT" + (filtered.length === 1 ? "" : "S");
-      }
 
-      function openGame(game) {
-        activeGame = game;
-        playerGameName.textContent = game.name;
-        playerGameMeta.textContent = (game.category || "game").toUpperCase() + " • Embedded player";
-        playerIframe.src = game.url;
-        showPlayerView();
-      }
-
-      function showPlayerView() {
-        libraryView.style.display = "none";
-        customizeView.style.display = "none";
-        settingsView.style.display = "none";
-        playerView.style.display = "flex";
-        viewLibraryBtn.classList.remove("active");
-        viewCustomizeBtn.classList.remove("active");
-        viewSettingsBtn.classList.remove("active");
-        viewPlayerBtn.classList.add("active");
-        viewPlayerBtn.disabled = false;
-      }
-
-      function showLibraryView() {
-        playerIframe.src = "";
-        playerView.style.display = "none";
-        customizeView.style.display = "none";
-        settingsView.style.display = "none";
-        libraryView.style.display = "block";
-        viewLibraryBtn.classList.add("active");
-        viewPlayerBtn.classList.remove("active");
-        viewCustomizeBtn.classList.remove("active");
-        viewSettingsBtn.classList.remove("active");
-        viewPlayerBtn.disabled = !activeGame;
-      }
-
-      function showCustomizeView() {
-        playerIframe.src = "";
-        playerView.style.display = "none";
-        libraryView.style.display = "none";
-        settingsView.style.display = "none";
-        customizeView.style.display = "flex";
-        viewLibraryBtn.classList.remove("active");
-        viewPlayerBtn.classList.remove("active");
-        viewSettingsBtn.classList.remove("active");
-        viewCustomizeBtn.classList.add("active");
-        viewPlayerBtn.disabled = !activeGame;
-      }
-
-      function showSettingsView() {
-        playerIframe.src = "";
-        playerView.style.display = "none";
-        libraryView.style.display = "none";
-        customizeView.style.display = "none";
-        settingsView.style.display = "flex";
-        viewLibraryBtn.classList.remove("active");
-        viewPlayerBtn.classList.remove("active");
-        viewCustomizeBtn.classList.remove("active");
-        viewSettingsBtn.classList.add("active");
-        viewPlayerBtn.disabled = !activeGame;
-      }
-      searchInput.addEventListener("input", () => {
-        activeSearch = searchInput.value;
-        clearSearchBtn.style.display = activeSearch.trim().length > 0 ? "block" : "none";
-        renderGrid();
-      });
-      clearSearchBtn.addEventListener("click", () => {
-        searchInput.value = "";
-        activeSearch = "";
-        clearSearchBtn.style.display = "none";
-        searchInput.focus();
-        renderGrid();
-      });
-      filterChips.forEach(chip => {
-        chip.addEventListener("click", () => {
-          filterChips.forEach(c => c.classList.remove("active"));
-          chip.classList.add("active");
-          activeCategory = chip.dataset.category || "all";
-          renderGrid();
+          card.addEventListener("click", () => openGame(game));
+          gameGrid.appendChild(card);
         });
-      });
-      viewLibraryBtn.addEventListener("click", showLibraryView);
-      viewPlayerBtn.addEventListener("click", () => {
-        if (activeGame) showPlayerView();
-      });
-      viewCustomizeBtn.addEventListener("click", showCustomizeView);
-      viewSettingsBtn.addEventListener("click", showSettingsView);
-      backToLibraryBtn.addEventListener("click", showLibraryView);
-      openInNewTabBtn.addEventListener("click", () => {
-        if (activeGame && activeGame.url) window.open(activeGame.url, "_blank");
-      });
-      portalLink.addEventListener("click", () => {
-        location.hash = (location.hash === "#portal") ? "" : "#portal";
-        location.reload();
-      });
-      const themeSelector = document.getElementById("themeSelector");
-      const savedTheme = localStorage.getItem("site-theme") || "nebula";
-      document.documentElement.setAttribute("data-theme", savedTheme);
-      themeSelector.value = savedTheme;
-      themeSelector.addEventListener("change", () => {
-        const newTheme = themeSelector.value;
-        document.documentElement.setAttribute("data-theme", newTheme);
-        localStorage.setItem("site-theme", newTheme);
-        // Disable custom theme when preset selected
-        localStorage.removeItem('nebulahub-theme-type');
-        document.getElementById('customActiveNotice').classList.remove('show');
-      });
+      }
 
-      function panicHide() {
-        window.location.href = panicUrl;
-      }
-      // Load saved custom theme on startup
-      function loadSavedCustomTheme() {
-        const saved = localStorage.getItem('nebulahub-custom-theme');
-        const themeType = localStorage.getItem('nebulahub-theme-type');
-        if (saved && themeType === 'custom') {
-          try {
-            const parsed = JSON.parse(saved);
-            Object.assign(customColors, parsed);
-            syncColorInputs();
-            applyCustomColors();
-            document.getElementById('customActiveNotice').classList.add('show');
-          } catch (e) {
-            console.error('Failed to load custom theme');
-          }
-        }
-      }
-      document.addEventListener("DOMContentLoaded", () => {
-        if (location.hash === "#portal") document.body.classList.add("portal-mode");
-        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-        // Load saved settings
-        loadSavedCustomTheme();
-        loadTabCloak();
-        // Load panic URL if saved
-        const savedPanic = localStorage.getItem('nebulahub-panic-url');
-        if (savedPanic) {
-          panicUrl = savedPanic;
-          document.getElementById('panicUrlInput').value = savedPanic;
-        }
+      statGames.textContent = games.length;
+      resultCountLabel.textContent =
+        filtered.length + " RESULT" + (filtered.length === 1 ? "" : "S");
+    }
+
+    function openGame(game) {
+      activeGame = game;
+      playerGameName.textContent = game.name;
+      playerGameMeta.textContent = (game.category || "game").toUpperCase() + " • Embedded player";
+      playerIframe.src = game.url;
+      showPlayerView();
+    }
+
+    function showPlayerView() {
+      libraryView.style.display = "none";
+      customizeView.style.display = "none";
+      settingsView.style.display = "none";
+      playerView.style.display = "flex";
+      viewLibraryBtn.classList.remove("active");
+      viewCustomizeBtn.classList.remove("active");
+      viewSettingsBtn.classList.remove("active");
+      viewPlayerBtn.classList.add("active");
+      viewPlayerBtn.disabled = false;
+    }
+
+    function showLibraryView() {
+      playerIframe.src = "";
+      playerView.style.display = "none";
+      customizeView.style.display = "none";
+      settingsView.style.display = "none";
+      libraryView.style.display = "block";
+      viewLibraryBtn.classList.add("active");
+      viewPlayerBtn.classList.remove("active");
+      viewCustomizeBtn.classList.remove("active");
+      viewSettingsBtn.classList.remove("active");
+      viewPlayerBtn.disabled = !activeGame;
+    }
+
+    function showCustomizeView() {
+      playerIframe.src = "";
+      playerView.style.display = "none";
+      libraryView.style.display = "none";
+      settingsView.style.display = "none";
+      customizeView.style.display = "flex";
+      viewLibraryBtn.classList.remove("active");
+      viewPlayerBtn.classList.remove("active");
+      viewSettingsBtn.classList.remove("active");
+      viewCustomizeBtn.classList.add("active");
+      viewPlayerBtn.disabled = !activeGame;
+    }
+
+    function showSettingsView() {
+      playerIframe.src = "";
+      playerView.style.display = "none";
+      libraryView.style.display = "none";
+      customizeView.style.display = "none";
+      settingsView.style.display = "flex";
+      viewLibraryBtn.classList.remove("active");
+      viewPlayerBtn.classList.remove("active");
+      viewCustomizeBtn.classList.remove("active");
+      viewSettingsBtn.classList.add("active");
+      viewPlayerBtn.disabled = !activeGame;
+    }
+
+    searchInput.addEventListener("input", () => {
+      activeSearch = searchInput.value;
+      clearSearchBtn.style.display = activeSearch.trim().length > 0 ? "block" : "none";
+      renderGrid();
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      activeSearch = "";
+      clearSearchBtn.style.display = "none";
+      searchInput.focus();
+      renderGrid();
+    });
+
+    filterChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        filterChips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        activeCategory = chip.dataset.category || "all";
         renderGrid();
-        // Show update modal after slight delay
-        setTimeout(showUpdateModal, 1000);
       });
-    </script>
-  </body>
+    });
+
+    viewLibraryBtn.addEventListener("click", showLibraryView);
+    viewPlayerBtn.addEventListener("click", () => { if (activeGame) showPlayerView(); });
+    viewCustomizeBtn.addEventListener("click", showCustomizeView);
+    viewSettingsBtn.addEventListener("click", showSettingsView);
+    backToLibraryBtn.addEventListener("click", showLibraryView);
+
+    openInNewTabBtn.addEventListener("click", () => {
+      if (activeGame && activeGame.url) window.open(activeGame.url, "_blank");
+    });
+
+    portalLink.addEventListener("click", () => {
+      location.hash = (location.hash === "#portal") ? "" : "#portal";
+      location.reload();
+    });
+
+    const themeSelector = document.getElementById("themeSelector");
+    const savedTheme = localStorage.getItem("site-theme") || "nebula";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    themeSelector.value = savedTheme;
+
+    themeSelector.addEventListener("change", () => {
+      const newTheme = themeSelector.value;
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("site-theme", newTheme);
+      // Disable custom theme when preset selected
+      localStorage.removeItem('nebulahub-theme-type');
+      document.getElementById('customActiveNotice').classList.remove('show');
+    });
+
+    function panicHide() {
+      window.location.href = panicUrl;
+    }
+
+    // Load saved custom theme on startup
+    function loadSavedCustomTheme() {
+      const saved = localStorage.getItem('nebulahub-custom-theme');
+      const themeType = localStorage.getItem('nebulahub-theme-type');
+      
+      if (saved && themeType === 'custom') {
+        try {
+          const parsed = JSON.parse(saved);
+          Object.assign(customColors, parsed);
+          syncColorInputs();
+          applyCustomColors();
+          document.getElementById('customActiveNotice').classList.add('show');
+        } catch(e) {
+          console.error('Failed to load custom theme');
+        }
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      if (location.hash === "#portal") document.body.classList.add("portal-mode");
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+      
+      // Load saved settings
+      loadSavedCustomTheme();
+      loadTabCloak();
+      
+      // Load panic URL if saved
+      const savedPanic = localStorage.getItem('nebulahub-panic-url');
+      if (savedPanic) {
+        panicUrl = savedPanic;
+        document.getElementById('panicUrlInput').value = savedPanic;
+      }
+      
+      renderGrid();
+      
+      // Show update modal after slight delay
+      setTimeout(showUpdateModal, 1000);
+    });
+  </script>
+</body>
 </html>
