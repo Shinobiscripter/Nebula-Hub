@@ -5,7 +5,7 @@
   <title>NEBULAHUB</title>
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-886SN3349C"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-886SN3349C "></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -14,10 +14,13 @@
   </script>
 
   <!-- AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092" crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092 " crossorigin="anonymous"></script>
 
   <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
+
+  <!-- SortableJS for drag-drop -->
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js "></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -260,6 +263,13 @@
       display:grid;
       grid-template-columns: 260px minmax(0, 1fr);
       gap:14px;
+      transition: all 0.3s ease;
+    }
+
+    .content.dev-mode-layout {
+      border: 2px dashed var(--custom-accent-color);
+      padding: 10px;
+      border-radius: 16px;
     }
 
     @media (max-width: 850px) {
@@ -274,6 +284,43 @@
       display:flex;
       flex-direction:column;
       gap:10px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar.dragging {
+      opacity: 0.5;
+      border-color: var(--custom-accent-strong);
+      transform: scale(0.98);
+    }
+
+    .dev-drag-handle {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 24px;
+      height: 24px;
+      background: var(--custom-accent-color);
+      border-radius: 6px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      font-size: 14px;
+      z-index: 10;
+    }
+
+    body.dev-mode-active .dev-drag-handle {
+      display: flex;
+    }
+
+    body.dev-mode-active .sidebar,
+    body.dev-mode-active .library {
+      position: relative;
+    }
+
+    body.dev-mode-active .sidebar:hover .dev-drag-handle,
+    body.dev-mode-active .library:hover .dev-drag-handle {
+      opacity: 1;
     }
 
     .sidebar-title {
@@ -351,6 +398,14 @@
       flex-direction:column;
       gap:10px;
       min-height:260px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .library.dragging {
+      opacity: 0.5;
+      border-color: var(--custom-accent-strong);
+      transform: scale(0.98);
     }
 
     .library-header {
@@ -401,12 +456,26 @@
       transform: none;
     }
 
+    .view-btn.dev-btn {
+      background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(245,158,11,0.2));
+      border-color: rgba(239,68,68,0.5);
+      color: #fca5a5;
+      font-weight: 600;
+    }
+
+    .view-btn.dev-btn:hover {
+      background: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(245,158,11,0.3));
+      border-color: rgba(239,68,68,0.8);
+      transform: translateY(-1px) scale(1.05);
+    }
+
     .library-body {
       margin-top:2px;
       border-radius:18px;
       background: rgba(15,23,42,0.7);
       border:1px solid rgba(30,64,175,0.5);
       padding:10px;
+      flex: 1;
     }
 
     .game-grid {
@@ -456,7 +525,7 @@
       height:80px;
       border-radius:11px;
       background:
-        radial-gradient(circle at 30% 20%, var(--custom-brand-color), #0b1020),
+        radient(circle at 30% 20%, var(--custom-brand-color), #0b1020),
         radial-gradient(circle at 80% 90%, rgba(56,189,248,0.9), transparent 60%);
       display:flex;
       align-items:center;
@@ -595,6 +664,516 @@
       cursor:pointer;
       text-decoration: underline;
       text-decoration-style: dotted;
+    }
+
+    /* Developer Mode Styles */
+    .dev-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .dev-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .dev-card {
+      background: var(--bg-soft);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(148,163,184,0.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dev-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ef4444, #f97316, #eab308);
+    }
+
+    .dev-card h3 {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+    }
+
+    .dev-badge {
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .dev-section {
+      margin-bottom: 20px;
+    }
+
+    .dev-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .dev-label {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+      display: block;
+      font-weight: 500;
+    }
+
+    /* Layout Editor */
+    .layout-preview {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 16px;
+      border: 2px dashed rgba(148,163,184,0.3);
+      min-height: 200px;
+    }
+
+    .layout-zone {
+      background: rgba(139,92,246,0.1);
+      border: 2px solid rgba(139,92,246,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+      cursor: move;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .layout-zone:hover {
+      background: rgba(139,92,246,0.2);
+      border-color: rgba(139,92,246,0.5);
+      transform: translateX(4px);
+    }
+
+    .layout-zone.sortable-ghost {
+      opacity: 0.4;
+      background: rgba(139,92,246,0.3);
+    }
+
+    .layout-zone.sortable-drag {
+      cursor: grabbing;
+      background: rgba(139,92,246,0.4);
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .zone-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--custom-accent-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .zone-info {
+      flex: 1;
+    }
+
+    .zone-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .zone-desc {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .zone-toggle {
+      width: 40px;
+      height: 22px;
+      background: rgba(148,163,184,0.3);
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .zone-toggle.active {
+      background: var(--custom-accent-strong);
+    }
+
+    .zone-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .zone-toggle.active::after {
+      transform: translateX(18px);
+    }
+
+    /* Feature Flags */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: rgba(15,23,42,0.6);
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.2);
+      transition: all 0.15s ease;
+    }
+
+    .feature-item:hover {
+      background: rgba(15,23,42,0.8);
+      border-color: rgba(148,163,184,0.4);
+      transform: translateX(2px);
+    }
+
+    .feature-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .feature-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-beta {
+      background: rgba(239,68,68,0.2);
+      color: #fca5a5;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+    }
+
+    .feature-desc {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .feature-toggle {
+      appearance: none;
+      width: 44px;
+      height: 24px;
+      background: rgba(148,163,184,0.3);
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.2s;
+    }
+
+    .feature-toggle:checked {
+      background: var(--custom-accent-strong);
+    }
+
+    .feature-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .feature-toggle:checked::after {
+      transform: translateX(20px);
+    }
+
+    /* CSS Editor */
+    .css-editor {
+      width: 100%;
+      min-height: 120px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      color: #a5f3fc;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      resize: vertical;
+      tab-size: 2;
+    }
+
+    .css-editor:focus {
+      outline: none;
+      border-color: var(--custom-accent-color);
+      box-shadow: 0 0 0 2px var(--accent-soft);
+    }
+
+    /* Quick Actions */
+    .dev-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .btn-danger {
+      background: rgba(239,68,68,0.2);
+      border-color: rgba(239,68,68,0.5);
+      color: #fca5a5;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239,68,68,0.4);
+      border-color: rgba(239,68,68,0.8);
+    }
+
+    .btn-success {
+      background: rgba(34,197,94,0.2);
+      border-color: rgba(34,197,94,0.5);
+      color: #bbf7d0;
+    }
+
+    .btn-success:hover {
+      background: rgba(34,197,94,0.4);
+      border-color: rgba(34,197,94,0.8);
+    }
+
+    .btn-warning {
+      background: rgba(245,158,11,0.2);
+      border-color: rgba(245,158,11,0.5);
+      color: #fde68a;
+    }
+
+    /* Dev Modal */
+    .dev-auth-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .dev-auth-modal.show {
+      display: flex;
+    }
+
+    .dev-auth-card {
+      background: var(--bg-elevated);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .dev-auth-card h2 {
+      margin-bottom: 8px;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .dev-auth-card p {
+      color: var(--text-soft);
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+    }
+
+    .password-input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .password-input-group input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--bg-soft);
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.15s ease;
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+
+    .password-input-group input:focus {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.2);
+    }
+
+    .dev-access-indicator {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(239,68,68,0.4);
+      z-index: 1000;
+      animation: pulse 2s infinite;
+      cursor: pointer;
+    }
+
+    body.dev-active .dev-access-indicator {
+      display: flex;
+    }
+
+    /* Game Editor */
+    .game-list-editor {
+      max-height: 300px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .game-edit-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(15,23,42,0.6);
+      border-radius: 8px;
+      border: 1px solid rgba(148,163,184,0.2);
+    }
+
+    .game-edit-thumb {
+      width: 40px;
+      height: 40px;
+      background: var(--custom-accent-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+
+    .game-edit-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .game-edit-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .game-edit-cat {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .game-edit-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(15,23,42,0.8);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.15s;
+    }
+
+    .icon-btn:hover {
+      background: rgba(239,68,68,0.3);
+      border-color: rgba(239,68,68,0.5);
+      transform: scale(1.1);
+    }
+
+    .add-game-btn {
+      width: 100%;
+      padding: 12px;
+      border: 2px dashed rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.4);
+      color: var(--text-soft);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .add-game-btn:hover {
+      border-color: var(--custom-accent-color);
+      color: var(--text);
+      background: rgba(139,92,246,0.1);
+    }
+
+    /* Export/Import */
+    .config-textarea {
+      width: 100%;
+      min-height: 100px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 8px;
+      padding: 12px;
+      color: #a5f3fc;
+      font-family: monospace;
+      font-size: 0.75rem;
+      word-break: break-all;
+      resize: vertical;
     }
 
     /* Customize View Styles */
@@ -1105,13 +1684,16 @@
     body.portal-mode .search-input:focus { box-shadow:none; border-color:#9ca3af; }
 
     body.portal-mode .customize-card,
-    body.portal-mode .settings-card {
+    body.portal-mode .settings-card,
+    body.portal-mode .dev-card {
       background: #f9fafb;
       border-color: #e5e7eb;
     }
 
     body.portal-mode .color-picker-wrapper input[type="text"],
-    body.portal-mode .input-group input[type="text"] {
+    body.portal-mode .input-group input[type="text"],
+    body.portal-mode .css-editor,
+    body.portal-mode .config-textarea {
       background: #ffffff;
       border-color: #e5e7eb;
       color: #111827;
@@ -1127,6 +1709,12 @@
     body.portal-mode .favicon-btn.active {
       background: rgba(99,102,241,0.1);
       border-color: #4f46e5;
+    }
+
+    body.portal-mode .feature-item,
+    body.portal-mode .game-edit-item {
+      background: #ffffff;
+      border-color: #e5e7eb;
     }
 
     /* THEMES */
@@ -1633,7 +2221,6 @@
     }
   </style>
 </head>
-
 <body>
   <div class="app-shell">
     <header class="top-bar">
@@ -1687,8 +2274,9 @@
       </div>
     </section>
 
-    <main class="content">
-      <aside class="sidebar">
+    <main class="content" id="mainContent">
+      <aside class="sidebar" id="sidebarZone">
+        <div class="dev-drag-handle" title="Drag to reorder">⋮⋮</div>
         <div>
           <div class="sidebar-title">Session info</div>
           <div class="sidebar-card">
@@ -1705,7 +2293,7 @@
               <span>• Use a subpage like: <strong>#portal</strong></span>
               <span>• Keep volume low 💀</span>
             </div>
-            <a class="small-link" href="https://github.com" target="_blank" rel="noreferrer">
+            <a class="small-link" href="https://github.com " target="_blank" rel="noreferrer">
               Manage on GitHub ↗
             </a>
           </div>
@@ -1724,7 +2312,8 @@
         </div>
       </aside>
 
-      <section class="library">
+      <section class="library" id="libraryZone">
+        <div class="dev-drag-handle" title="Drag to reorder">⋮⋮</div>
         <div class="library-header">
           <div class="library-title">
             <span>Library</span>
@@ -1736,6 +2325,7 @@
             <button class="view-btn" id="viewCustomizeBtn">Customize</button>
             <button class="view-btn" id="viewSettingsBtn">Settings</button>
             <button class="view-btn" id="viewChatBtn">💬 Chat</button>
+            <button class="view-btn dev-btn" id="viewDevBtn" onclick="devMode.requestAccess()">⚡ Dev</button>
           </div>
         </div>
 
@@ -1918,10 +2508,113 @@
                 
                 <div class="input-group">
                   <label>Panic URL (where 🚨 takes you)</label>
-                  <input type="text" id="panicUrlInput" placeholder="https://classroom.google.com" value="https://clever.com/in/dallasisd/student/portal">
+                  <input type="text" id="panicUrlInput" placeholder="https://classroom.google.com " value="https://clever.com/in/dallasisd/student/portal ">
                 </div>
                 
                 <button class="btn btn-primary" onclick="savePanicUrl()" style="margin-top: 8px;">💾 Save Panic URL</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Developer View -->
+          <div id="devView" class="dev-view">
+            <div class="dev-grid">
+              <!-- Layout Editor -->
+              <div class="dev-card">
+                <h3><span>🎛️</span> Layout Editor <span class="dev-badge">Dev</span></h3>
+                
+                <div class="dev-section">
+                  <span class="dev-label">Drag zones to reorder layout</span>
+                  <div class="layout-preview" id="layoutPreview">
+                    <div class="layout-zone" data-zone="sidebar" draggable="true">
+                      <div class="zone-icon">📊</div>
+                      <div class="zone-info">
+                        <div class="zone-title">Sidebar</div>
+                        <div class="zone-desc">Session info & Stats</div>
+                      </div>
+                      <div class="zone-toggle active" onclick="devMode.toggleZone('sidebar')"></div>
+                    </div>
+                    <div class="layout-zone" data-zone="library" draggable="true">
+                      <div class="zone-icon">🎮</div>
+                      <div class="zone-info">
+                        <div class="zone-title">Library</div>
+                        <div class="zone-desc">Games grid & Player</div>
+                      </div>
+                      <div class="zone-toggle active" onclick="devMode.toggleZone('library')"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dev-actions">
+                  <button class="btn btn-primary" onclick="devMode.saveLayout()">💾 Save Layout</button>
+                  <button class="btn btn-secondary" onclick="devMode.resetLayout()">↩ Reset</button>
+                </div>
+              </div>
+
+              <!-- Experimental Features -->
+              <div class="dev-card">
+                <h3><span>🧪</span> Experimental Features</h3>
+                
+                <div class="feature-list" id="featureList">
+                  <!-- Features injected by JS -->
+                </div>
+                
+                <div style="margin-top: 16px; padding: 12px; background: rgba(245,158,11,0.1); border-radius: 8px; border: 1px solid rgba(245,158,11,0.3);">
+                  <div style="font-size: 0.8rem; color: #fde68a; font-weight: 600;">💡 Developer Note</div>
+                  <div style="font-size: 0.75rem; color: var(--text-soft); margin-top: 4px;">
+                    New features can be registered via <code>devMode.registerFeature()</code>. See console documentation.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live CSS Editor -->
+              <div class="dev-card">
+                <h3><span>🎨</span> Live CSS Editor</h3>
+                
+                <div class="dev-section">
+                  <span class="dev-label">Custom CSS (injected live)</span>
+                  <textarea class="css-editor" id="devCssEditor" placeholder="/* Enter custom CSS here */
+.example {
+  color: red;
+}"></textarea>
+                </div>
+
+                <div class="dev-actions">
+                  <button class="btn btn-primary" onclick="devMode.applyCSS()">⚡ Apply CSS</button>
+                  <button class="btn btn-secondary" onclick="devMode.clearCSS()">🗑️ Clear</button>
+                  <button class="btn btn-success" onclick="devMode.saveCSS()">💾 Save</button>
+                </div>
+              </div>
+
+              <!-- Game Manager -->
+              <div class="dev-card">
+                <h3><span>🎮</span> Quick Game Manager</h3>
+                
+                <div class="dev-section">
+                  <span class="dev-label">Current Games (<span id="devGameCount">0</span>)</span>
+                  <div class="game-list-editor" id="devGameList">
+                    <!-- Games injected here -->
+                  </div>
+                  <button class="add-game-btn" onclick="devMode.showAddGameModal()">
+                    <span>+</span> Add New Game
+                  </button>
+                </div>
+              </div>
+
+              <!-- Global Config -->
+              <div class="dev-card">
+                <h3><span>⚙️</span> Global Configuration</h3>
+                
+                <div class="dev-section">
+                  <span class="dev-label">Export/Import Settings</span>
+                  <textarea class="config-textarea" id="devConfigExport" readonly placeholder="Configuration JSON will appear here..."></textarea>
+                </div>
+
+                <div class="dev-actions">
+                  <button class="btn btn-primary" onclick="devMode.exportConfig()">📋 Export</button>
+                  <button class="btn btn-secondary" onclick="devMode.importConfig()">📥 Import</button>
+                  <button class="btn btn-danger" onclick="devMode.resetAll()">⚠️ Reset All</button>
+                </div>
               </div>
             </div>
           </div>
@@ -1995,7 +2688,7 @@
     <footer>
       <span>NebulaHub • static HTML build</span>
       <span>
-        Host this on <a href="https://pages.github.com/" target="_blank" rel="noreferrer">GitHub Pages</a>.
+        Host this on <a href="https://pages.github.com/ " target="_blank" rel="noreferrer">GitHub Pages</a>.
         <span class="portal-link" id="portalLink">Portal mode</span>
       </span>
     </footer>
@@ -2017,6 +2710,19 @@
         <input type="text" id="usernameInput" placeholder="Enter username..." maxlength="20">
       </div>
       <button class="btn btn-primary" onclick="saveChatUser()" style="width:100%; justify-content:center;">Join Chat</button>
+    </div>
+  </div>
+
+  <!-- Dev Auth Modal -->
+  <div id="devAuthModal" class="dev-auth-modal">
+    <div class="dev-auth-card">
+      <h2>⚡ Developer Access</h2>
+      <p>Enter password to access developer tools</p>
+      <div class="password-input-group">
+        <input type="password" id="devPasswordInput" placeholder="••••••••" maxlength="20">
+      </div>
+      <button class="btn btn-primary" onclick="devMode.authenticate()" style="width:100%; justify-content:center;">Unlock Dev Mode</button>
+      <button class="btn btn-ghost" onclick="devMode.closeAuth()" style="width:100%; justify-content:center; margin-top: 8px;">Cancel</button>
     </div>
   </div>
 
@@ -2042,19 +2748,27 @@
     </div>
   </div>
 
+  <!-- Dev Access Indicator -->
+  <div class="dev-access-indicator" id="devIndicator" onclick="devMode.lock()">
+    <span>⚡</span>
+    <span>DEV MODE ACTIVE (Click to lock)</span>
+  </div>
+
   <script>
     // ==================== UPDATE CONFIGURATION ====================
     const UPDATE_CONFIG = {
-      version: "2.2",
-      date: "January 28, 2026",
-      title: "🚀 What's New in NebulaHub",
+      version: "2.3",
+      date: "January 30, 2026",
+      title: "🚀 Developer Mode Unlocked",
       changes: [
-        "💬 NEW: NebulaChat integration! Real-time chat with other users",
-        "🎨 Chat themes customizable in the Customize tab",
-        "🕵️ Disguise your tab as Google, Classroom, Docs, or Slides",
-        "🎨 Personalize icon colors, accent colors, and background effects",
-        "💾 Themes are saved automatically to your browser",
-        "📢 Added this update notification system"
+        "💻 NEW: Developer Mode with password protection",
+        "🎛️ Drag & drop layout editor",
+        "🧪 Experimental features system",
+        "🎨 Live CSS editor with persistence",
+        "🎮 Quick game manager (add/remove games)",
+        "⚙️ Global config export/import",
+        "💬 NebulaChat integration",
+        "🎨 Full theme customization"
       ],
       showOnce: true
     };
@@ -2062,17 +2776,17 @@
 
     // Favicon Data URIs for tab cloaking
     const FAVICONS = {
-      default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2322c55e"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">NH</text></svg>',
-      google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">G</text></svg>',
-      classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2324a865"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">C</text></svg>',
-      docs: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">D</text></svg>',
-      slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
+      default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2322c55e"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">NH</text></svg>',
+      google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">G</text></svg>',
+      classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%2324a865"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">C</text></svg>',
+      docs: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">D</text></svg>',
+      slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
     };
 
     // ✅ Game data
-    const games = [
+    let games = [
       { id: "geometry-dash", name: "Geometry Dash Lite", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "games/Geometry Dash Lite/Geometry Dash Lite.html" },
-      { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/" },
+      { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/ " },
       { id: "buckshot-roulette", name: "Buckshot Roulette", category: "horror", tags: ["casino", "psych-horror"], url: "games/Buckshot Roulette/Buckshot Roulette.html" },
       { id: "minecraft", name: "Minecraft Web", category: "sandbox", tags: ["minecraft", "survival", "blocks"], url: "games/Minecraft/Minecraft 1.21.4.html" },
       { id: "basketball-random", name: "Basketball Random", category: "arcade", tags: ["sports", "2-player", "random"], url: "games/Basketball Random/Basket Random.html" },
@@ -2087,7 +2801,7 @@
       { id: "fnaf-ps", name: "FNAF Pizza Sim", category: "horror", tags: ["fnaf", "tycoon"], url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_ Pizza Simulator.html" },
       { id: "fnaf-ucn", name: "FNAF UCN", category: "horror", tags: ["fnaf", "custom"], url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html" },
       { id: "fnaf-world", name: "FNAF World", category: "horror", tags: ["fnaf", "rpg"], url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html" },
-      { id: "Robbie's Remastered", name: "Robbie's Remastered", category: "Horror", tags: ["Fnaf", "Pc game"], url: "https://serve.gamejolt.net/9f4180e05596b34a73f3575ffb88b229132e305fc9a74ee4b2f724f9be689843,1769810612,7/data/games/13/11/845011/files/674ab887625cb/index.html?gjapi_username=GAMERGEEK123&gjapi_token=kAxZPw" },
+      { id: "Robbie's Remastered", name: "Robbie's Remastered", category: "Horror", tags: ["Fnaf", "Pc game"], url: "https://serve.gamejolt.net/9f4180e05596b34a73f3575ffb88b229132e305fc9a74ee4b2f724f9be689843 ,1769810612,7/data/games/13/11/845011/files/674ab887625cb/index.html?gjapi_username=GAMERGEEK123&gjapi_token=kAxZPw" },
       { id: "A Bite at Freddy's", name: "A Bite at Freddy's", category: "horror", tags: ["fnaf", "pcgame"], url: "games/A Bite at Freddy's/A Bite at Freddy's.html" },
       { id: "Baldi's Basic", name: "Baldi's Basic", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics.html" },
       { id: "Baldi's Basic Classic Remastered", name: "Baldi's Basic Classic Remastered", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics Classic Remastered.html" },
@@ -2107,8 +2821,7 @@
       { id: "Midnight Shift", name: "Midnight Shift", category: "arcade", tags: ["fun"], url: "games/Midnight Shift/Midnight Shift.html" },
       { id: "Raft", name: "Raft", category: "arcade", tags: ["fun"], url: "games/Raft/Raft.html" },
       { id: "0V0", name: "0V0", category: "arcade", tags: ["fun"], url: "games/0V0/OvO.html" },
-      { id: "Game Request Form/Bug Report Form", name: "Game Request/Bug Report Form", category: "Report", tags: ["FeedBack"], url: "https://forms.gle/2X5VTJaARrx95gtS8" }
-      
+      { id: "Game Request Form/Bug Report Form", name: "Game Request/Bug Report Form", category: "Report", tags: ["FeedBack"], url: "https://forms.gle/2X5VTJaARrx95gtS8 " }
     ];
 
     // elements
@@ -2125,11 +2838,13 @@
     const customizeView = document.getElementById("customizeView");
     const settingsView = document.getElementById("settingsView");
     const chatView = document.getElementById("chatView");
+    const devView = document.getElementById("devView");
     const viewLibraryBtn = document.getElementById("viewLibraryBtn");
     const viewPlayerBtn = document.getElementById("viewPlayerBtn");
     const viewCustomizeBtn = document.getElementById("viewCustomizeBtn");
     const viewSettingsBtn = document.getElementById("viewSettingsBtn");
     const viewChatBtn = document.getElementById("viewChatBtn");
+    const viewDevBtn = document.getElementById("viewDevBtn");
     const playerGameName = document.getElementById("playerGameName");
     const playerGameMeta = document.getElementById("playerGameMeta");
     const playerIframe = document.getElementById("playerIframe");
@@ -2137,12 +2852,429 @@
     const openInNewTabBtn = document.getElementById("openInNewTabBtn");
     const portalLink = document.getElementById("portalLink");
     const yearSpan = document.getElementById("yearSpan");
+    const mainContent = document.getElementById("mainContent");
+    const sidebarZone = document.getElementById("sidebarZone");
+    const libraryZone = document.getElementById("libraryZone");
 
     // state
     let activeCategory = "all";
     let activeSearch = "";
     let activeGame = null;
-    let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal";
+    let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal ";
+
+    // ==================== DEVELOPER MODE SYSTEM ====================
+    const devMode = {
+      password: "Ponchis721",
+      isActive: false,
+      features: [],
+      layout: { sidebar: true, library: true, order: ['sidebar', 'library'] },
+      customCSS: '',
+      
+      // Initialize dev mode system
+      init() {
+        this.loadState();
+        this.initLayoutEditor();
+        this.registerDefaultFeatures();
+        this.renderGameList();
+        
+        // Load saved CSS
+        if (this.customCSS) {
+          this.injectCSS(this.customCSS);
+          document.getElementById('devCssEditor').value = this.customCSS;
+        }
+        
+        // Check for persistent dev session
+        if (sessionStorage.getItem('dev-mode-active') === 'true') {
+          this.activate();
+        }
+      },
+
+      // Request password entry
+      requestAccess() {
+        document.getElementById('devAuthModal').classList.add('show');
+        setTimeout(() => document.getElementById('devPasswordInput').focus(), 100);
+      },
+
+      // Authenticate
+      authenticate() {
+        const input = document.getElementById('devPasswordInput');
+        if (input.value === this.password) {
+          this.activate();
+          this.closeAuth();
+          input.value = '';
+          showNotification('🔓 Developer mode activated!');
+        } else {
+          input.style.borderColor = '#ef4444';
+          input.value = '';
+          input.placeholder = 'Incorrect password';
+          setTimeout(() => {
+            input.style.borderColor = '';
+            input.placeholder = '••••••••';
+          }, 1500);
+        }
+      },
+
+      // Close auth modal
+      closeAuth() {
+        document.getElementById('devAuthModal').classList.remove('show');
+      },
+
+      // Activate dev mode
+      activate() {
+        this.isActive = true;
+        document.body.classList.add('dev-active');
+        document.body.classList.add('dev-mode-active');
+        sessionStorage.setItem('dev-mode-active', 'true');
+        this.showDevView();
+      },
+
+      // Lock dev mode
+      lock() {
+        this.isActive = false;
+        document.body.classList.remove('dev-active');
+        document.body.classList.remove('dev-mode-active');
+        sessionStorage.removeItem('dev-mode-active');
+        showLibraryView();
+        showNotification('🔒 Developer mode locked');
+      },
+
+      // Show dev view
+      showDevView() {
+        this.hideAllViews();
+        devView.style.display = 'flex';
+        viewDevBtn.classList.add('active');
+        this.renderFeatures();
+        this.renderGameList();
+      },
+
+      hideAllViews() {
+        libraryView.style.display = "none";
+        customizeView.style.display = "none";
+        settingsView.style.display = "none";
+        chatView.style.display = "none";
+        playerView.style.display = "none";
+        devView.style.display = "none";
+        
+        viewLibraryBtn.classList.remove("active");
+        viewPlayerBtn.classList.remove("active");
+        viewCustomizeBtn.classList.remove("active");
+        viewSettingsBtn.classList.remove("active");
+        viewChatBtn.classList.remove("active");
+        viewDevBtn.classList.remove("active");
+      },
+
+      // Layout Editor
+      initLayoutEditor() {
+        const container = document.getElementById('layoutPreview');
+        if (window.Sortable) {
+          new Sortable(container, {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            dragClass: 'sortable-drag',
+            handle: '.layout-zone',
+            onEnd: (evt) => {
+              const zones = container.querySelectorAll('.layout-zone');
+              this.layout.order = Array.from(zones).map(z => z.dataset.zone);
+            }
+          });
+        }
+      },
+
+      toggleZone(zone) {
+        this.layout[zone] = !this.layout[zone];
+        const toggle = document.querySelector(`[data-zone="${zone}"] .zone-toggle`);
+        toggle.classList.toggle('active');
+        
+        // Visual feedback only (actual layout change requires restructure)
+        const el = zone === 'sidebar' ? sidebarZone : libraryZone;
+        el.style.opacity = this.layout[zone] ? '1' : '0.3';
+      },
+
+      saveLayout() {
+        localStorage.setItem('nebulahub-dev-layout', JSON.stringify(this.layout));
+        showNotification('💾 Layout saved!');
+      },
+
+      resetLayout() {
+        this.layout = { sidebar: true, library: true, order: ['sidebar', 'library'] };
+        document.querySelectorAll('.zone-toggle').forEach(t => t.classList.add('active'));
+        sidebarZone.style.opacity = '1';
+        libraryZone.style.opacity = '1';
+        this.saveLayout();
+        showNotification('↩ Layout reset');
+      },
+
+      // Feature Registration System
+      registerFeature(id, name, description, defaultState = false, callback = null) {
+        const feature = { id, name, description, enabled: defaultState, callback, beta: true };
+        this.features.push(feature);
+        if (this.isActive) this.renderFeatures();
+        return feature;
+      },
+
+      registerDefaultFeatures() {
+        this.registerFeature('particles', 'Enhanced Particles', 'Add floating particle effects to the background', false, (enabled) => {
+          if (enabled) {
+            document.body.style.setProperty('--particle-count', '100');
+          } else {
+            document.body.style.removeProperty('--particle-count');
+          }
+        });
+        
+        this.registerFeature('debug', 'Debug Mode', 'Show debug information in console', false, (enabled) => {
+          window.DEBUG = enabled;
+        });
+        
+        this.registerFeature('compact', 'Compact Mode', 'Reduce padding and margins for dense view', false, (enabled) => {
+          document.body.classList.toggle('compact-mode', enabled);
+        });
+        
+        this.registerFeature('animations', 'Reduced Motion', 'Disable animations for accessibility', false, (enabled) => {
+          document.body.classList.toggle('reduce-motion', enabled);
+        });
+      },
+
+      renderFeatures() {
+        const container = document.getElementById('featureList');
+        container.innerHTML = this.features.map(f => `
+          <div class="feature-item">
+            <div class="feature-info">
+              <div class="feature-name">
+                ${f.name}
+                ${f.beta ? '<span class="feature-beta">Beta</span>' : ''}
+              </div>
+              <div class="feature-desc">${f.description}</div>
+            </div>
+            <input type="checkbox" class="feature-toggle" 
+              ${f.enabled ? 'checked' : ''} 
+              onchange="devMode.toggleFeature('${f.id}')">
+          </div>
+        `).join('');
+      },
+
+      toggleFeature(id) {
+        const feature = this.features.find(f => f.id === id);
+        if (feature) {
+          feature.enabled = !feature.enabled;
+          if (feature.callback) feature.callback(feature.enabled);
+          this.saveState();
+        }
+      },
+
+      // CSS Editor
+      applyCSS() {
+        const css = document.getElementById('devCssEditor').value;
+        this.injectCSS(css);
+        this.customCSS = css;
+        showNotification('🎨 CSS applied');
+      },
+
+      injectCSS(css) {
+        let style = document.getElementById('dev-custom-css');
+        if (!style) {
+          style = document.createElement('style');
+          style.id = 'dev-custom-css';
+          document.head.appendChild(style);
+        }
+        style.textContent = css;
+      },
+
+      clearCSS() {
+        document.getElementById('devCssEditor').value = '';
+        this.injectCSS('');
+        this.customCSS = '';
+        showNotification('🗑️ CSS cleared');
+      },
+
+      saveCSS() {
+        localStorage.setItem('nebulahub-dev-css', document.getElementById('devCssEditor').value);
+        showNotification('💾 CSS saved');
+      },
+
+      // Game Manager
+      renderGameList() {
+        const container = document.getElementById('devGameList');
+        const count = document.getElementById('devGameCount');
+        count.textContent = games.length;
+        
+        container.innerHTML = games.map(g => `
+          <div class="game-edit-item">
+            <div class="game-edit-thumb">${g.name.slice(0,2).toUpperCase()}</div>
+            <div class="game-edit-info">
+              <div class="game-edit-name">${g.name}</div>
+              <div class="game-edit-cat">${g.category}</div>
+            </div>
+            <div class="game-edit-actions">
+              <button class="icon-btn" onclick="devMode.editGame('${g.id}')" title="Edit">✏️</button>
+              <button class="icon-btn" onclick="devMode.deleteGame('${g.id}')" title="Delete">🗑️</button>
+            </div>
+          </div>
+        `).join('');
+      },
+
+      deleteGame(id) {
+        if (confirm('Delete this game?')) {
+          games = games.filter(g => g.id !== id);
+          renderGrid();
+          this.renderGameList();
+          this.saveState();
+        }
+      },
+
+      showAddGameModal() {
+        const name = prompt('Game Name:');
+        if (!name) return;
+        const category = prompt('Category (arcade/horror/fps/sandbox):', 'arcade') || 'arcade';
+        const url = prompt('Game URL:');
+        if (!url) return;
+        
+        const newGame = {
+          id: 'custom-' + Date.now(),
+          name,
+          category: category.toLowerCase(),
+          tags: ['custom'],
+          url
+        };
+        
+        games.push(newGame);
+        renderGrid();
+        this.renderGameList();
+        this.saveState();
+        showNotification('🎮 Game added!');
+      },
+
+      editGame(id) {
+        const game = games.find(g => g.id === id);
+        if (!game) return;
+        
+        const newName = prompt('Game Name:', game.name);
+        if (newName) game.name = newName;
+        const newUrl = prompt('Game URL:', game.url);
+        if (newUrl) game.url = newUrl;
+        
+        renderGrid();
+        this.renderGameList();
+        this.saveState();
+      },
+
+      // Config Import/Export
+      exportConfig() {
+        const config = {
+          games,
+          customColors,
+          layout: this.layout,
+          features: this.features,
+          customCSS: this.customCSS,
+          exportDate: new Date().toISOString(),
+          version: UPDATE_CONFIG.version
+        };
+        
+        const json = JSON.stringify(config, null, 2);
+        document.getElementById('devConfigExport').value = json;
+        
+        // Copy to clipboard
+        navigator.clipboard.writeText(json).then(() => {
+          showNotification('📋 Config copied to clipboard!');
+        });
+      },
+
+      importConfig() {
+        const json = prompt('Paste configuration JSON:');
+        if (!json) return;
+        
+        try {
+          const config = JSON.parse(json);
+          
+          if (config.games) {
+            games = config.games;
+            renderGrid();
+            this.renderGameList();
+          }
+          
+          if (config.customColors) {
+            Object.assign(customColors, config.customColors);
+            syncColorInputs();
+            applyCustomColors();
+          }
+          
+          if (config.customCSS) {
+            this.customCSS = config.customCSS;
+            document.getElementById('devCssEditor').value = config.customCSS;
+            this.injectCSS(config.customCSS);
+          }
+          
+          this.saveState();
+          showNotification('📥 Config imported successfully!');
+        } catch(e) {
+          alert('Invalid JSON configuration');
+        }
+      },
+
+      resetAll() {
+        if (confirm('⚠️ WARNING: This will reset ALL developer settings, custom games, and CSS. Continue?')) {
+          localStorage.removeItem('nebulahub-dev-state');
+          localStorage.removeItem('nebulahub-dev-layout');
+          localStorage.removeItem('nebulahub-dev-css');
+          location.reload();
+        }
+      },
+
+      // Persistence
+      saveState() {
+        const state = {
+          layout: this.layout,
+          features: this.features,
+          customCSS: this.customCSS
+        };
+        localStorage.setItem('nebulahub-dev-state', JSON.stringify(state));
+      },
+
+      loadState() {
+        const saved = localStorage.getItem('nebulahub-dev-state');
+        if (saved) {
+          try {
+            const state = JSON.parse(saved);
+            if (state.layout) this.layout = state.layout;
+            if (state.features) this.features = state.features;
+            if (state.customCSS) this.customCSS = state.customCSS;
+          } catch(e) {}
+        }
+        
+        const savedGames = localStorage.getItem('nebulahub-custom-games');
+        if (savedGames) {
+          try {
+            const customGames = JSON.parse(savedGames);
+            games = [...games, ...customGames];
+          } catch(e) {}
+        }
+      }
+    };
+
+    // Helper function for notifications
+    function showNotification(message) {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--custom-accent-color);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 9999;
+        animation: slideUp 0.3s ease;
+      `;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Override view buttons to include dev mode
+    viewDevBtn.addEventListener('click', () => devMode.showDevView());
 
     // ==================== CUSTOMIZATION SYSTEM ====================
     const customColors = {
@@ -2487,11 +3619,13 @@
       customizeView.style.display = "none";
       settingsView.style.display = "none";
       chatView.style.display = "none";
+      devView.style.display = "none";
       playerView.style.display = "flex";
       viewLibraryBtn.classList.remove("active");
       viewCustomizeBtn.classList.remove("active");
       viewSettingsBtn.classList.remove("active");
       viewChatBtn.classList.remove("active");
+      viewDevBtn.classList.remove("active");
       viewPlayerBtn.classList.add("active");
       viewPlayerBtn.disabled = false;
     }
@@ -2502,12 +3636,14 @@
       customizeView.style.display = "none";
       settingsView.style.display = "none";
       chatView.style.display = "none";
+      devView.style.display = "none";
       libraryView.style.display = "block";
       viewLibraryBtn.classList.add("active");
       viewPlayerBtn.classList.remove("active");
       viewCustomizeBtn.classList.remove("active");
       viewSettingsBtn.classList.remove("active");
       viewChatBtn.classList.remove("active");
+      viewDevBtn.classList.remove("active");
       viewPlayerBtn.disabled = !activeGame;
     }
 
@@ -2517,11 +3653,13 @@
       libraryView.style.display = "none";
       settingsView.style.display = "none";
       chatView.style.display = "none";
+      devView.style.display = "none";
       customizeView.style.display = "flex";
       viewLibraryBtn.classList.remove("active");
       viewPlayerBtn.classList.remove("active");
       viewSettingsBtn.classList.remove("active");
       viewChatBtn.classList.remove("active");
+      viewDevBtn.classList.remove("active");
       viewCustomizeBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
     }
@@ -2532,11 +3670,13 @@
       libraryView.style.display = "none";
       customizeView.style.display = "none";
       chatView.style.display = "none";
+      devView.style.display = "none";
       settingsView.style.display = "flex";
       viewLibraryBtn.classList.remove("active");
       viewPlayerBtn.classList.remove("active");
       viewCustomizeBtn.classList.remove("active");
       viewChatBtn.classList.remove("active");
+      viewDevBtn.classList.remove("active");
       viewSettingsBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
     }
@@ -2547,11 +3687,13 @@
       libraryView.style.display = "none";
       customizeView.style.display = "none";
       settingsView.style.display = "none";
+      devView.style.display = "none";
       chatView.style.display = "flex";
       viewLibraryBtn.classList.remove("active");
       viewPlayerBtn.classList.remove("active");
       viewCustomizeBtn.classList.remove("active");
       viewSettingsBtn.classList.remove("active");
+      viewDevBtn.classList.remove("active");
       viewChatBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
       
@@ -2633,7 +3775,7 @@
 
     // ==================== NEBULACHAT SYSTEM ====================
     const SUPABASE_CONFIG = {
-      url: 'https://eatwwxzrnsyxuzkfckal.supabase.co',
+      url: 'https://eatwwxzrnsyxuzkfckal.supabase.co ',
       anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhdHd3eHpybnN5eHV6a2Zja2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM0MjgsImV4cCI6MjA3OTQ5OTQyOH0.UZoqLR93nMHoK_zQAEndaSntx9F05CXLEKMNGDyi9qc'
     };
 
@@ -2811,12 +3953,18 @@
       if (e.key === 'Enter') sendMessage();
     });
 
+    // Dev password enter key
+    document.getElementById('devPasswordInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') devMode.authenticate();
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
       if (location.hash === "#portal") document.body.classList.add("portal-mode");
       if (yearSpan) yearSpan.textContent = new Date().getFullYear();
       
       loadSavedCustomTheme();
       loadTabCloak();
+      devMode.init(); // Initialize dev mode
       
       const savedPanic = localStorage.getItem('nebulahub-panic-url');
       if (savedPanic) {
