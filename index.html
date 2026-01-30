@@ -5,7 +5,7 @@
   <title>NEBULAHUB</title>
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-886SN3349C "></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-886SN3349C  "></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -14,13 +14,13 @@
   </script>
 
   <!-- AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092 " crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8989843364629092  " crossorigin="anonymous"></script>
 
   <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 "></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2  "></script>
 
   <!-- SortableJS for drag-drop -->
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js "></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js  "></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -411,7 +411,7 @@
     .library-header {
       display:flex;
       justify-content:space-between;
-      align-items:baseline;
+      align-items:center;
       gap:6px;
       flex-wrap:wrap;
     }
@@ -431,7 +431,7 @@
       letter-spacing:0.14em;
     }
 
-    .view-toggle { display:flex; gap:6px; font-size:0.75rem; }
+    .view-toggle { display:flex; gap:6px; font-size:0.75rem; flex-wrap: wrap; }
 
     .view-btn {
       border-radius:999px;
@@ -467,6 +467,17 @@
       background: linear-gradient(135deg, rgba(239,68,68,0.3), rgba(245,158,11,0.3));
       border-color: rgba(239,68,68,0.8);
       transform: translateY(-1px) scale(1.05);
+    }
+
+    .view-btn .btn-badge {
+      background: #ef4444;
+      color: white;
+      font-size: 0.6rem;
+      padding: 1px 5px;
+      border-radius: 999px;
+      margin-left: 4px;
+      font-weight: 700;
+      animation: pulse 2s infinite;
     }
 
     .library-body {
@@ -525,7 +536,7 @@
       height:80px;
       border-radius:11px;
       background:
-        radient(circle at 30% 20%, var(--custom-brand-color), #0b1020),
+        radial-gradient(circle at 30% 20%, var(--custom-brand-color), #0b1020),
         radial-gradient(circle at 80% 90%, rgba(56,189,248,0.9), transparent 60%);
       display:flex;
       align-items:center;
@@ -2219,6 +2230,169 @@
       color: white;
       align-self: flex-end;
     }
+
+    /* ==================== ANNOUNCEMENTS & SURVEY STYLES ==================== */
+    .announcements-view, .survey-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
+    .announcement-card {
+      background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(30,64,175,0.05));
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .announcement-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .announcement-card.important {
+      border-color: rgba(239,68,68,0.5);
+      background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(245,158,11,0.05));
+    }
+
+    .announcement-card.update {
+      border-color: rgba(34,197,94,0.5);
+      background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(21,128,61,0.05));
+    }
+
+    .announcement-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      background: rgba(139,92,246,0.2);
+      color: #c4b5fd;
+      border: 1px solid rgba(139,92,246,0.4);
+    }
+
+    .announcement-card.important .announcement-badge {
+      background: rgba(239,68,68,0.2);
+      color: #fca5a5;
+      border-color: rgba(239,68,68,0.4);
+    }
+
+    .announcement-card.update .announcement-badge {
+      background: rgba(34,197,94,0.2);
+      color: #bbf7d0;
+      border-color: rgba(34,197,94,0.4);
+    }
+
+    .announcement-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .announcement-date {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+
+    .announcement-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin: 16px 0;
+      border: 1px solid rgba(148,163,184,0.2);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .announcement-gif {
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 12px;
+      margin: 16px 0;
+      background: rgba(0,0,0,0.3);
+      padding: 8px;
+    }
+
+    .announcement-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text);
+      opacity: 0.95;
+    }
+
+    .announcement-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-soft);
+    }
+
+    .announcement-empty-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Survey View Styles */
+    .survey-container {
+      background: var(--bg-soft);
+      border-radius: 20px;
+      border: 1px solid rgba(148,163,184,0.3);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 70vh;
+      min-height: 500px;
+    }
+
+    .survey-header {
+      padding: 20px 24px;
+      background: radial-gradient(circle at top right, rgba(79,70,229,0.2), transparent 60%);
+      border-bottom: 1px solid rgba(148,163,184,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .survey-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .survey-frame-container {
+      flex: 1;
+      position: relative;
+      background: #fff;
+    }
+
+    .survey-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    body.portal-mode .survey-container {
+      background: #ffffff;
+      border-color: #e5e7eb;
+    }
   </style>
 </head>
 <body>
@@ -2293,7 +2467,7 @@
               <span>• Use a subpage like: <strong>#portal</strong></span>
               <span>• Keep volume low 💀</span>
             </div>
-            <a class="small-link" href="https://github.com " target="_blank" rel="noreferrer">
+            <a class="small-link" href="https://github.com  " target="_blank" rel="noreferrer">
               Manage on GitHub ↗
             </a>
           </div>
@@ -2322,6 +2496,8 @@
           <div class="view-toggle">
             <button class="view-btn active" id="viewLibraryBtn">Library</button>
             <button class="view-btn" id="viewPlayerBtn" disabled>Player</button>
+            <button class="view-btn" id="viewAnnouncementsBtn">📢 News<span class="btn-badge" id="announcementBadge" style="display:none;">NEW</span></button>
+            <button class="view-btn" id="viewSurveyBtn">📋 Survey</button>
             <button class="view-btn" id="viewCustomizeBtn">Customize</button>
             <button class="view-btn" id="viewSettingsBtn">Settings</button>
             <button class="view-btn" id="viewChatBtn">💬 Chat</button>
@@ -2351,6 +2527,29 @@
             </div>
             <div class="player-frame">
               <iframe id="playerIframe" src=""></iframe>
+            </div>
+          </div>
+
+          <!-- Announcements View -->
+          <div id="announcementsView" class="announcements-view">
+            <!-- Populated by JavaScript -->
+          </div>
+
+          <!-- Survey View -->
+          <div id="surveyView" class="survey-view">
+            <div class="survey-container">
+              <div class="survey-header">
+                <div class="survey-title">
+                  <span>📋</span>
+                  <span>Community Survey</span>
+                </div>
+                <div style="font-size:0.8rem;color:var(--text-soft);">
+                  Help us improve NebulaHub
+                </div>
+              </div>
+              <div class="survey-frame-container">
+                <iframe class="survey-frame" id="surveyFrame" src=""></iframe>
+              </div>
             </div>
           </div>
 
@@ -2508,7 +2707,7 @@
                 
                 <div class="input-group">
                   <label>Panic URL (where 🚨 takes you)</label>
-                  <input type="text" id="panicUrlInput" placeholder="https://classroom.google.com " value="https://clever.com/in/dallasisd/student/portal ">
+                  <input type="text" id="panicUrlInput" placeholder="https://classroom.google.com  " value="https://clever.com/in/dallasisd/student/portal  ">
                 </div>
                 
                 <button class="btn btn-primary" onclick="savePanicUrl()" style="margin-top: 8px;">💾 Save Panic URL</button>
@@ -2688,7 +2887,7 @@
     <footer>
       <span>NebulaHub • static HTML build</span>
       <span>
-        Host this on <a href="https://pages.github.com/ " target="_blank" rel="noreferrer">GitHub Pages</a>.
+        Host this on <a href="https://pages.github.com/  " target="_blank" rel="noreferrer">GitHub Pages</a>.
         <span class="portal-link" id="portalLink">Portal mode</span>
       </span>
     </footer>
@@ -2755,6 +2954,38 @@
   </div>
 
   <script>
+    // ==================== EASY TO EDIT ANNOUNCEMENTS ====================
+    // Add your announcements here! Supports images, GIFs, and different types.
+    const ANNOUNCEMENTS = [
+      {
+        id: 1,
+        title: "🎮 Welcome to NebulaHub v2.3!",
+        content: "We've added Developer Mode, Announcements, Surveys, and much more. Check out the new tabs above!\n\nThis is now easily editable in the code. You can add images, GIFs, and style your announcements differently.",
+        date: "January 30, 2026",
+        image: null, // Add image URL here like "https://example.com/image.jpg"
+        gif: null, // Add GIF URL here like "https://example.com/animation.gif"
+        badge: "NEW",
+        type: "update" // options: "normal", "important", "update"
+      },
+      {
+        id: 2,
+        title: "🛠️ Developer Mode Added",
+        content: "Unlock the developer tools with password: Ponchis721\n\nFeatures include:\n• Layout Editor\n• Live CSS Editor\n• Game Manager\n• Feature Flags\n• Config Import/Export",
+        date: "January 29, 2026",
+        image: null,
+        gif: null,
+        badge: null,
+        type: "important"
+      }
+      // Add more announcements here - they will display newest first
+    ];
+
+    // Google Form Survey URL - EDIT THIS LINE TO CHANGE THE SURVEY
+    const SURVEY_URL = "https://forms.gle/example-survey-url"; // <-- PUT YOUR GOOGLE FORM LINK HERE
+
+    const MAX_DISPLAYED_ANNOUNCEMENTS = 5; // How many announcements to show
+    // =====================================================================
+
     // ==================== UPDATE CONFIGURATION ====================
     const UPDATE_CONFIG = {
       version: "2.3",
@@ -2768,7 +2999,9 @@
         "🎮 Quick game manager (add/remove games)",
         "⚙️ Global config export/import",
         "💬 NebulaChat integration",
-        "🎨 Full theme customization"
+        "🎨 Full theme customization",
+        "📢 NEW: Announcements tab with image/gif support",
+        "📋 NEW: Survey tab for community feedback"
       ],
       showOnce: true
     };
@@ -2776,17 +3009,17 @@
 
     // Favicon Data URIs for tab cloaking
     const FAVICONS = {
-      default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2322c55e"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">NH</text></svg>',
-      google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">G</text></svg>',
-      classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%2324a865"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">C</text></svg>',
-      docs: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">D</text></svg>',
-      slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg " viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
+      default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg  " viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2322c55e"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">NH</text></svg>',
+      google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg  " viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">G</text></svg>',
+      classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg  " viewBox="0 0 100 100"><rect width="100" height="100" fill="%2324a865"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">C</text></svg>',
+      docs: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg  " viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">D</text></svg>',
+      slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg  " viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
     };
 
     // ✅ Game data
     let games = [
       { id: "geometry-dash", name: "Geometry Dash Lite", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "games/Geometry Dash Lite/Geometry Dash Lite.html" },
-      { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/ " },
+      { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/  " },
       { id: "buckshot-roulette", name: "Buckshot Roulette", category: "horror", tags: ["casino", "psych-horror"], url: "games/Buckshot Roulette/Buckshot Roulette.html" },
       { id: "minecraft", name: "Minecraft Web", category: "sandbox", tags: ["minecraft", "survival", "blocks"], url: "games/Minecraft/Minecraft 1.21.4.html" },
       { id: "basketball-random", name: "Basketball Random", category: "arcade", tags: ["sports", "2-player", "random"], url: "games/Basketball Random/Basket Random.html" },
@@ -2801,7 +3034,7 @@
       { id: "fnaf-ps", name: "FNAF Pizza Sim", category: "horror", tags: ["fnaf", "tycoon"], url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_ Pizza Simulator.html" },
       { id: "fnaf-ucn", name: "FNAF UCN", category: "horror", tags: ["fnaf", "custom"], url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html" },
       { id: "fnaf-world", name: "FNAF World", category: "horror", tags: ["fnaf", "rpg"], url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html" },
-      { id: "Robbie's Remastered", name: "Robbie's Remastered", category: "Horror", tags: ["Fnaf", "Pc game"], url: "https://serve.gamejolt.net/9f4180e05596b34a73f3575ffb88b229132e305fc9a74ee4b2f724f9be689843 ,1769810612,7/data/games/13/11/845011/files/674ab887625cb/index.html?gjapi_username=GAMERGEEK123&gjapi_token=kAxZPw" },
+      { id: "Robbie's Remastered", name: "Robbie's Remastered", category: "Horror", tags: ["Fnaf", "Pc game"], url: "https://serve.gamejolt.net/9f4180e05596b34a73f3575ffb88b229132e305fc9a74ee4b2f724f9be689843  ,1769810612,7/data/games/13/11/845011/files/674ab887625cb/index.html?gjapi_username=GAMERGEEK123&gjapi_token=kAxZPw" },
       { id: "A Bite at Freddy's", name: "A Bite at Freddy's", category: "horror", tags: ["fnaf", "pcgame"], url: "games/A Bite at Freddy's/A Bite at Freddy's.html" },
       { id: "Baldi's Basic", name: "Baldi's Basic", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics.html" },
       { id: "Baldi's Basic Classic Remastered", name: "Baldi's Basic Classic Remastered", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics Classic Remastered.html" },
@@ -2821,7 +3054,7 @@
       { id: "Midnight Shift", name: "Midnight Shift", category: "arcade", tags: ["fun"], url: "games/Midnight Shift/Midnight Shift.html" },
       { id: "Raft", name: "Raft", category: "arcade", tags: ["fun"], url: "games/Raft/Raft.html" },
       { id: "0V0", name: "0V0", category: "arcade", tags: ["fun"], url: "games/0V0/OvO.html" },
-      { id: "Game Request Form/Bug Report Form", name: "Game Request/Bug Report Form", category: "Report", tags: ["FeedBack"], url: "https://forms.gle/2X5VTJaARrx95gtS8 " }
+      { id: "Game Request Form/Bug Report Form", name: "Game Request/Bug Report Form", category: "Report", tags: ["FeedBack"], url: "https://forms.gle/2X5VTJaARrx95gtS8  " }
     ];
 
     // elements
@@ -2839,12 +3072,16 @@
     const settingsView = document.getElementById("settingsView");
     const chatView = document.getElementById("chatView");
     const devView = document.getElementById("devView");
+    const announcementsView = document.getElementById("announcementsView");
+    const surveyView = document.getElementById("surveyView");
     const viewLibraryBtn = document.getElementById("viewLibraryBtn");
     const viewPlayerBtn = document.getElementById("viewPlayerBtn");
     const viewCustomizeBtn = document.getElementById("viewCustomizeBtn");
     const viewSettingsBtn = document.getElementById("viewSettingsBtn");
     const viewChatBtn = document.getElementById("viewChatBtn");
     const viewDevBtn = document.getElementById("viewDevBtn");
+    const viewAnnouncementsBtn = document.getElementById("viewAnnouncementsBtn");
+    const viewSurveyBtn = document.getElementById("viewSurveyBtn");
     const playerGameName = document.getElementById("playerGameName");
     const playerGameMeta = document.getElementById("playerGameMeta");
     const playerIframe = document.getElementById("playerIframe");
@@ -2860,7 +3097,106 @@
     let activeCategory = "all";
     let activeSearch = "";
     let activeGame = null;
-    let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal ";
+    let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal  ";
+
+    // ==================== ANNOUNCEMENTS SYSTEM ====================
+    function renderAnnouncements() {
+      const container = document.getElementById('announcementsView');
+      const badge = document.getElementById('announcementBadge');
+      
+      if (ANNOUNCEMENTS.length === 0) {
+        container.innerHTML = `
+          <div class="announcement-empty">
+            <div class="announcement-empty-icon">📭</div>
+            <strong>No announcements yet</strong>
+            <p style="margin-top:8px;opacity:0.7;">Check back later for updates!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Sort by date (newest first) and limit to max
+      const sorted = [...ANNOUNCEMENTS]
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, MAX_DISPLAYED_ANNOUNCEMENTS);
+      
+      container.innerHTML = sorted.map(ann => `
+        <div class="announcement-card ${ann.type || 'normal'}">
+          ${ann.badge ? `<div class="announcement-badge">${ann.badge}</div>` : ''}
+          <div class="announcement-title">${ann.title}</div>
+          <div class="announcement-date">${ann.date}</div>
+          ${ann.image ? `<img src="${ann.image}" class="announcement-image" alt="Announcement Image">` : ''}
+          ${ann.gif ? `<img src="${ann.gif}" class="announcement-gif" alt="Announcement GIF">` : ''}
+          <div class="announcement-content">${ann.content.replace(/\n/g, '<br>')}</div>
+        </div>
+      `).join('');
+      
+      // Check if there are unseen announcements
+      const lastSeen = parseInt(localStorage.getItem('nebulahub-last-announcement') || '0');
+      const latestId = Math.max(...ANNOUNCEMENTS.map(a => a.id));
+      
+      if (latestId > lastSeen) {
+        badge.style.display = 'inline-flex';
+        badge.textContent = ANNOUNCEMENTS.filter(a => a.id > lastSeen).length || 'NEW';
+      }
+    }
+
+    function showAnnouncementsView() {
+      hideAllViews();
+      announcementsView.style.display = 'flex';
+      viewAnnouncementsBtn.classList.add('active');
+      
+      // Mark as seen
+      const latestId = Math.max(...ANNOUNCEMENTS.map(a => a.id));
+      localStorage.setItem('nebulahub-last-announcement', latestId);
+      document.getElementById('announcementBadge').style.display = 'none';
+    }
+
+    // ==================== SURVEY SYSTEM ====================
+    function showSurveyView() {
+      hideAllViews();
+      surveyView.style.display = 'flex';
+      viewSurveyBtn.classList.add('active');
+      
+      // Load survey URL if configured
+      if (SURVEY_URL && SURVEY_URL !== "https://forms.gle/gsBVKuUB9vhhrRNr9") {
+        document.getElementById('surveyFrame').src = SURVEY_URL;
+      } else {
+        document.getElementById('surveyFrame').src = "about:blank";
+        // Show placeholder text
+        const container = document.querySelector('.survey-frame-container');
+        container.innerHTML = `
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text-soft);text-align:center;padding:40px;">
+            <div style="font-size:3rem;margin-bottom:20px;">📋</div>
+            <h3 style="margin-bottom:12px;color:var(--text);">Survey Not Configured</h3>
+            <p>Edit the SURVEY_URL constant at the top of the JavaScript<br>to add your Google Form link.</p>
+            <code style="margin-top:16px;padding:12px 16px;background:rgba(0,0,0,0.3);border-radius:8px;font-size:0.8rem;">
+              const SURVEY_URL = "https://forms.gle/your-form-link";
+            </code>
+          </div>
+        `;
+      }
+    }
+
+    function hideAllViews() {
+      libraryView.style.display = "none";
+      customizeView.style.display = "none";
+      settingsView.style.display = "none";
+      chatView.style.display = "none";
+      playerView.style.display = "none";
+      devView.style.display = "none";
+      announcementsView.style.display = "none";
+      surveyView.style.display = "none";
+      
+      viewLibraryBtn.classList.remove("active");
+      viewPlayerBtn.classList.remove("active");
+      viewCustomizeBtn.classList.remove("active");
+      viewSettingsBtn.classList.remove("active");
+      viewChatBtn.classList.remove("active");
+      viewDevBtn.classList.remove("active");
+      viewAnnouncementsBtn.classList.remove("active");
+      viewSurveyBtn.classList.remove("active");
+    }
 
     // ==================== DEVELOPER MODE SYSTEM ====================
     const devMode = {
@@ -2940,27 +3276,11 @@
 
       // Show dev view
       showDevView() {
-        this.hideAllViews();
+        hideAllViews();
         devView.style.display = 'flex';
         viewDevBtn.classList.add('active');
         this.renderFeatures();
         this.renderGameList();
-      },
-
-      hideAllViews() {
-        libraryView.style.display = "none";
-        customizeView.style.display = "none";
-        settingsView.style.display = "none";
-        chatView.style.display = "none";
-        playerView.style.display = "none";
-        devView.style.display = "none";
-        
-        viewLibraryBtn.classList.remove("active");
-        viewPlayerBtn.classList.remove("active");
-        viewCustomizeBtn.classList.remove("active");
-        viewSettingsBtn.classList.remove("active");
-        viewChatBtn.classList.remove("active");
-        viewDevBtn.classList.remove("active");
       },
 
       // Layout Editor
@@ -3274,7 +3594,16 @@
     }
 
     // Override view buttons to include dev mode
-    viewDevBtn.addEventListener('click', () => devMode.showDevView());
+    viewDevBtn.addEventListener('click', () => {
+      if (devMode.isActive) {
+        devMode.showDevView();
+      } else {
+        devMode.requestAccess();
+      }
+    });
+
+    viewAnnouncementsBtn.addEventListener('click', showAnnouncementsView);
+    viewSurveyBtn.addEventListener('click', showSurveyView);
 
     // ==================== CUSTOMIZATION SYSTEM ====================
     const customColors = {
@@ -3615,85 +3944,40 @@
     }
 
     function showPlayerView() {
-      libraryView.style.display = "none";
-      customizeView.style.display = "none";
-      settingsView.style.display = "none";
-      chatView.style.display = "none";
-      devView.style.display = "none";
+      hideAllViews();
       playerView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewDevBtn.classList.remove("active");
       viewPlayerBtn.classList.add("active");
       viewPlayerBtn.disabled = false;
     }
 
     function showLibraryView() {
       playerIframe.src = "";
-      playerView.style.display = "none";
-      customizeView.style.display = "none";
-      settingsView.style.display = "none";
-      chatView.style.display = "none";
-      devView.style.display = "none";
+      hideAllViews();
       libraryView.style.display = "block";
       viewLibraryBtn.classList.add("active");
-      viewPlayerBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewDevBtn.classList.remove("active");
       viewPlayerBtn.disabled = !activeGame;
     }
 
     function showCustomizeView() {
       playerIframe.src = "";
-      playerView.style.display = "none";
-      libraryView.style.display = "none";
-      settingsView.style.display = "none";
-      chatView.style.display = "none";
-      devView.style.display = "none";
+      hideAllViews();
       customizeView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewPlayerBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewDevBtn.classList.remove("active");
       viewCustomizeBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
     }
 
     function showSettingsView() {
       playerIframe.src = "";
-      playerView.style.display = "none";
-      libraryView.style.display = "none";
-      customizeView.style.display = "none";
-      chatView.style.display = "none";
-      devView.style.display = "none";
+      hideAllViews();
       settingsView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewPlayerBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewDevBtn.classList.remove("active");
       viewSettingsBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
     }
 
     function showChatView() {
       playerIframe.src = "";
-      playerView.style.display = "none";
-      libraryView.style.display = "none";
-      customizeView.style.display = "none";
-      settingsView.style.display = "none";
-      devView.style.display = "none";
+      hideAllViews();
       chatView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewPlayerBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewDevBtn.classList.remove("active");
       viewChatBtn.classList.add("active");
       viewPlayerBtn.disabled = !activeGame;
       
@@ -3775,7 +4059,7 @@
 
     // ==================== NEBULACHAT SYSTEM ====================
     const SUPABASE_CONFIG = {
-      url: 'https://eatwwxzrnsyxuzkfckal.supabase.co ',
+      url: 'https://eatwwxzrnsyxuzkfckal.supabase.co  ',
       anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhdHd3eHpybnN5eHV6a2Zja2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM0MjgsImV4cCI6MjA3OTQ5OTQyOH0.UZoqLR93nMHoK_zQAEndaSntx9F05CXLEKMNGDyi9qc'
     };
 
@@ -3965,6 +4249,7 @@
       loadSavedCustomTheme();
       loadTabCloak();
       devMode.init(); // Initialize dev mode
+      renderAnnouncements(); // Initialize announcements
       
       const savedPanic = localStorage.getItem('nebulahub-panic-url');
       if (savedPanic) {
