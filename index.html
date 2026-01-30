@@ -36,6 +36,7 @@
       --radius-xl: 24px;
       --shadow-soft: 0 18px 40px rgba(0,0,0,0.6);
       --transition-fast: 0.15s ease-out;
+      --dev-accent: #f59e0b;
       
       /* Custom user overrides */
       --custom-brand-color: #22c55e;
@@ -116,6 +117,34 @@
       flex-direction: column;
       gap: 14px;
       backdrop-filter: blur(18px) saturate(1.2);
+    }
+
+    /* Dev Mode Indicator */
+    .dev-mode-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+      animation: pulseDev 2s infinite;
+    }
+
+    .dev-mode-badge.show {
+      display: block;
+    }
+
+    @keyframes pulseDev {
+      0%, 100% { box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4); }
+      50% { box-shadow: 0 4px 20px rgba(245, 158, 11, 0.8); }
     }
 
     .top-bar {
@@ -376,7 +405,7 @@
       letter-spacing:0.14em;
     }
 
-    .view-toggle { display:flex; gap:6px; font-size:0.75rem; }
+    .view-toggle { display:flex; gap:6px; font-size:0.75rem; flex-wrap: wrap; }
 
     .view-btn {
       border-radius:999px;
@@ -399,6 +428,17 @@
       opacity: 0.4;
       cursor: not-allowed;
       transform: none;
+    }
+
+    .view-btn.dev-btn {
+      border-color: var(--dev-accent);
+      color: var(--dev-accent);
+      display: inline-flex;
+    }
+
+    .view-btn.dev-btn:hover {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: #f59e0b;
     }
 
     .library-body {
@@ -560,6 +600,19 @@
 
     .btn-ghost { background: rgba(15,23,42,0.9); }
 
+    .btn-dev {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: var(--dev-accent);
+      color: var(--dev-accent);
+      font-weight: 600;
+    }
+
+    .btn-dev:hover {
+      background: rgba(245, 158, 11, 0.4);
+      border-color: #f59e0b;
+      color: #fbbf24;
+    }
+
     .player-frame {
       margin-top:2px;
       border-radius:18px;
@@ -597,7 +650,183 @@
       text-decoration-style: dotted;
     }
 
-    /* Customize View Styles */
+    /* Dev Mode Login Modal */
+    .dev-login-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(12px);
+      z-index: 3000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .dev-login-modal.show {
+      display: flex;
+    }
+
+    .dev-login-card {
+      background: linear-gradient(145deg, #1e1b4b, #0f172a);
+      border: 2px solid var(--dev-accent);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 25px 50px rgba(245, 158, 11, 0.3);
+      text-align: center;
+    }
+
+    .dev-login-card h2 {
+      color: var(--dev-accent);
+      margin-bottom: 12px;
+      font-size: 1.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .dev-warning-text {
+      background: rgba(245, 158, 11, 0.1);
+      border-left: 4px solid var(--dev-accent);
+      padding: 16px;
+      margin: 20px 0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #fcd34d;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .dev-login-card p {
+      color: var(--text-soft);
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+    }
+
+    .dev-password-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(15,23,42,0.8);
+      border: 1px solid var(--dev-accent);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-align: center;
+      margin-bottom: 16px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .dev-password-input:focus {
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+      border-color: #fbbf24;
+    }
+
+    .dev-error {
+      color: #ef4444;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .dev-error.show {
+      display: block;
+    }
+
+    /* Dev Mode View */
+    .dev-mode-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .dev-mode-view.active {
+      display: flex;
+    }
+
+    .dev-panel {
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), rgba(15,23,42,0.9));
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .dev-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .dev-panel-title {
+      color: var(--dev-accent);
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dev-editor {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      padding: 16px;
+      width: 100%;
+      min-height: 300px;
+      resize: vertical;
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    .dev-editor:focus {
+      border-color: var(--dev-accent);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    .dev-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .dev-section {
+      background: rgba(15,23,42,0.6);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .dev-section h4 {
+      color: var(--dev-accent);
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .dev-help-text {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .dev-help-text code {
+      background: rgba(245, 158, 11, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: var(--dev-accent);
+    }
+
+    /* Customize View */
     .customize-view {
       display: none;
       flex-direction: column;
@@ -698,7 +927,7 @@
 
     .preset-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
       margin-top: 8px;
     }
@@ -719,7 +948,7 @@
       color: var(--text);
     }
 
-    /* Settings View Styles */
+    /* Settings View */
     .settings-view {
       display: none;
       flex-direction: column;
@@ -842,7 +1071,7 @@
       font-weight: 600;
     }
 
-    /* Update Modal Styles - THEME AWARE */
+    /* Update Modal */
     .update-modal {
       position: fixed;
       inset: 0;
@@ -853,7 +1082,6 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      animation: fadeIn 0.3s ease;
     }
 
     .update-modal.show {
@@ -958,129 +1186,7 @@
       cursor: pointer;
     }
 
-    /* THEME SPECIFIC MODAL ADJUSTMENTS */
-    
-    /* Portal Mode (Light) */
-    body.portal-mode .update-modal {
-      background: rgba(255,255,255,0.9);
-    }
-
-    body.portal-mode .update-card {
-      background: #ffffff;
-      border-color: #e5e7eb;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-    }
-
-    body.portal-mode .update-header {
-      background: linear-gradient(135deg, rgba(99,102,241,0.1), transparent 60%);
-      border-bottom-color: #e5e7eb;
-    }
-
-    body.portal-mode .update-title {
-      background: linear-gradient(135deg, #4f46e5, #22c55e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    body.portal-mode .update-body,
-    body.portal-mode .update-footer {
-      background: #ffffff;
-    }
-
-    body.portal-mode .update-list li {
-      color: #111827;
-    }
-
-    body.portal-mode .update-date,
-    body.portal-mode .checkbox-label {
-      color: #6b7280;
-    }
-
-    body.portal-mode .update-footer {
-      border-top-color: #e5e7eb;
-    }
-
-    /* Bubblegum Theme */
-    :root[data-theme="bubblegum"] .update-modal {
-      background: rgba(255,228,241,0.95);
-    }
-
-    :root[data-theme="bubblegum"] .update-card {
-      background: #ffd6ec;
-      border-color: #ff4fa3;
-    }
-
-    :root[data-theme="bubblegum"] .update-header {
-      background: linear-gradient(135deg, rgba(255,79,163,0.2), transparent 60%);
-      border-bottom-color: rgba(255,79,163,0.3);
-    }
-
-    :root[data-theme="bubblegum"] .update-list li {
-      color: #3a0035;
-    }
-
-    :root[data-theme="bubblegum"] .update-date,
-    :root[data-theme="bubblegum"] .checkbox-label {
-      color: #5f1a50;
-    }
-
-    :root[data-theme="bubblegum"] .update-footer {
-      border-top-color: rgba(255,79,163,0.3);
-    }
-
-    /* Matrix Theme */
-    :root[data-theme="matrix"] .update-modal {
-      background: rgba(0,0,0,0.95);
-    }
-
-    :root[data-theme="matrix"] .update-card {
-      background: #001100;
-      border-color: #00ff41;
-      box-shadow: 0 0 30px rgba(0,255,65,0.2);
-    }
-
-    :root[data-theme="matrix"] .update-header {
-      background: linear-gradient(135deg, rgba(0,255,65,0.15), transparent 60%);
-      border-bottom-color: rgba(0,255,65,0.3);
-    }
-
-    :root[data-theme="matrix"] .update-title {
-      background: linear-gradient(135deg, #00ff41, #d9ffd9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    :root[data-theme="matrix"] .update-list li::before {
-      color: #00ff41;
-    }
-
-    :root[data-theme="matrix"] .update-footer {
-      border-top-color: rgba(0,255,65,0.3);
-    }
-
-    /* Minecraft Theme */
-    :root[data-theme="minecraft"] .update-card {
-      background: #0f3d0f;
-      border-color: #3c8527;
-      border-width: 2px;
-      border-style: solid;
-    }
-
-    :root[data-theme="minecraft"] .update-header {
-      background: linear-gradient(135deg, rgba(60,133,39,0.2), transparent 60%);
-      border-bottom-color: rgba(60,133,39,0.4);
-    }
-
-    :root[data-theme="minecraft"] .update-list li::before {
-      color: #8b5a2b;
-    }
-
-    :root[data-theme="minecraft"] .update-footer {
-      border-top-color: rgba(60,133,39,0.4);
-    }
-
+    /* Portal Mode */
     body.portal-mode { background:#f9fafb; color:#111827; }
     body.portal-mode::before, body.portal-mode::after { display:none; }
 
@@ -1105,7 +1211,9 @@
     body.portal-mode .search-input:focus { box-shadow:none; border-color:#9ca3af; }
 
     body.portal-mode .customize-card,
-    body.portal-mode .settings-card {
+    body.portal-mode .settings-card,
+    body.portal-mode .dev-panel,
+    body.portal-mode .dev-section {
       background: #f9fafb;
       border-color: #e5e7eb;
     }
@@ -1233,6 +1341,152 @@
       background: rgba(34,197,94,0.05);
       color: #059669;
       border-color: rgba(34,197,94,0.2);
+    }
+
+    /* Apps styles */
+    .apps-library {
+      background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.24), transparent 60%), var(--bg-elevated);
+    }
+
+    .app-card {
+      background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.32), transparent 58%),
+                  linear-gradient(145deg, rgba(15,23,42,0.96), rgba(15,23,42,0.85));
+    }
+
+    /* Surveys & Announcements */
+    .surveys-view, .announcements-view {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .survey-container {
+      background: var(--bg-soft);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(148,163,184,0.28);
+      height: 70vh;
+      min-height: 500px;
+    }
+
+    .survey-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+      background: white;
+    }
+
+    .announcement-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .announcement-card {
+      background: var(--bg-soft);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(148,163,184,0.28);
+      margin-bottom: 16px;
+    }
+
+    .announcement-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(148,163,184,0.2);
+    }
+
+    .announcement-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .announcement-date {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    .announcement-badge {
+      background: var(--accent-soft);
+      color: var(--custom-accent-strong);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border: 1px solid var(--custom-accent-color);
+    }
+
+    .announcement-content {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-soft);
+      white-space: pre-wrap;
+    }
+
+    .announcement-content img {
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 12px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .announcement-editor {
+      background: var(--bg-soft);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(148,163,184,0.28);
+      display: none;
+    }
+
+    .announcement-editor.active {
+      display: block;
+    }
+
+    .announcement-editor textarea {
+      width: 100%;
+      min-height: 200px;
+      background: rgba(15,23,42,0.6);
+      border: 1px solid rgba(148,163,184,0.3);
+      border-radius: 12px;
+      padding: 16px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+
+    .editor-help {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+      padding: 12px;
+      background: rgba(15,23,42,0.4);
+      border-radius: 8px;
+      border-left: 3px solid var(--custom-accent-color);
+    }
+
+    .announcement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .announcement-grid { grid-template-columns: 1fr; }
+      .dev-grid { grid-template-columns: 1fr; }
     }
 
     /* ==================== NEBULACHAT STYLES ==================== */
@@ -1635,6 +1889,9 @@
 </head>
 
 <body>
+  <!-- Dev Mode Badge -->
+  <div class="dev-mode-badge" id="devModeBadge">⚡ DEV MODE ACTIVE</div>
+
   <div class="app-shell">
     <header class="top-bar">
       <div class="brand">
@@ -1683,7 +1940,9 @@
         <button class="filter-chip" data-category="horror"><span class="dot"></span>Horror</button>
         <button class="filter-chip" data-category="fps"><span class="dot"></span>FPS</button>
         <button class="filter-chip" data-category="sandbox"><span class="dot"></span>Sandbox</button>
-        <button class="filter-chip" data-category="movies"><span class="dot"></span>Movies</button>
+        <button class="filter-chip" data-category="sports"><span class="dot"></span>Sports</button>
+        <button class="filter-chip" data-category="racing"><span class="dot"></span>Racing</button>
+        <button class="filter-chip" data-category="puzzle"><span class="dot"></span>Puzzle</button>
       </div>
     </section>
 
@@ -1715,6 +1974,7 @@
           <div class="sidebar-title">Stats</div>
           <div class="sidebar-card">
             <div class="stat-row"><span>Games loaded</span><strong id="statGames">0</strong></div>
+            <div class="stat-row"><span>Apps loaded</span><strong id="statApps">0</strong></div>
             <div class="stat-row"><span>Filters</span><strong>Search + category</strong></div>
             <div class="stat-row"><span>Status</span><strong style="color:#bbf7d0;">Online</strong></div>
             <p class="sidebar-card-text">
@@ -1722,32 +1982,52 @@
             </p>
           </div>
         </div>
+
+        <!-- Dev Mode Sidebar Section (hidden by default) -->
+        <div id="devSidebarSection" style="display: none;">
+          <div class="sidebar-title" style="color: var(--dev-accent);">⚡ Developer Tools</div>
+          <div class="sidebar-card" style="border-color: rgba(245, 158, 11, 0.4);">
+            <div class="sidebar-card-text">
+              <strong style="color: var(--dev-accent);">Dev Mode Active</strong><br>
+              You have full editing access to the site content and layout.
+            </div>
+            <button class="btn btn-dev" onclick="exitDevMode()" style="margin-top: 10px; width: 100%;">
+              🚪 Exit Dev Mode
+            </button>
+          </div>
+        </div>
       </aside>
 
       <section class="library">
         <div class="library-header">
           <div class="library-title">
-            <span>Library</span>
+            <span id="sectionTitle">Library</span>
             <span class="count" id="resultCountLabel">0 RESULTS</span>
           </div>
           <div class="view-toggle">
             <button class="view-btn active" id="viewLibraryBtn">Library</button>
             <button class="view-btn" id="viewPlayerBtn" disabled>Player</button>
+            <button class="view-btn" id="viewAppsBtn">Apps</button>
+            <button class="view-btn" id="viewAppPlayerBtn" disabled>App Player</button>
+            <button class="view-btn" id="viewSurveysBtn">📊 Surveys</button>
+            <button class="view-btn" id="viewAnnouncementsBtn">📢 Announcements</button>
             <button class="view-btn" id="viewCustomizeBtn">Customize</button>
             <button class="view-btn" id="viewSettingsBtn">Settings</button>
-            <button class="view-btn" id="viewChatBtn">💬 Chat</button>
+            <!-- Dev Mode Button - Now Always Visible -->
+            <button class="view-btn dev-btn" id="viewDevBtn" onclick="handleDevBtnClick()">⚡ Dev Mode</button>
           </div>
         </div>
 
         <div class="library-body">
+          <!-- Games Library -->
           <div id="libraryView">
             <div id="gameGrid" class="game-grid"></div>
             <div id="emptyState" class="empty-state" style="display:none;">
-              <strong>No matches.</strong><br />
-              Try clearing the search or switching categories.
+              <strong>No matches.</strong><br>Try clearing the search or switching categories.
             </div>
           </div>
 
+          <!-- Game Player -->
           <div id="playerView" class="player-view">
             <div class="player-header">
               <div class="player-title">
@@ -1764,61 +2044,107 @@
             </div>
           </div>
 
+          <!-- Apps Library -->
+          <div id="appsLibraryView" style="display:none;">
+            <div id="appsGrid" class="game-grid"></div>
+            <div id="appsEmptyState" class="empty-state" style="display:none;">
+              <strong>No apps found.</strong><br>Check back later for new additions.
+            </div>
+          </div>
+
+          <!-- App Player -->
+          <div id="appPlayerView" class="player-view" style="display:none;">
+            <div class="player-header">
+              <div class="player-title">
+                <span class="main" id="appPlayerName">App name</span>
+                <span class="sub" id="appPlayerMeta">Category • App Player</span>
+              </div>
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button class="btn btn-ghost" id="openAppInNewTabBtn">🔗 Open in new tab</button>
+                <button class="btn" id="backToAppsBtn">⬅ Back to apps</button>
+              </div>
+            </div>
+            <div class="player-frame">
+              <iframe id="appPlayerIframe" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation"></iframe>
+            </div>
+          </div>
+
+          <!-- Surveys -->
+          <div id="surveysView" class="surveys-view">
+            <div class="announcement-controls">
+              <div style="font-size: 0.9rem; color: var(--text-soft);">
+                Help us improve by filling out this survey!
+              </div>
+              <button class="btn btn-ghost" onclick="openSurveyInNewTab()">↗ Open in New Tab</button>
+            </div>
+            <div class="survey-container">
+              <iframe id="surveyIframe" class="survey-iframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfX2e1V9t3n5yQ7z8x9y0z1x2y3z4w5v6u7t8s9r0q1p2o3i4u5y6t/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+          </div>
+
+          <!-- Announcements -->
+          <div id="announcementsView" class="announcements-view">
+            <div class="announcement-controls">
+              <div style="font-size: 1rem; font-weight: 600;">
+                📢 Latest Updates & News
+              </div>
+              <!-- Edit button moved here but hidden from non-devs -->
+              <button class="btn btn-primary" id="editAnnouncementsBtn" style="display: none;" onclick="toggleAnnouncementEdit()">
+                ✏️ Edit Announcements
+              </button>
+            </div>
+
+            <div id="announcementEditor" class="announcement-editor">
+              <div class="editor-help">
+                <strong>Editor Mode:</strong> Use Markdown for images <code>![alt](url)</code> and <code>**bold**</code> for text.
+              </div>
+              <textarea id="announcementTextarea" placeholder="Edit announcement content here..."></textarea>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="saveAnnouncements()">💾 Save Changes</button>
+                <button class="btn btn-secondary" onclick="cancelEditAnnouncements()">↩ Cancel</button>
+              </div>
+            </div>
+
+            <div id="announcementsDisplay" class="announcement-grid">
+              <!-- Announcements injected here -->
+            </div>
+          </div>
+
+          <!-- Customize -->
           <div id="customizeView" class="customize-view">
             <div class="customize-grid">
               <div class="customize-card">
-                <h3>🎨 Icon & Brand Colors</h3>
+                <h3>🎨 Brand Colors</h3>
                 <div class="color-input-group">
-                  <label>Logo Primary Color</label>
+                  <label>Logo Primary</label>
                   <div class="color-picker-wrapper">
                     <input type="color" id="brandColorPicker" value="#22c55e">
-                    <input type="text" id="brandColorText" value="#22c55e" placeholder="#22c55e">
+                    <input type="text" id="brandColorText" value="#22c55e">
                   </div>
                 </div>
                 <div class="color-input-group">
                   <label>Accent Color</label>
                   <div class="color-picker-wrapper">
                     <input type="color" id="accentColorPicker" value="#8b5cf6">
-                    <input type="text" id="accentColorText" value="#8b5cf6" placeholder="#8b5cf6">
-                  </div>
-                </div>
-                <div class="color-input-group">
-                  <label>Strong Accent (Highlights)</label>
-                  <div class="color-picker-wrapper">
-                    <input type="color" id="accentStrongPicker" value="#22c55e">
-                    <input type="text" id="accentStrongText" value="#22c55e" placeholder="#22c55e">
+                    <input type="text" id="accentColorText" value="#8b5cf6">
                   </div>
                 </div>
               </div>
 
               <div class="customize-card">
-                <h3>🌌 Background Gradients</h3>
+                <h3>🌌 Background</h3>
                 <div class="color-input-group">
                   <label>Gradient Top-Left</label>
                   <div class="color-picker-wrapper">
                     <input type="color" id="bgGrad1Picker" value="#1f2937">
-                    <input type="text" id="bgGrad1Text" value="#1f2937" placeholder="#1f2937">
+                    <input type="text" id="bgGrad1Text" value="#1f2937">
                   </div>
                 </div>
                 <div class="color-input-group">
                   <label>Gradient Bottom-Right</label>
                   <div class="color-picker-wrapper">
                     <input type="color" id="bgGrad2Picker" value="#111827">
-                    <input type="text" id="bgGrad2Text" value="#111827" placeholder="#111827">
-                  </div>
-                </div>
-                <div class="color-input-group">
-                  <label>Overlay Tint 1 (Blue-ish)</label>
-                  <div class="color-picker-wrapper">
-                    <input type="color" id="overlay1Picker" value="#3b82f6">
-                    <input type="text" id="overlay1Text" value="rgba(59,130,246,0.35)" placeholder="rgba(59,130,246,0.35)">
-                  </div>
-                </div>
-                <div class="color-input-group">
-                  <label>Overlay Tint 2 (Pink-ish)</label>
-                  <div class="color-picker-wrapper">
-                    <input type="color" id="overlay2Picker" value="#ec4899">
-                    <input type="text" id="overlay2Text" value="rgba(236,72,153,0.3)" placeholder="rgba(236,72,153,0.3)">
+                    <input type="text" id="bgGrad2Text" value="#111827">
                   </div>
                 </div>
               </div>
@@ -1829,12 +2155,10 @@
                   <button class="preset-btn" onclick="applyPreset('ocean')">Ocean</button>
                   <button class="preset-btn" onclick="applyPreset('sunset')">Sunset</button>
                   <button class="preset-btn" onclick="applyPreset('forest')">Forest</button>
-                  <button class="preset-btn" onclick="applyPreset('crimson')">Crimson</button>
-                  <button class="preset-btn" onclick="applyPreset('gold')">Gold</button>
                   <button class="preset-btn" onclick="applyPreset('purple')">Purple</button>
                 </div>
                 <div class="theme-active-notice" id="customActiveNotice">
-                  ✨ Custom theme active! Select a preset theme from the dropdown above to reset.
+                  ✨ Custom theme active!
                 </div>
               </div>
 
@@ -1861,25 +2185,22 @@
                 </div>
               </div>
             </div>
-
             <div class="customize-actions">
               <button class="btn btn-primary" onclick="saveCustomTheme()">💾 Save Theme</button>
-              <button class="btn btn-secondary" onclick="resetCustomTheme()">↩ Reset to Default</button>
-              <button class="btn btn-secondary" onclick="previewTheme()">👁 Preview</button>
+              <button class="btn btn-secondary" onclick="resetCustomTheme()">↩ Reset</button>
             </div>
           </div>
 
+          <!-- Settings -->
           <div id="settingsView" class="settings-view">
             <div class="settings-grid">
               <div class="settings-card">
                 <h3>🕵️ Tab Cloaking</h3>
                 <p class="settings-desc">Disguise this site to look like a different tab</p>
-                
                 <div class="input-group">
                   <label>Tab Title</label>
-                  <input type="text" id="tabTitleInput" placeholder="e.g. Algebra Notes, Google Docs, My Drive" maxlength="50">
+                  <input type="text" id="tabTitleInput" placeholder="e.g. Algebra Notes" maxlength="50">
                 </div>
-                
                 <div class="input-group">
                   <label>Tab Icon</label>
                   <div class="favicon-options">
@@ -1895,17 +2216,8 @@
                       <span class="favicon-preview classroom">C</span>
                       <span>Classroom</span>
                     </button>
-                    <button class="favicon-btn" data-favicon="docs">
-                      <span class="favicon-preview docs">D</span>
-                      <span>Docs</span>
-                    </button>
-                    <button class="favicon-btn" data-favicon="slides">
-                      <span class="favicon-preview slides">S</span>
-                      <span>Slides</span>
-                    </button>
                   </div>
                 </div>
-                
                 <div class="customize-actions">
                   <button class="btn btn-primary" onclick="applyTabCloak()">🔄 Apply Cloak</button>
                   <button class="btn btn-secondary" onclick="resetTabCloak()">↩ Reset</button>
@@ -1915,13 +2227,86 @@
               <div class="settings-card">
                 <h3>⚠️ Panic Button</h3>
                 <p class="settings-desc">Configure the panic button redirect destination</p>
-                
                 <div class="input-group">
-                  <label>Panic URL (where 🚨 takes you)</label>
-                  <input type="text" id="panicUrlInput" placeholder="https://classroom.google.com" value="https://clever.com/in/dallasisd/student/portal">
+                  <label>Panic URL</label>
+                  <input type="text" id="panicUrlInput" value="https://clever.com/in/dallasisd/student/portal">
                 </div>
-                
-                <button class="btn btn-primary" onclick="savePanicUrl()" style="margin-top: 8px;">💾 Save Panic URL</button>
+                <button class="btn btn-primary" onclick="savePanicUrl()" style="margin-top: 8px;">💾 Save</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dev Mode View -->
+          <div id="devModeView" class="dev-mode-view">
+            <!-- Dev Warning Banner -->
+            <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 16px; margin-bottom: 10px;">
+              <div style="color: var(--dev-accent); font-weight: 700; font-size: 1.1rem; margin-bottom: 8px;">
+                ⚡ Developer Mode Active
+              </div>
+              <div style="color: var(--text-soft); font-size: 0.9rem; line-height: 1.5;">
+                You have full access to edit the website content, games library, and layout. 
+                Be careful with your changes - they are saved to your browser's local storage.
+              </div>
+            </div>
+
+            <div class="dev-panel">
+              <div class="dev-panel-header">
+                <div class="dev-panel-title">
+                  <span>⚡</span>
+                  <span>Developer Control Panel</span>
+                </div>
+                <button class="btn btn-secondary" onclick="hideDevView()">✕ Close Dev Mode</button>
+              </div>
+              
+              <div class="dev-grid">
+                <!-- Games Editor -->
+                <div class="dev-section">
+                  <h4>🎮 Edit Games Library</h4>
+                  <div class="dev-help-text">
+                    Edit the games array directly. Format: <code>id, name, category, tags[], url</code>
+                  </div>
+                  <textarea id="devGamesEditor" class="dev-editor" placeholder="Games JSON..."></textarea>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-dev" onclick="saveDevGames()">💾 Save Games</button>
+                    <button class="btn btn-secondary" onclick="resetDevGames()">↩ Reset</button>
+                  </div>
+                </div>
+
+                <!-- Apps Editor -->
+                <div class="dev-section">
+                  <h4>📱 Edit Apps Library</h4>
+                  <div class="dev-help-text">
+                    Edit the apps array. Same format as games.
+                  </div>
+                  <textarea id="devAppsEditor" class="dev-editor" placeholder="Apps JSON..."></textarea>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-dev" onclick="saveDevApps()">💾 Save Apps</button>
+                    <button class="btn btn-secondary" onclick="resetDevApps()">↩ Reset</button>
+                  </div>
+                </div>
+
+                <!-- Layout Editor -->
+                <div class="dev-section" style="grid-column: 1 / -1;">
+                  <h4>🎨 Edit Layout & CSS</h4>
+                  <div class="dev-help-text">
+                    Add custom CSS overrides or modify layout variables. This will be injected into the page.
+                  </div>
+                  <textarea id="devLayoutEditor" class="dev-editor" style="min-height: 150px;" placeholder=":root { --custom-bg: #000; }"></textarea>
+                  <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-dev" onclick="applyDevLayout()">🎨 Apply CSS</button>
+                    <button class="btn btn-secondary" onclick="clearDevLayout()">🗑 Clear Custom CSS</button>
+                  </div>
+                </div>
+
+                <!-- Data Management -->
+                <div class="dev-section" style="grid-column: 1 / -1;">
+                  <h4>💾 Data Management</h4>
+                  <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+                    <button class="btn btn-secondary" onclick="exportAllData()">📤 Export All Data</button>
+                    <button class="btn btn-secondary" onclick="importDataPrompt()">📥 Import Data</button>
+                    <button class="btn btn-secondary" style="color: #ef4444; border-color: #ef4444;" onclick="clearAllData()">🗑 Clear All Local Data</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -2002,9 +2387,55 @@
 
     <div class="legal-footer">
       <span>© <span id="yearSpan"></span> NebulaHub</span>
-      <a href="/about.html">About</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms of Use</a>
+    </div>
+  </div>
+
+  <!-- Dev Mode Login Modal -->
+  <div id="devLoginModal" class="dev-login-modal">
+    <div class="dev-login-card">
+      <h2>⚡ Developer Mode</h2>
+      
+      <div class="dev-warning-text">
+        <strong>⚠️ Warning:</strong> This is the Developer Panel. It is password locked to prevent any non-developers from destroying our website. 
+        If you are not a developer, please exit and continue using our website as intended.
+      </div>
+
+      <p>Enter the developer password to access advanced editing features.</p>
+      
+      <input type="password" id="devPasswordInput" class="dev-password-input" placeholder="••••••••" maxlength="20">
+      <button class="btn btn-dev" onclick="checkDevPassword()" style="width: 100%; justify-content: center; font-size: 1rem; padding: 12px;">
+        🔓 Unlock Dev Mode
+      </button>
+      <button class="btn btn-ghost" onclick="hideDevLogin()" style="width: 100%; margin-top: 8px;">
+        ← Back to Website
+      </button>
+      <div id="devErrorMsg" class="dev-error">Incorrect password. Access denied.</div>
+    </div>
+  </div>
+
+  <!-- Update Modal -->
+  <div id="updateModal" class="update-modal">
+    <div class="update-card">
+      <div class="update-header">
+        <div class="update-title" id="updateTitle">🚀 What's New</div>
+        <div class="update-date" id="updateDate">February 2026</div>
+      </div>
+      <div class="update-body">
+        <ul class="update-list" id="updateList">
+          <li>⚡ NEW: Dev Mode with password protection</li>
+          <li>🎮 Expanded game library (50+ games)</li>
+          <li>🎨 Modify layout and CSS in real-time</li>
+          <li>🔐 Secure announcement editing (Dev only)</li>
+          <li>💾 Export/Import all site data</li>
+        </ul>
+      </div>
+      <div class="update-footer">
+        <label class="checkbox-label">
+          <input type="checkbox" id="dontShowAgain">
+          Don't show again until next update
+        </label>
+        <button class="btn btn-primary" onclick="closeUpdateModal()">Got it!</button>
+      </div>
     </div>
   </div>
 
@@ -2020,59 +2451,15 @@
     </div>
   </div>
 
-  <!-- Update Modal -->
-  <div id="updateModal" class="update-modal">
-    <div class="update-card">
-      <div class="update-header">
-        <div class="update-title" id="updateTitle">🚀 What's New</div>
-        <div class="update-date" id="updateDate">January 28, 2026</div>
-      </div>
-      <div class="update-body">
-        <ul class="update-list" id="updateList">
-          <!-- Changes injected here -->
-        </ul>
-      </div>
-      <div class="update-footer">
-        <label class="checkbox-label">
-          <input type="checkbox" id="dontShowAgain">
-          Don't show again until next update
-        </label>
-        <button class="btn btn-primary" onclick="closeUpdateModal()">Got it!</button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // ==================== UPDATE CONFIGURATION ====================
-    const UPDATE_CONFIG = {
-      version: "2.2",
-      date: "January 28, 2026",
-      title: "🚀 What's New in NebulaHub",
-      changes: [
-        "💬 NEW: NebulaChat integration! Real-time chat with other users",
-        "🎨 Chat themes customizable in the Customize tab",
-        "🕵️ Disguise your tab as Google, Classroom, Docs, or Slides",
-        "🎨 Personalize icon colors, accent colors, and background effects",
-        "💾 Themes are saved automatically to your browser",
-        "📢 Added this update notification system"
-      ],
-      showOnce: true
-    };
-    // ==============================================================
+    // Configuration
+    const DEV_PASSWORD = "Ponchis721";
+    let isDevMode = false;
 
-    // Favicon Data URIs for tab cloaking
-    const FAVICONS = {
-      default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%2322c55e"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">NH</text></svg>',
-      google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">G</text></svg>',
-      classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2324a865"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">C</text></svg>',
-      docs: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234285F4"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">D</text></svg>',
-      slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
-    };
-
-    // ✅ Game data
-    const games = [
+    // Data - YOUR SPECIFIC GAME LIBRARY
+    let games = [
       { id: "geometry-dash", name: "Geometry Dash Lite", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "games/Geometry Dash Lite/Geometry Dash Lite.html" },
-      { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/" },
+      { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/ " },
       { id: "buckshot-roulette", name: "Buckshot Roulette", category: "horror", tags: ["casino", "psych-horror"], url: "games/Buckshot Roulette/Buckshot Roulette.html" },
       { id: "minecraft", name: "Minecraft Web", category: "sandbox", tags: ["minecraft", "survival", "blocks"], url: "games/Minecraft/Minecraft 1.21.4.html" },
       { id: "basketball-random", name: "Basketball Random", category: "arcade", tags: ["sports", "2-player", "random"], url: "games/Basketball Random/Basket Random.html" },
@@ -2087,7 +2474,7 @@
       { id: "fnaf-ps", name: "FNAF Pizza Sim", category: "horror", tags: ["fnaf", "tycoon"], url: "games/Five Nights at Freddy's Pizza Sim/Five Nights at Freddy's_ Pizza Simulator.html" },
       { id: "fnaf-ucn", name: "FNAF UCN", category: "horror", tags: ["fnaf", "custom"], url: "games/FNAF UCN/Five Nights at Freddy's_ Ultimate Custom Night.html" },
       { id: "fnaf-world", name: "FNAF World", category: "horror", tags: ["fnaf", "rpg"], url: "games/Five Nights at Freddy's World/Five Nights at Freddy's_ World.html" },
-      { id: "Robbie's Remastered", name: "Robbie's Remastered", category: "Horror", tags: ["Fnaf", "Pc game"], url: "https://serve.gamejolt.net/9f4180e05596b34a73f3575ffb88b229132e305fc9a74ee4b2f724f9be689843,1769810612,7/data/games/13/11/845011/files/674ab887625cb/index.html?gjapi_username=GAMERGEEK123&gjapi_token=kAxZPw" },
+      { id: "Robbie's Remastered", name: "Robbie's Remastered", category: "Horror", tags: ["Fnaf", "Pc game"], url: "https://serve.gamejolt.net/9f4180e05596b34a73f3575ffb88b229132e305fc9a74ee4b2f724f9be689843 ,1769810612,7/data/games/13/11/845011/files/674ab887625cb/index.html?gjapi_username=GAMERGEEK123&gjapi_token=kAxZPw" },
       { id: "A Bite at Freddy's", name: "A Bite at Freddy's", category: "horror", tags: ["fnaf", "pcgame"], url: "games/A Bite at Freddy's/A Bite at Freddy's.html" },
       { id: "Baldi's Basic", name: "Baldi's Basic", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics.html" },
       { id: "Baldi's Basic Classic Remastered", name: "Baldi's Basic Classic Remastered", category: "arcade", tags: ["horror"], url: "games/Baldi's Basics/Baldi's Basics Classic Remastered.html" },
@@ -2107,533 +2494,643 @@
       { id: "Midnight Shift", name: "Midnight Shift", category: "arcade", tags: ["fun"], url: "games/Midnight Shift/Midnight Shift.html" },
       { id: "Raft", name: "Raft", category: "arcade", tags: ["fun"], url: "games/Raft/Raft.html" },
       { id: "0V0", name: "0V0", category: "arcade", tags: ["fun"], url: "games/0V0/OvO.html" },
-      { id: "Game Request Form/Bug Report Form", name: "Game Request/Bug Report Form", category: "Report", tags: ["FeedBack"], url: "https://forms.gle/2X5VTJaARrx95gtS8" }
-      
+      { id: "Game Request Form/Bug Report Form", name: "Game Request/Bug Report Form", category: "Report", tags: ["FeedBack"], url: "https://forms.gle/2X5VTJaARrx95gtS8 " }
     ];
 
-    // elements
-    const gameGrid = document.getElementById("gameGrid");
-    const emptyState = document.getElementById("emptyState");
-    const searchInput = document.getElementById("searchInput");
-    const clearSearchBtn = document.getElementById("clearSearchBtn");
-    const filterChips = document.querySelectorAll(".filter-chip");
-    const statGames = document.getElementById("statGames");
-    const resultCountLabel = document.getElementById("resultCountLabel");
+    let apps = [
+      { id: "youtube", name: "YouTube", category: "media", tags: ["video", "streaming"], url: "https://www.youtube.com" },
+      { id: "proxy", name: "Proxy Browser", category: "utility", tags: ["browser", "web"], url: "https://www.google.com" }
+    ];
 
-    const libraryView = document.getElementById("libraryView");
-    const playerView = document.getElementById("playerView");
-    const customizeView = document.getElementById("customizeView");
-    const settingsView = document.getElementById("settingsView");
-    const chatView = document.getElementById("chatView");
-    const viewLibraryBtn = document.getElementById("viewLibraryBtn");
-    const viewPlayerBtn = document.getElementById("viewPlayerBtn");
-    const viewCustomizeBtn = document.getElementById("viewCustomizeBtn");
-    const viewSettingsBtn = document.getElementById("viewSettingsBtn");
-    const viewChatBtn = document.getElementById("viewChatBtn");
-    const playerGameName = document.getElementById("playerGameName");
-    const playerGameMeta = document.getElementById("playerGameMeta");
-    const playerIframe = document.getElementById("playerIframe");
-    const backToLibraryBtn = document.getElementById("backToLibraryBtn");
-    const openInNewTabBtn = document.getElementById("openInNewTabBtn");
-    const portalLink = document.getElementById("portalLink");
-    const yearSpan = document.getElementById("yearSpan");
+    let defaultAnnouncements = [
+      {
+        id: 1,
+        title: "🎉 Welcome to NebulaHub v2.5!",
+        date: new Date().toLocaleDateString(),
+        badge: "UPDATE",
+        content: "We've expanded our library!\n\n**New Features:**\n- Dev Mode with password protection\n- Expanded game library including FNAF series, Retro Bowl, and more\n- Better customization options\n- Data export/import functionality"
+      }
+    ];
 
-    // state
+    // State
     let activeCategory = "all";
     let activeSearch = "";
     let activeGame = null;
+    let activeApp = null;
     let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal";
 
-    // ==================== CUSTOMIZATION SYSTEM ====================
-    const customColors = {
-      brand: '#22c55e',
-      accent: '#8b5cf6',
-      accentStrong: '#22c55e',
-      bgGrad1: '#1f2937',
-      bgGrad2: '#111827',
-      overlay1: 'rgba(59,130,246,0.35)',
-      overlay2: 'rgba(236,72,153,0.3)',
-      chatSent: '#8b5cf6',
-      chatBg: '#0c1024'
-    };
+    // Elements
+    const libraryView = document.getElementById("libraryView");
+    const playerView = document.getElementById("playerView");
+    const appsLibraryView = document.getElementById("appsLibraryView");
+    const appPlayerView = document.getElementById("appPlayerView");
+    const surveysView = document.getElementById("surveysView");
+    const announcementsView = document.getElementById("announcementsView");
+    const customizeView = document.getElementById("customizeView");
+    const settingsView = document.getElementById("settingsView");
+    const devModeView = document.getElementById("devModeView");
+    const chatView = document.getElementById("chatView");
 
-    function syncColorInputs() {
-      document.getElementById('brandColorPicker').value = customColors.brand;
-      document.getElementById('brandColorText').value = customColors.brand;
-      document.getElementById('accentColorPicker').value = customColors.accent;
-      document.getElementById('accentColorText').value = customColors.accent;
-      document.getElementById('accentStrongPicker').value = customColors.accentStrong;
-      document.getElementById('accentStrongText').value = customColors.accentStrong;
-      document.getElementById('bgGrad1Picker').value = customColors.bgGrad1;
-      document.getElementById('bgGrad1Text').value = customColors.bgGrad1;
-      document.getElementById('bgGrad2Picker').value = customColors.bgGrad2;
-      document.getElementById('bgGrad2Text').value = customColors.bgGrad2;
+    // Initialize
+    document.addEventListener("DOMContentLoaded", () => {
+      loadData();
+      renderGrid();
+      renderAppsGrid();
+      renderAnnouncements();
+      setupEventListeners();
       
-      const hex1 = rgbToHex(customColors.overlay1) || '#3b82f6';
-      const hex2 = rgbToHex(customColors.overlay2) || '#ec4899';
-      document.getElementById('overlay1Picker').value = hex1;
-      document.getElementById('overlay1Text').value = customColors.overlay1;
-      document.getElementById('overlay2Picker').value = hex2;
-      document.getElementById('overlay2Text').value = customColors.overlay2;
+      if (localStorage.getItem('nebulahub-dev-mode') === 'true') {
+        activateDevMode();
+      }
+      
+      document.getElementById('yearSpan').textContent = new Date().getFullYear();
+    });
 
-      // Chat colors
-      document.getElementById('chatSentPicker').value = customColors.chatSent;
-      document.getElementById('chatSentText').value = customColors.chatSent;
-      document.getElementById('chatBgPicker').value = customColors.chatBg;
-      document.getElementById('chatBgText').value = customColors.chatBg;
+    function setupEventListeners() {
+      // Search
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        activeSearch = e.target.value;
+        document.getElementById('clearSearchBtn').style.display = activeSearch ? 'block' : 'none';
+        renderGrid();
+      });
+
+      document.getElementById('clearSearchBtn').addEventListener('click', () => {
+        document.getElementById('searchInput').value = '';
+        activeSearch = '';
+        document.getElementById('clearSearchBtn').style.display = 'none';
+        renderGrid();
+      });
+
+      // Filters
+      document.querySelectorAll('.filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeCategory = chip.dataset.category;
+          renderGrid();
+        });
+      });
+
+      // View buttons
+      document.getElementById('viewLibraryBtn').addEventListener('click', () => showView('library'));
+      document.getElementById('viewPlayerBtn').addEventListener('click', () => showView('player'));
+      document.getElementById('viewAppsBtn').addEventListener('click', () => showView('apps'));
+      document.getElementById('viewAppPlayerBtn').addEventListener('click', () => showView('appPlayer'));
+      document.getElementById('viewSurveysBtn').addEventListener('click', () => showView('surveys'));
+      document.getElementById('viewAnnouncementsBtn').addEventListener('click', () => showView('announcements'));
+      document.getElementById('viewCustomizeBtn').addEventListener('click', () => showView('customize'));
+      document.getElementById('viewSettingsBtn').addEventListener('click', () => showView('settings'));
+
+      // Back buttons
+      document.getElementById('backToLibraryBtn').addEventListener('click', () => showView('library'));
+      document.getElementById('backToAppsBtn').addEventListener('click', () => showView('apps'));
     }
 
-    function rgbToHex(rgba) {
-      if (!rgba || !rgba.includes('rgb')) return null;
-      const parts = rgba.match(/\d+/g);
-      if (!parts || parts.length < 3) return null;
-      return "#" + ((1 << 24) + (parseInt(parts[0]) << 16) + (parseInt(parts[1]) << 8) + parseInt(parts[2])).toString(16).slice(1);
+    // View Management
+    function showView(view) {
+      hideAllViews();
+      
+      // Update buttons
+      document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+      
+      switch(view) {
+        case 'library':
+          libraryView.style.display = 'block';
+          document.getElementById('viewLibraryBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Library';
+          renderGrid();
+          break;
+        case 'player':
+          playerView.style.display = 'flex';
+          document.getElementById('viewPlayerBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Now Playing';
+          break;
+        case 'apps':
+          appsLibraryView.style.display = 'block';
+          document.getElementById('viewAppsBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Apps';
+          renderAppsGrid();
+          break;
+        case 'appPlayer':
+          appPlayerView.style.display = 'flex';
+          document.getElementById('viewAppPlayerBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Now Running';
+          break;
+        case 'surveys':
+          surveysView.style.display = 'flex';
+          document.getElementById('viewSurveysBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Surveys';
+          break;
+        case 'announcements':
+          announcementsView.style.display = 'flex';
+          document.getElementById('viewAnnouncementsBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Announcements';
+          renderAnnouncements();
+          break;
+        case 'customize':
+          customizeView.style.display = 'flex';
+          document.getElementById('viewCustomizeBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Customize';
+          break;
+        case 'settings':
+          settingsView.style.display = 'flex';
+          document.getElementById('viewSettingsBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'Settings';
+          break;
+        case 'dev':
+          if (isDevMode) {
+            devModeView.style.display = 'flex';
+            document.getElementById('viewDevBtn').classList.add('active');
+            document.getElementById('sectionTitle').textContent = 'Dev Mode';
+          }
+          break;
+        case 'chat':
+          chatView.style.display = 'flex';
+          document.getElementById('viewChatBtn').classList.add('active');
+          document.getElementById('sectionTitle').textContent = 'NebulaChat';
+          break;
+      }
     }
 
-    function hexToRgba(hex, alpha = 0.35) {
-      const r = parseInt(hex.slice(1, 3), 16);
-      const g = parseInt(hex.slice(3, 5), 16);
-      const b = parseInt(hex.slice(5, 7), 16);
-      return `rgba(${r},${g},${b},${alpha})`;
+    function hideAllViews() {
+      libraryView.style.display = 'none';
+      playerView.style.display = 'none';
+      appsLibraryView.style.display = 'none';
+      appPlayerView.style.display = 'none';
+      surveysView.style.display = 'none';
+      announcementsView.style.display = 'none';
+      customizeView.style.display = 'none';
+      settingsView.style.display = 'none';
+      devModeView.style.display = 'none';
+      chatView.style.display = 'none';
+    }
+
+    // Game/App Rendering
+    function renderGrid() {
+      const grid = document.getElementById('gameGrid');
+      const empty = document.getElementById('emptyState');
+      const query = activeSearch.toLowerCase();
+      
+      const filtered = games.filter(g => {
+        const matchesCategory = activeCategory === 'all' || g.category === activeCategory;
+        const matchesSearch = !query || g.name.toLowerCase().includes(query) || g.tags.some(t => t.includes(query));
+        return matchesCategory && matchesSearch;
+      });
+
+      grid.innerHTML = '';
+      
+      if (filtered.length === 0) {
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        filtered.forEach(game => {
+          const card = document.createElement('article');
+          card.className = 'game-card';
+          const initials = game.name.split(' ').map(w => w[0]).join('').slice(0, 3);
+          
+          card.innerHTML = `
+            <div class="game-thumb"><span>${initials}</span></div>
+            <div class="game-name" title="${game.name}">${game.name}</div>
+            <div class="game-meta">
+              <span>${game.category.toUpperCase()}</span>
+              <span class="game-tag">${game.tags[0]}</span>
+            </div>
+          `;
+          card.onclick = () => openGame(game);
+          grid.appendChild(card);
+        });
+      }
+      
+      document.getElementById('statGames').textContent = games.length;
+      document.getElementById('resultCountLabel').textContent = filtered.length + ' RESULTS';
+    }
+
+    function renderAppsGrid() {
+      const grid = document.getElementById('appsGrid');
+      const empty = document.getElementById('appsEmptyState');
+      
+      grid.innerHTML = '';
+      
+      if (apps.length === 0) {
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        apps.forEach(app => {
+          const card = document.createElement('article');
+          card.className = 'game-card app-card';
+          const initials = app.name.split(' ').map(w => w[0]).join('').slice(0, 3);
+          
+          card.innerHTML = `
+            <div class="game-thumb" style="background: radial-gradient(circle at 30% 20%, var(--custom-accent-color), #0b1020);">
+              <span>${initials}</span>
+            </div>
+            <div class="game-name">${app.name}</div>
+            <div class="game-meta">
+              <span>${app.category.toUpperCase()}</span>
+              <span class="game-tag">${app.tags[0]}</span>
+            </div>
+          `;
+          card.onclick = () => openApp(app);
+          grid.appendChild(card);
+        });
+      }
+      
+      document.getElementById('statApps').textContent = apps.length;
+    }
+
+    function openGame(game) {
+      activeGame = game;
+      document.getElementById('playerGameName').textContent = game.name;
+      document.getElementById('playerGameMeta').textContent = game.category.toUpperCase() + ' • Embedded player';
+      document.getElementById('playerIframe').src = game.url;
+      document.getElementById('viewPlayerBtn').disabled = false;
+      document.getElementById('openInNewTabBtn').onclick = () => window.open(game.url, '_blank');
+      showView('player');
+    }
+
+    function openApp(app) {
+      activeApp = app;
+      document.getElementById('appPlayerName').textContent = app.name;
+      document.getElementById('appPlayerMeta').textContent = app.category.toUpperCase() + ' • App Player';
+      document.getElementById('appPlayerIframe').src = app.url;
+      document.getElementById('viewAppPlayerBtn').disabled = false;
+      document.getElementById('openAppInNewTabBtn').onclick = () => window.open(app.url, '_blank');
+      showView('appPlayer');
+    }
+
+    function openSurveyInNewTab() {
+      window.open('https://docs.google.com/forms', '_blank');
+    }
+
+    // Announcements
+    function renderAnnouncements() {
+      const container = document.getElementById('announcementsDisplay');
+      const saved = localStorage.getItem('nebulahub-announcements');
+      const data = saved ? JSON.parse(saved) : defaultAnnouncements;
+      
+      container.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'announcement-card';
+        
+        let content = item.content
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1">')
+          .replace(/(https?:\/\/[^\s]+\.(?:jpg|jpeg|png|gif|webp))/gi, '<img src="$1">');
+        
+        div.innerHTML = `
+          <div class="announcement-header">
+            <div>
+              <div class="announcement-title">${item.title}</div>
+              <div class="announcement-date">${item.date}</div>
+            </div>
+            <span class="announcement-badge">${item.badge}</span>
+          </div>
+          <div class="announcement-content">${content}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleAnnouncementEdit() {
+      if (!isDevMode) {
+        alert('Dev Mode required to edit announcements!');
+        return;
+      }
+      
+      const editor = document.getElementById('announcementEditor');
+      const isActive = editor.classList.contains('active');
+      
+      if (!isActive) {
+        const saved = localStorage.getItem('nebulahub-announcements');
+        document.getElementById('announcementTextarea').value = JSON.stringify(saved ? JSON.parse(saved) : defaultAnnouncements, null, 2);
+        editor.classList.add('active');
+        document.getElementById('editAnnouncementsBtn').textContent = '👁 View Mode';
+      } else {
+        editor.classList.remove('active');
+        document.getElementById('editAnnouncementsBtn').textContent = '✏️ Edit Announcements';
+      }
+    }
+
+    function saveAnnouncements() {
+      try {
+        const text = document.getElementById('announcementTextarea').value;
+        const data = JSON.parse(text);
+        localStorage.setItem('nebulahub-announcements', JSON.stringify(data));
+        renderAnnouncements();
+        toggleAnnouncementEdit();
+      } catch(e) {
+        alert('Invalid JSON format!');
+      }
+    }
+
+    function cancelEditAnnouncements() {
+      toggleAnnouncementEdit();
+    }
+
+    // Dev Mode Functions
+    function handleDevBtnClick() {
+      if (isDevMode) {
+        showView('dev');
+      } else {
+        showDevLogin();
+      }
+    }
+
+    function showDevLogin() {
+      document.getElementById('devLoginModal').classList.add('show');
+      document.getElementById('devPasswordInput').value = '';
+      document.getElementById('devPasswordInput').focus();
+      document.getElementById('devErrorMsg').classList.remove('show');
+    }
+
+    function hideDevLogin() {
+      document.getElementById('devLoginModal').classList.remove('show');
+    }
+
+    function checkDevPassword() {
+      const input = document.getElementById('devPasswordInput').value;
+      if (input === DEV_PASSWORD) {
+        hideDevLogin();
+        activateDevMode();
+      } else {
+        document.getElementById('devErrorMsg').classList.add('show');
+        document.getElementById('devPasswordInput').value = '';
+      }
+    }
+
+    function activateDevMode() {
+      isDevMode = true;
+      localStorage.setItem('nebulahub-dev-mode', 'true');
+      
+      // Show dev elements
+      document.getElementById('devModeBadge').classList.add('show');
+      document.getElementById('devSidebarSection').style.display = 'flex';
+      document.getElementById('editAnnouncementsBtn').style.display = 'inline-flex';
+      
+      // Populate dev editors
+      document.getElementById('devGamesEditor').value = JSON.stringify(games, null, 2);
+      document.getElementById('devAppsEditor').value = JSON.stringify(apps, null, 2);
+      
+      // If clicked from button, show dev view
+      showView('dev');
+    }
+
+    function exitDevMode() {
+      isDevMode = false;
+      localStorage.removeItem('nebulahub-dev-mode');
+      
+      document.getElementById('devModeBadge').classList.remove('show');
+      document.getElementById('devSidebarSection').style.display = 'none';
+      document.getElementById('editAnnouncementsBtn').style.display = 'none';
+      document.getElementById('announcementEditor').classList.remove('active');
+      
+      // If in dev view, switch to library
+      if (devModeView.style.display === 'flex') {
+        showView('library');
+      }
+    }
+
+    function hideDevView() {
+      showView('library');
+    }
+
+    function saveDevGames() {
+      try {
+        const text = document.getElementById('devGamesEditor').value;
+        games = JSON.parse(text);
+        localStorage.setItem('nebulahub-games', JSON.stringify(games));
+        renderGrid();
+        alert('Games library updated!');
+      } catch(e) {
+        alert('Invalid JSON format for games!');
+      }
+    }
+
+    function resetDevGames() {
+      document.getElementById('devGamesEditor').value = JSON.stringify(games, null, 2);
+    }
+
+    function saveDevApps() {
+      try {
+        const text = document.getElementById('devAppsEditor').value;
+        apps = JSON.parse(text);
+        localStorage.setItem('nebulahub-apps', JSON.stringify(apps));
+        renderAppsGrid();
+        alert('Apps library updated!');
+      } catch(e) {
+        alert('Invalid JSON format for apps!');
+      }
+    }
+
+    function resetDevApps() {
+      document.getElementById('devAppsEditor').value = JSON.stringify(apps, null, 2);
+    }
+
+    function applyDevLayout() {
+      const css = document.getElementById('devLayoutEditor').value;
+      let style = document.getElementById('dev-custom-css');
+      if (!style) {
+        style = document.createElement('style');
+        style.id = 'dev-custom-css';
+        document.head.appendChild(style);
+      }
+      style.textContent = css;
+      localStorage.setItem('nebulahub-dev-css', css);
+      alert('Custom CSS applied!');
+    }
+
+    function clearDevLayout() {
+      document.getElementById('devLayoutEditor').value = '';
+      const style = document.getElementById('dev-custom-css');
+      if (style) style.remove();
+      localStorage.removeItem('nebulahub-dev-css');
+    }
+
+    function exportAllData() {
+      const data = {
+        games: games,
+        apps: apps,
+        announcements: localStorage.getItem('nebulahub-announcements'),
+        theme: localStorage.getItem('site-theme'),
+        customTheme: localStorage.getItem('nebulahub-custom-theme'),
+        surveyUrl: localStorage.getItem('nebulahub-survey-url'),
+        panicUrl: localStorage.getItem('nebulahub-panic-url'),
+        css: localStorage.getItem('nebulahub-dev-css')
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'nebulahub-backup.json';
+      a.click();
+    }
+
+    function importDataPrompt() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const data = JSON.parse(event.target.result);
+            if (data.games) {
+              games = data.games;
+              localStorage.setItem('nebulahub-games', JSON.stringify(games));
+            }
+            if (data.apps) {
+              apps = data.apps;
+              localStorage.setItem('nebulahub-apps', JSON.stringify(apps));
+            }
+            if (data.announcements) localStorage.setItem('nebulahub-announcements', data.announcements);
+            if (data.css) {
+              localStorage.setItem('nebulahub-dev-css', data.css);
+              document.getElementById('devLayoutEditor').value = data.css;
+              applyDevLayout();
+            }
+            
+            renderGrid();
+            renderAppsGrid();
+            alert('Data imported successfully! Refreshing...');
+            location.reload();
+          } catch(err) {
+            alert('Error importing data: Invalid file format');
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    function clearAllData() {
+      if (confirm('WARNING: This will delete ALL saved data including games, apps, themes, and settings. Continue?')) {
+        localStorage.clear();
+        alert('All data cleared. Refreshing page...');
+        location.reload();
+      }
+    }
+
+    // Data Loading
+    function loadData() {
+      const savedGames = localStorage.getItem('nebulahub-games');
+      if (savedGames) games = JSON.parse(savedGames);
+      
+      const savedApps = localStorage.getItem('nebulahub-apps');
+      if (savedApps) apps = JSON.parse(savedApps);
+      
+      const savedCss = localStorage.getItem('nebulahub-dev-css');
+      if (savedCss) {
+        document.getElementById('devLayoutEditor').value = savedCss;
+        let style = document.getElementById('dev-custom-css');
+        if (!style) {
+          style = document.createElement('style');
+          style.id = 'dev-custom-css';
+          document.head.appendChild(style);
+        }
+        style.textContent = savedCss;
+      }
+    }
+
+    // Theme Functions
+    function saveCustomTheme() {
+      const colors = {
+        brand: document.getElementById('brandColorPicker').value,
+        accent: document.getElementById('accentColorPicker').value
+      };
+      localStorage.setItem('nebulahub-custom-theme', JSON.stringify(colors));
+      applyCustomColors();
+      document.getElementById('customActiveNotice').classList.add('show');
+      alert('Theme saved!');
+    }
+
+    function resetCustomTheme() {
+      localStorage.removeItem('nebulahub-custom-theme');
+      document.getElementById('brandColorPicker').value = '#22c55e';
+      document.getElementById('accentColorPicker').value = '#8b5cf6';
+      applyCustomColors();
+      document.getElementById('customActiveNotice').classList.remove('show');
     }
 
     function applyCustomColors() {
       const root = document.documentElement;
-      root.style.setProperty('--custom-brand-color', customColors.brand);
-      root.style.setProperty('--custom-accent-color', customColors.accent);
-      root.style.setProperty('--custom-accent-strong', customColors.accentStrong);
-      root.style.setProperty('--custom-bg-grad-1', customColors.bgGrad1);
-      root.style.setProperty('--custom-bg-grad-2', customColors.bgGrad2);
-      root.style.setProperty('--custom-overlay-1', customColors.overlay1);
-      root.style.setProperty('--custom-overlay-2', customColors.overlay2);
-      root.style.setProperty('--custom-chat-sent', customColors.chatSent);
-      root.style.setProperty('--custom-chat-bg', customColors.chatBg);
-      document.getElementById('customActiveNotice').classList.add('show');
-      updateChatPreview();
-    }
-
-    function saveCustomTheme() {
-      localStorage.setItem('nebulahub-custom-theme', JSON.stringify(customColors));
-      localStorage.setItem('nebulahub-theme-type', 'custom');
-      document.getElementById('themeSelector').value = 'nebula';
-      alert('Theme saved! Your custom colors will persist across sessions.');
-    }
-
-    function resetCustomTheme() {
-      customColors.brand = '#22c55e';
-      customColors.accent = '#8b5cf6';
-      customColors.accentStrong = '#22c55e';
-      customColors.bgGrad1 = '#1f2937';
-      customColors.bgGrad2 = '#111827';
-      customColors.overlay1 = 'rgba(59,130,246,0.35)';
-      customColors.overlay2 = 'rgba(236,72,153,0.3)';
-      customColors.chatSent = '#8b5cf6';
-      customColors.chatBg = '#0c1024';
-      syncColorInputs();
-      applyCustomColors();
-      localStorage.removeItem('nebulahub-custom-theme');
-      localStorage.removeItem('nebulahub-theme-type');
-      document.getElementById('customActiveNotice').classList.remove('show');
-    }
-
-    function previewTheme() {
-      applyCustomColors();
+      root.style.setProperty('--custom-brand-color', document.getElementById('brandColorPicker').value);
+      root.style.setProperty('--custom-accent-color', document.getElementById('accentColorPicker').value);
     }
 
     function applyPreset(name) {
       const presets = {
-        ocean: { brand: '#0ea5e9', accent: '#0284c7', accentStrong: '#38bdf8', bgGrad1: '#0c4a6e', bgGrad2: '#082f49', overlay1: 'rgba(14,165,233,0.4)', overlay2: 'rgba(56,189,248,0.3)', chatSent: '#0ea5e9', chatBg: '#082f49' },
-        sunset: { brand: '#f97316', accent: '#ea580c', accentStrong: '#fb923c', bgGrad1: '#7c2d12', bgGrad2: '#431407', overlay1: 'rgba(249,115,22,0.4)', overlay2: 'rgba(236,72,153,0.3)', chatSent: '#f97316', chatBg: '#431407' },
-        forest: { brand: '#22c55e', accent: '#16a34a', accentStrong: '#4ade80', bgGrad1: '#14532d', bgGrad2: '#052e16', overlay1: 'rgba(34,197,94,0.4)', overlay2: 'rgba(101,163,13,0.3)', chatSent: '#22c55e', chatBg: '#052e16' },
-        crimson: { brand: '#ef4444', accent: '#dc2626', accentStrong: '#f87171', bgGrad1: '#7f1d1d', bgGrad2: '#450a0a', overlay1: 'rgba(239,68,68,0.4)', overlay2: 'rgba(249,115,22,0.3)', chatSent: '#ef4444', chatBg: '#450a0a' },
-        gold: { brand: '#eab308', accent: '#ca8a04', accentStrong: '#facc15', bgGrad1: '#713f12', bgGrad2: '#422006', overlay1: 'rgba(234,179,8,0.4)', overlay2: 'rgba(251,191,36,0.3)', chatSent: '#eab308', chatBg: '#422006' },
-        purple: { brand: '#a855f7', accent: '#9333ea', accentStrong: '#c084fc', bgGrad1: '#581c87', bgGrad2: '#3b0764', overlay1: 'rgba(168,85,247,0.4)', overlay2: 'rgba(192,132,252,0.3)', chatSent: '#a855f7', chatBg: '#3b0764' }
+        ocean: { brand: '#0ea5e9', accent: '#0284c7' },
+        sunset: { brand: '#f97316', accent: '#ea580c' },
+        forest: { brand: '#22c55e', accent: '#16a34a' },
+        purple: { brand: '#a855f7', accent: '#9333ea' }
       };
       
       if (presets[name]) {
-        Object.assign(customColors, presets[name]);
-        syncColorInputs();
+        document.getElementById('brandColorPicker').value = presets[name].brand;
+        document.getElementById('accentColorPicker').value = presets[name].accent;
         applyCustomColors();
       }
     }
 
-    function updateChatPreview() {
-      const box = document.getElementById('chatPreviewBox');
-      if (box) {
-        box.style.background = customColors.chatBg;
-        const sent = box.querySelector('.sent');
-        if (sent) sent.style.background = customColors.chatSent;
-      }
-    }
-
-    // Color input listeners
-    ['brand', 'accent', 'accentStrong'].forEach(key => {
-      const picker = document.getElementById(key + 'ColorPicker');
-      const text = document.getElementById(key + 'ColorText');
-      if (picker) {
-        picker.addEventListener('input', (e) => {
-          customColors[key] = e.target.value;
-          if (text) text.value = e.target.value;
-        });
-      }
-      if (text) {
-        text.addEventListener('change', (e) => {
-          customColors[key] = e.target.value;
-          if (picker) picker.value = e.target.value;
-        });
-      }
-    });
-
-    ['bgGrad1', 'bgGrad2'].forEach(key => {
-      const picker = document.getElementById(key + 'Picker');
-      const text = document.getElementById(key + 'Text');
-      if (picker) {
-        picker.addEventListener('input', (e) => {
-          customColors[key] = e.target.value;
-          if (text) text.value = e.target.value;
-        });
-      }
-    });
-
-    document.getElementById('overlay1Picker').addEventListener('input', (e) => {
-      customColors.overlay1 = hexToRgba(e.target.value, 0.35);
-      document.getElementById('overlay1Text').value = customColors.overlay1;
-    });
-    document.getElementById('overlay2Picker').addEventListener('input', (e) => {
-      customColors.overlay2 = hexToRgba(e.target.value, 0.3);
-      document.getElementById('overlay2Text').value = customColors.overlay2;
-    });
-
-    // Chat customization listeners
-    document.getElementById('chatSentPicker').addEventListener('input', (e) => {
-      customColors.chatSent = e.target.value;
-      document.getElementById('chatSentText').value = e.target.value;
-      document.documentElement.style.setProperty('--custom-chat-sent', e.target.value);
-      updateChatPreview();
-    });
-    document.getElementById('chatBgPicker').addEventListener('input', (e) => {
-      customColors.chatBg = e.target.value;
-      document.getElementById('chatBgText').value = e.target.value;
-      document.documentElement.style.setProperty('--custom-chat-bg', e.target.value);
-      updateChatPreview();
-    });
-
-    // ==================== TAB CLOAKING SYSTEM ====================
-    document.querySelectorAll('.favicon-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      });
-    });
-
+    // Cloaking
     function applyTabCloak() {
-      const title = document.getElementById('tabTitleInput').value.trim();
-      const faviconType = document.querySelector('.favicon-btn.active').dataset.favicon;
-      
+      const title = document.getElementById('tabTitleInput').value;
       if (title) {
         document.title = title;
         localStorage.setItem('nebulahub-cloak-title', title);
       }
       
+      const favicon = document.querySelector('.favicon-btn.active').dataset.favicon;
+      localStorage.setItem('nebulahub-cloak-favicon', favicon);
+      
       let link = document.querySelector("link[rel*='icon']");
       if (!link) {
         link = document.createElement('link');
-        link.rel = 'shortcut icon';
-        link.type = 'image/svg+xml';
+        link.rel = 'icon';
         document.head.appendChild(link);
       }
-      link.href = FAVICONS[faviconType];
       
-      localStorage.setItem('nebulahub-cloak-favicon', faviconType);
+      const svgs = {
+        default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%2322c55e" width="100" height="100" rx="20"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle">NH</text></svg>',
+        google: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%234285F4" width="100" height="100"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle">G</text></svg>',
+        classroom: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%2324a865" width="100" height="100"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle">C</text></svg>'
+      };
       
-      const btn = document.querySelector('button[onclick="applyTabCloak()"]');
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '✅ Applied!';
-      setTimeout(() => {
-        btn.innerHTML = originalText;
-      }, 1500);
+      link.href = svgs[favicon];
+      alert('Cloak applied!');
     }
 
     function resetTabCloak() {
       document.title = 'NEBULAHUB';
-      document.getElementById('tabTitleInput').value = '';
-      
-      let link = document.querySelector("link[rel*='icon']");
+      const link = document.querySelector("link[rel*='icon']");
       if (link) link.remove();
-      
-      document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('[data-favicon="default"]').classList.add('active');
-      
       localStorage.removeItem('nebulahub-cloak-title');
       localStorage.removeItem('nebulahub-cloak-favicon');
     }
 
     function savePanicUrl() {
-      const url = document.getElementById('panicUrlInput').value.trim();
+      const url = document.getElementById('panicUrlInput').value;
       if (url) {
-        panicUrl = url;
         localStorage.setItem('nebulahub-panic-url', url);
-        alert('Panic button URL saved!');
+        panicUrl = url;
+        alert('Panic URL saved!');
       }
-    }
-
-    function loadTabCloak() {
-      const savedTitle = localStorage.getItem('nebulahub-cloak-title');
-      const savedFavicon = localStorage.getItem('nebulahub-cloak-favicon');
-      
-      if (savedTitle) {
-        document.title = savedTitle;
-        document.getElementById('tabTitleInput').value = savedTitle;
-      }
-      
-      if (savedFavicon && FAVICONS[savedFavicon]) {
-        let link = document.querySelector("link[rel*='icon']");
-        if (!link) {
-          link = document.createElement('link');
-          link.rel = 'shortcut icon';
-          link.type = 'image/svg+xml';
-          document.head.appendChild(link);
-        }
-        link.href = FAVICONS[savedFavicon];
-        
-        document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
-        const btn = document.querySelector(`[data-favicon="${savedFavicon}"]`);
-        if (btn) btn.classList.add('active');
-      }
-    }
-
-    // ==================== UPDATE MODAL SYSTEM ====================
-    function showUpdateModal() {
-      const lastSeen = localStorage.getItem('nebulahub-update-seen');
-      const savedVersion = localStorage.getItem('nebulahub-update-version');
-      
-      if (UPDATE_CONFIG.showOnce && savedVersion === UPDATE_CONFIG.version && lastSeen === 'true') {
-        return;
-      }
-      
-      document.getElementById('updateTitle').textContent = UPDATE_CONFIG.title;
-      document.getElementById('updateDate').textContent = UPDATE_CONFIG.date;
-      
-      const list = document.getElementById('updateList');
-      list.innerHTML = UPDATE_CONFIG.changes.map(change => `<li>${change}</li>`).join('');
-      
-      document.getElementById('updateModal').classList.add('show');
     }
 
     function closeUpdateModal() {
-      const dontShow = document.getElementById('dontShowAgain').checked;
-      if (dontShow && UPDATE_CONFIG.showOnce) {
-        localStorage.setItem('nebulahub-update-seen', 'true');
-        localStorage.setItem('nebulahub-update-version', UPDATE_CONFIG.version);
-      }
       document.getElementById('updateModal').classList.remove('show');
     }
-
-    // ==================== CORE FUNCTIONS ====================
-    function renderGrid() {
-      const query = activeSearch.trim().toLowerCase();
-      const filtered = games.filter(game => {
-        const matchesCategory = activeCategory === "all" || game.category === activeCategory;
-        const haystack = (game.name + " " + (game.tags || []).join(" ")).toLowerCase();
-        const matchesSearch = query === "" || haystack.includes(query);
-        return matchesCategory && matchesSearch;
-      });
-
-      gameGrid.innerHTML = "";
-
-      if (filtered.length === 0) {
-        emptyState.style.display = "block";
-      } else {
-        emptyState.style.display = "none";
-        filtered.forEach(game => {
-          const card = document.createElement("article");
-          card.className = "game-card";
-
-          const initials = game.name
-            .split(" ")
-            .map(w => w[0]?.toUpperCase() || "")
-            .join("")
-            .slice(0, 3);
-
-          card.innerHTML = `
-            <div class="game-thumb"><span>${initials}</span></div>
-            <div class="game-name" title="${game.name}">${game.name}</div>
-            <div class="game-meta">
-              <span>${(game.category || "game").toUpperCase()}</span>
-              <span class="game-tag">${(game.tags && game.tags[0]) ? game.tags[0] : "game"}</span>
-            </div>
-          `;
-
-          card.addEventListener("click", () => openGame(game));
-          gameGrid.appendChild(card);
-        });
-      }
-
-      statGames.textContent = games.length;
-      resultCountLabel.textContent =
-        filtered.length + " RESULT" + (filtered.length === 1 ? "" : "S");
-    }
-
-    function openGame(game) {
-      activeGame = game;
-      playerGameName.textContent = game.name;
-      playerGameMeta.textContent = (game.category || "game").toUpperCase() + " • Embedded player";
-      playerIframe.src = game.url;
-      showPlayerView();
-    }
-
-    function showPlayerView() {
-      libraryView.style.display = "none";
-      customizeView.style.display = "none";
-      settingsView.style.display = "none";
-      chatView.style.display = "none";
-      playerView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewPlayerBtn.classList.add("active");
-      viewPlayerBtn.disabled = false;
-    }
-
-    function showLibraryView() {
-      playerIframe.src = "";
-      playerView.style.display = "none";
-      customizeView.style.display = "none";
-      settingsView.style.display = "none";
-      chatView.style.display = "none";
-      libraryView.style.display = "block";
-      viewLibraryBtn.classList.add("active");
-      viewPlayerBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewPlayerBtn.disabled = !activeGame;
-    }
-
-    function showCustomizeView() {
-      playerIframe.src = "";
-      playerView.style.display = "none";
-      libraryView.style.display = "none";
-      settingsView.style.display = "none";
-      chatView.style.display = "none";
-      customizeView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewPlayerBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewCustomizeBtn.classList.add("active");
-      viewPlayerBtn.disabled = !activeGame;
-    }
-
-    function showSettingsView() {
-      playerIframe.src = "";
-      playerView.style.display = "none";
-      libraryView.style.display = "none";
-      customizeView.style.display = "none";
-      chatView.style.display = "none";
-      settingsView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewPlayerBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewChatBtn.classList.remove("active");
-      viewSettingsBtn.classList.add("active");
-      viewPlayerBtn.disabled = !activeGame;
-    }
-
-    function showChatView() {
-      playerIframe.src = "";
-      playerView.style.display = "none";
-      libraryView.style.display = "none";
-      customizeView.style.display = "none";
-      settingsView.style.display = "none";
-      chatView.style.display = "flex";
-      viewLibraryBtn.classList.remove("active");
-      viewPlayerBtn.classList.remove("active");
-      viewCustomizeBtn.classList.remove("active");
-      viewSettingsBtn.classList.remove("active");
-      viewChatBtn.classList.add("active");
-      viewPlayerBtn.disabled = !activeGame;
-      
-      if (!supabaseClient) initSupabase();
-    }
-
-    searchInput.addEventListener("input", () => {
-      activeSearch = searchInput.value;
-      clearSearchBtn.style.display = activeSearch.trim().length > 0 ? "block" : "none";
-      renderGrid();
-    });
-
-    clearSearchBtn.addEventListener("click", () => {
-      searchInput.value = "";
-      activeSearch = "";
-      clearSearchBtn.style.display = "none";
-      searchInput.focus();
-      renderGrid();
-    });
-
-    filterChips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        filterChips.forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-        activeCategory = chip.dataset.category || "all";
-        renderGrid();
-      });
-    });
-
-    viewLibraryBtn.addEventListener("click", showLibraryView);
-    viewPlayerBtn.addEventListener("click", () => { if (activeGame) showPlayerView(); });
-    viewCustomizeBtn.addEventListener("click", showCustomizeView);
-    viewSettingsBtn.addEventListener("click", showSettingsView);
-    viewChatBtn.addEventListener("click", showChatView);
-    backToLibraryBtn.addEventListener("click", showLibraryView);
-
-    openInNewTabBtn.addEventListener("click", () => {
-      if (activeGame && activeGame.url) window.open(activeGame.url, "_blank");
-    });
-
-    portalLink.addEventListener("click", () => {
-      location.hash = (location.hash === "#portal") ? "" : "#portal";
-      location.reload();
-    });
-
-    const themeSelector = document.getElementById("themeSelector");
-    const savedTheme = localStorage.getItem("site-theme") || "nebula";
-    document.documentElement.setAttribute("data-theme", savedTheme);
-    themeSelector.value = savedTheme;
-
-    themeSelector.addEventListener("change", () => {
-      const newTheme = themeSelector.value;
-      document.documentElement.setAttribute("data-theme", newTheme);
-      localStorage.setItem("site-theme", newTheme);
-      localStorage.removeItem('nebulahub-theme-type');
-      document.getElementById('customActiveNotice').classList.remove('show');
-    });
 
     function panicHide() {
       window.location.href = panicUrl;
     }
 
-    function loadSavedCustomTheme() {
-      const saved = localStorage.getItem('nebulahub-custom-theme');
-      const themeType = localStorage.getItem('nebulahub-theme-type');
-      
-      if (saved && themeType === 'custom') {
-        try {
-          const parsed = JSON.parse(saved);
-          Object.assign(customColors, parsed);
-          syncColorInputs();
-          applyCustomColors();
-          document.getElementById('customActiveNotice').classList.add('show');
-        } catch(e) {
-          console.error('Failed to load custom theme');
-        }
-      }
-    }
-
     // ==================== NEBULACHAT SYSTEM ====================
     const SUPABASE_CONFIG = {
-      url: 'https://eatwwxzrnsyxuzkfckal.supabase.co',
+      url: 'https://eatwwxzrnsyxuzkfckal.supabase.co ',
       anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhdHd3eHpybnN5eHV6a2Zja2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM0MjgsImV4cCI6MjA3OTQ5OTQyOH0.UZoqLR93nMHoK_zQAEndaSntx9F05CXLEKMNGDyi9qc'
     };
 
@@ -2811,21 +3308,18 @@
       if (e.key === 'Enter') sendMessage();
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-      if (location.hash === "#portal") document.body.classList.add("portal-mode");
-      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-      
-      loadSavedCustomTheme();
-      loadTabCloak();
-      
-      const savedPanic = localStorage.getItem('nebulahub-panic-url');
-      if (savedPanic) {
-        panicUrl = savedPanic;
-        document.getElementById('panicUrlInput').value = savedPanic;
+    // Keyboard shortcut for dev mode (Ctrl+Shift+D)
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+        e.preventDefault();
+        showDevLogin();
       }
-      
-      renderGrid();
-      setTimeout(showUpdateModal, 1000);
+    });
+
+    // Initialize chat button
+    document.getElementById('viewChatBtn').addEventListener('click', () => {
+      showView('chat');
+      if (!supabaseClient) initSupabase();
     });
   </script>
 </body>
