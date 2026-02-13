@@ -28,6 +28,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
+    /* ============================================================
+       NEBULAHUB — STYLESHEET
+       ============================================================
+       TABLE OF CONTENTS
+       ----------------------------------------------------------
+       1.  CSS VARIABLES & ROOT
+       2.  BASE / RESET / BODY
+       3.  LAYOUT — APP SHELL & SIDEBAR
+       4.  LIBRARY — GAME GRID & CARDS
+       5.  PLAYER VIEW
+       6.  DEVELOPER MODE
+       7.  UPDATE MODAL
+       8.  PORTAL MODE
+       9.  THEMES
+       10. NEBULACHAT
+       11. ANNOUNCEMENTS & SURVEY
+       12. SOLAR UI — BRAND & SEARCH BAR
+       13. SOLAR UI — BOTTOM DOCK
+       14. SOLAR UI — FULL-SCREEN PANELS
+       15. UI TOGGLE DROPDOWN
+       ============================================================ */
+
+    /* ============================================================
+       1. CSS VARIABLES & ROOT
+       ============================================================ */
     :root {
       --bg: #030014;
       --bg-elevated: #06051c;
@@ -55,6 +80,9 @@
       --custom-chat-bg: #0c1024;
     }
 
+    /* ============================================================
+       2. BASE / RESET / BODY
+       ============================================================ */
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -108,6 +136,9 @@
       100% { transform: translate3d(-40px, -60px, 0); }
     }
 
+    /* ============================================================
+       3. LAYOUT — APP SHELL & SIDEBAR
+       ============================================================ */
     .app-shell {
       width: 100%;
       max-width: 1200px;
@@ -484,6 +515,9 @@
       flex: 1;
     }
 
+    /* ============================================================
+       4. LIBRARY — GAME GRID & CARDS
+       ============================================================ */
     .game-grid {
       display:grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -592,6 +626,9 @@
 
     .empty-state strong { color:#e5e7eb; }
 
+    /* ============================================================
+       5. PLAYER VIEW
+       ============================================================ */
     .player-view { display:none; flex-direction:column; gap:8px; }
 
     .player-header {
@@ -672,7 +709,9 @@
       text-decoration-style: dotted;
     }
 
-    /* Developer Mode Styles */
+    /* ============================================================
+       6. DEVELOPER MODE
+       ============================================================ */
     .dev-view {
       display: none;
       flex-direction: column;
@@ -992,7 +1031,9 @@
     .favicon-btn span:last-child { font-size: 0.75rem; color: var(--text-soft); }
     .favicon-btn.active span:last-child { color: var(--text); font-weight: 600; }
 
-    /* Update Modal */
+    /* ============================================================
+       7. UPDATE MODAL
+       ============================================================ */
     .update-modal {
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.8);
@@ -1063,7 +1104,9 @@
     .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-soft); cursor: pointer; }
     .checkbox-label input[type="checkbox"] { accent-color: var(--custom-accent-color); width: 16px; height: 16px; cursor: pointer; }
 
-    /* Portal Mode */
+    /* ============================================================
+       8. PORTAL MODE
+       ============================================================ */
     body.portal-mode { background:#f9fafb; color:#111827; }
     body.portal-mode::before, body.portal-mode::after { display:none; }
     body.portal-mode .app-shell { background:#fff; border-radius:0; border:1px solid #e5e7eb; box-shadow:none; }
@@ -1081,7 +1124,10 @@
     body.portal-mode .favicon-btn.active { background: rgba(99,102,241,0.1); border-color: #4f46e5; }
     body.portal-mode .feature-item, body.portal-mode .game-edit-item { background: #ffffff; border-color: #e5e7eb; }
 
-    /* THEMES */
+    /* ============================================================
+       9. THEMES
+       (data-theme attribute on <html> — options: nebula / midnight / bubblegum / matrix / minecraft)
+       ============================================================ */
     :root[data-theme="nebula"] { --bg: #050816; --bg-elevated: #0b1020; --bg-soft: #11182a; --accent: #4f46e5; --accent-soft: rgba(79, 70, 229, 0.25); --accent-strong: #22c55e; --text: #e5e7eb; --text-soft: #9ca3af; }
     :root[data-theme="midnight"] { --bg: #010409; --bg-elevated: #0d1117; --bg-soft: #161b22; --accent: #58a6ff; --accent-soft: rgba(88,166,255,0.23); --accent-strong: #238636; --text: #c9d1d9; --text-soft: #8b949e; }
     :root[data-theme="bubblegum"] { --bg: #ffe4f1; --bg-elevated: #ffd6ec; --bg-soft: #ffcae6; --accent: #ff4fa3; --accent-soft: rgba(255, 79, 163, 0.23); --accent-strong: #ff1e80; --text: #3a0035; --text-soft: #5f1a50; }
@@ -1099,7 +1145,9 @@
     .theme-active-notice.show { display: block; }
     body.portal-mode .theme-active-notice { background: rgba(34,197,94,0.05); color: #059669; border-color: rgba(34,197,94,0.2); }
 
-    /* ==================== NEBULACHAT STYLES ==================== */
+    /* ============================================================
+       10. NEBULACHAT
+       ============================================================ */
     .chat-view { display: none; flex-direction: column; gap: 16px; animation: fadeIn 0.3s ease; height: 70vh; min-height: 500px; }
 
     .chat-container { display: grid; grid-template-columns: 260px 1fr; gap: 16px; height: 100%; background: var(--bg-elevated); border-radius: 22px; border: 1px solid rgba(148,163,184,0.3); overflow: hidden; }
@@ -1159,7 +1207,9 @@
     .chat-preview-msg.received { background: var(--bg-elevated); color: var(--text); border: 1px solid rgba(148,163,184,0.3); align-self: flex-start; }
     .chat-preview-msg.sent { background: var(--custom-chat-sent, var(--custom-accent-color)); color: white; align-self: flex-end; }
 
-    /* ==================== ANNOUNCEMENTS & SURVEY ==================== */
+    /* ============================================================
+       11. ANNOUNCEMENTS & SURVEY
+       ============================================================ */
     .announcements-view, .survey-view { display: none; flex-direction: column; gap: 20px; animation: fadeIn 0.3s ease; max-height: 75vh; overflow-y: auto; }
 
     .announcement-card { background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(30,64,175,0.05)); border: 1px solid rgba(139,92,246,0.3); border-radius: 20px; padding: 24px; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
@@ -1185,7 +1235,9 @@
     .survey-frame-container { flex: 1; position: relative; background: #fff; }
     .survey-frame { width: 100%; height: 100%; border: none; background: #fff; }
 
-    /* ==================== NEBULAHUB UI (renamed from Coreus) ==================== */
+    /* ============================================================
+       12. SOLAR UI — BRAND, SEARCH BAR & PROXY SELECTOR
+       ============================================================ */
     .nebulahub-ui {
       display: none;
       flex-direction: column;
@@ -1369,7 +1421,9 @@
       border: none;
     }
 
-    /* ==================== BOTTOM HOTBAR (NebulaHub minimal UI) ==================== */
+    /* ============================================================
+       13. SOLAR UI — BOTTOM DOCK
+       ============================================================ */
     .nebulahub-dock {
       position: fixed;
       bottom: 28px;
@@ -1457,27 +1511,27 @@
 
     body.portal-mode .nebulahub-dock-item:hover { background: rgba(99,102,241,0.1); }
 
-    /* ==================== MINIMAL UI PANELS ==================== */
-    /* Shared panel container */
+    /* ============================================================
+       14. SOLAR UI — FULL-SCREEN PANELS
+       (library / player / news / survey / chat / customize / settings / dev)
+       ============================================================ */
     .minimal-panel {
       display: none;
-      width: 100%;
-      max-width: 860px;
-      background: rgba(6,5,28,0.92);
-      border: 1px solid rgba(139,92,246,0.35);
-      border-radius: 24px;
-      overflow: hidden;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
-      animation: panelIn 0.25s cubic-bezier(0.34,1.2,0.64,1);
-      max-height: 72vh;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      bottom: 88px; /* dock is ~70px + 18px gap */
+      background: rgba(3, 0, 20, 0.98);
+      backdrop-filter: blur(28px) saturate(1.4);
       flex-direction: column;
+      z-index: 200;
+      overflow: hidden;
+      animation: panelIn 0.2s ease-out;
     }
     .minimal-panel.show { display: flex; }
 
     @keyframes panelIn {
-      from { opacity:0; transform: translateY(20px) scale(0.97); }
-      to   { opacity:1; transform: translateY(0) scale(1); }
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* Panel header */
@@ -1485,9 +1539,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
+      padding: 18px 36px;
       border-bottom: 1px solid rgba(139,92,246,0.2);
-      background: rgba(15,23,42,0.6);
+      background: rgba(6,5,28,0.9);
       flex-shrink: 0;
     }
 
@@ -1516,15 +1570,15 @@
     /* Panel body scroll */
     .mp-body {
       overflow-y: auto;
-      padding: 16px 20px;
+      padding: 24px 36px;
       flex: 1;
     }
 
     /* ---- LIBRARY PANEL ---- */
     .mp-game-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
     }
 
     .mp-game-card {
@@ -1540,7 +1594,7 @@
     .mp-game-card:hover { transform: translateY(-3px); border-color: rgba(139,92,246,0.8); box-shadow: 0 12px 28px rgba(0,0,0,0.5); }
 
     .mp-game-thumb {
-      height: 68px; border-radius: 10px;
+      height: 90px; border-radius: 12px;
       background: radial-gradient(circle at 30% 20%, var(--custom-brand-color), #0b1020);
       display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; color: #e5e7eb;
@@ -1790,7 +1844,9 @@
 
     .mp-config-area { width:100%; min-height:80px; background:rgba(0,0,0,0.5); border:1px solid rgba(148,163,184,0.3); border-radius:8px; padding:10px; color:#a5f3fc; font-family:monospace; font-size:0.7rem; word-break:break-all; resize:vertical; }
 
-    /* UI Toggle */
+    /* ============================================================
+       15. UI TOGGLE DROPDOWN
+       ============================================================ */
     .ui-toggle-container { position: relative; }
 
     .ui-toggle-btn {
@@ -1850,7 +1906,9 @@
   </style>
 </head>
 <body>
-  <!-- MAIN NEBULAHUB UI (Full portal) -->
+  <!-- ============================================================
+       FULL HUB UI  (visible when mode = 'nebulahub')
+       ============================================================ -->
   <div class="app-shell" id="nebulaHubUI">
     <header class="top-bar">
       <div class="brand">
@@ -1895,11 +1953,11 @@
                 <span class="ui-option-desc">Full game portal</span>
               </div>
             </div>
-            <div class="ui-option" onclick="switchUI('minimal')" id="optionMinimal">
+            <div class="ui-option" onclick="switchUI('solar')" id="optionMinimal">
               <div class="ui-option-icon" style="background: linear-gradient(135deg, #22c55e, #16a34a);">⚡</div>
               <div class="ui-option-text">
-                <span class="ui-option-label">NebulaHub Minimal</span>
-                <span class="ui-option-desc">Clean launcher mode</span>
+                <span class="ui-option-label">Solar UI</span>
+                <span class="ui-option-desc">Solar UI — clean launcher</span>
               </div>
             </div>
           </div>
@@ -2330,7 +2388,9 @@
     </div>
   </div>
 
-  <!-- ==================== NEBULAHUB MINIMAL UI (renamed from Coreus) ==================== -->
+  <!-- ============================================================
+       SOLAR UI  (visible when mode = 'solar')
+       ============================================================ -->
   <div class="nebulahub-ui" id="nebulaHubMinimalUI">
     
     <!-- Animated NebulaHub Logo & Brand -->
@@ -2405,7 +2465,10 @@
       <iframe id="nebulaResultsIframe" src="" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
     </div>
 
-    <!-- ==================== MINIMAL UI PANELS ==================== -->
+    <!-- ============================================================
+         SOLAR UI — FULL-SCREEN PANELS
+         (each panel is position:fixed, toggled via .show class)
+         ============================================================ -->
 
     <!-- LIBRARY PANEL -->
     <div class="minimal-panel" id="mpLibrary">
@@ -2429,7 +2492,7 @@
     </div>
 
     <!-- PLAYER PANEL -->
-    <div class="minimal-panel" id="mpPlayer" style="max-height:80vh;">
+    <div class="minimal-panel" id="mpPlayer">
       <div class="mp-header">
         <div class="mp-title">▶️ <span id="mpPlayerTitle">Now Playing</span></div>
         <div style="display:flex;gap:8px;">
@@ -2452,7 +2515,7 @@
     </div>
 
     <!-- SURVEY PANEL -->
-    <div class="minimal-panel" id="mpSurvey" style="max-height:80vh;">
+    <div class="minimal-panel" id="mpSurvey">
       <div class="mp-header">
         <div class="mp-title">📋 <span>Community Survey</span></div>
         <button class="mp-close" onclick="closeMinimalPanel('mpSurvey')">✕</button>
@@ -2461,7 +2524,7 @@
     </div>
 
     <!-- CHAT PANEL -->
-    <div class="minimal-panel" id="mpChat" style="max-height:78vh;">
+    <div class="minimal-panel" id="mpChat">
       <div class="mp-header">
         <div class="mp-title">💬 <span>NebulaChat</span> <span style="font-size:0.75rem;color:var(--text-soft);font-weight:400;" id="mpChatStatus">· Connecting...</span></div>
         <button class="mp-close" onclick="closeMinimalPanel('mpChat')">✕</button>
@@ -2625,7 +2688,9 @@
       </div>
     </div>
 
-    <!-- Bottom Hotbar Dock with all tabs from main UI -->
+    <!-- ============================================================
+         BOTTOM DOCK  (shared between Solar UI and Full Hub)
+         ============================================================ -->
     <div class="nebulahub-dock" id="nebulaHubDock">
       <!-- Back to full UI -->
       <div class="nebulahub-dock-item" onclick="switchUI('nebulahub')" data-tip="Full Hub">🌌</div>
@@ -2666,6 +2731,9 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       MODALS
+       ============================================================ -->
   <!-- Username Setup Modal -->
   <div id="usernameModal" class="username-modal">
     <div class="username-card">
@@ -2718,7 +2786,42 @@
   </div>
 
   <script>
-    // ==================== PROXY CONFIGURATION ====================
+    /* ============================================================
+       NEBULAHUB — JAVASCRIPT
+       ============================================================
+       TABLE OF CONTENTS
+       ----------------------------------------------------------
+       §1   PROXY CONFIGURATION         (search engines & UV proxy)
+       §2   SOLAR UI PANEL SYSTEM       (open/close full-screen panels)
+       §3   SOLAR UI — LIBRARY PANEL    (game grid, search, filter)
+       §4   SOLAR UI — NEWS PANEL       (announcements renderer)
+       §5   SOLAR UI — SURVEY PANEL     (Google Form iframe)
+       §6   SOLAR UI — CHAT PANEL       (room switching, send, render)
+       §7   SOLAR UI — CUSTOMIZE PANEL  (color pickers sync)
+       §8   SOLAR UI — SETTINGS PANEL   (cloak, panic, theme)
+       §9   SOLAR UI — DEV PANEL        (features, CSS editor, game mgr)
+       §10  DOCK TAB HANDLER            (routes dock clicks → correct UI)
+       §11  UI TOGGLE SYSTEM            (switchUI, Solar ↔ Full Hub)
+       §12  ANNOUNCEMENTS               (data array + MAX_DISPLAYED)
+       §13  SURVEY                      (SURVEY_URL constant)
+       §14  UPDATE MODAL CONFIG         (version, changelog entries)
+       §15  FAVICONS                    (tab-cloak icon presets)
+       §16  GAME LIBRARY DATA           (games[] array — add games here)
+       §17  CORE STATE VARIABLES        (activeCategory, activeGame…)
+       §18  ANNOUNCEMENTS SYSTEM        (render, badge, unread count)
+       §19  SURVEY SYSTEM               (renderSurveyView)
+       §20  DEVELOPER MODE SYSTEM       (devMode object — auth, features)
+       §21  CUSTOMIZATION SYSTEM        (colors, presets, applyCustomColors)
+       §22  TAB CLOAKING SYSTEM         (title + favicon spoofing)
+       §23  UPDATE MODAL                (showUpdateModal, close)
+       §24  CORE FUNCTIONS              (renderGrid, showView helpers)
+       §25  NEBULACHAT SYSTEM           (Supabase realtime chat)
+       §26  INIT                        (DOMContentLoaded bootstrap)
+       ============================================================ */
+
+    // ================================================================
+    // §1  PROXY CONFIGURATION
+    // ================================================================
     let activeProxy = 'duckduckgo';
 
     const PROXY_CONFIG = {
@@ -2802,7 +2905,9 @@
       document.getElementById('nebulaSearchInput').value = '';
     }
 
-    // ==================== MINIMAL UI PANEL SYSTEM ====================
+    // ================================================================
+    // §2  SOLAR UI PANEL SYSTEM
+    // ================================================================
     let mpActivePanel = null;
     let mpCurrentGameUrl = '';
     let mpActiveCategory = 'all';
@@ -2841,7 +2946,9 @@
       document.querySelectorAll('.nebulahub-dock-item').forEach(d => d.classList.remove('active-dock-item'));
     }
 
-    // ---- LIBRARY PANEL ----
+    // ----------------------------------------------------------------
+    // §3  SOLAR UI — LIBRARY PANEL
+    // ----------------------------------------------------------------
     function mpRenderLibrary() {
       const query = (document.getElementById('mpSearchInput')?.value || '').toLowerCase().trim();
       const grid = document.getElementById('mpGameGrid');
@@ -2853,16 +2960,25 @@
         return catMatch && (query === '' || hay.includes(query));
       });
 
-      grid.innerHTML = filtered.map(g => {
+      grid.innerHTML = filtered.map((g, i) => {
         const initials = g.name.split(' ').map(w => w[0]?.toUpperCase()||'').join('').slice(0,3);
+        // Use data-index to avoid quote-escaping issues in onclick
+        const idx = games.indexOf(g);
         return `
-          <div class="mp-game-card" onclick="mpOpenGame(${JSON.stringify(g.url)}, ${JSON.stringify(g.name)})">
+          <div class="mp-game-card" data-game-idx="${idx}" onclick="mpOpenGameByIndex(this)">
             <div class="mp-game-thumb">${initials}</div>
             <div class="mp-game-name" title="${g.name}">${g.name}</div>
             <div class="mp-game-cat">${(g.category||'game').toUpperCase()}</div>
           </div>
         `;
       }).join('') || '<div style="padding:20px;text-align:center;color:var(--text-soft);">No matches found.</div>';
+    }
+
+    function mpOpenGameByIndex(cardEl) {
+      const idx = parseInt(cardEl.getAttribute('data-game-idx'), 10);
+      const g = games[idx];
+      if (!g) return;
+      mpOpenGame(g.url, g.name);
     }
 
     function mpFilterGame(btn, cat) {
@@ -2876,13 +2992,21 @@
       mpCurrentGameUrl = url;
       document.getElementById('mpPlayerTitle').textContent = name;
       document.getElementById('mpPlayerIframe').src = url;
-      // Also update main activeGame so Player button works
       activeGame = { name, url, category: 'game', tags: [] };
+
+      // Close all panels (including library), then open player — Solar UI tab navigation
       closeAllMinimalPanels();
-      openMinimalPanel('mpPlayer', null);
+      mpActivePanel = 'mpPlayer';
+      document.getElementById('mpPlayer').classList.add('show');
+      // Highlight the ▶️ dock icon
+      document.querySelectorAll('.nebulahub-dock-item').forEach(d => {
+        if (d.getAttribute('data-tip') === 'Now Playing') d.classList.add('active-dock-item');
+      });
     }
 
-    // ---- NEWS PANEL ----
+    // ----------------------------------------------------------------
+    // §4  SOLAR UI — NEWS PANEL
+    // ----------------------------------------------------------------
     function mpRenderNews() {
       const body = document.getElementById('mpNewsBody');
       if (!body) return;
@@ -2910,7 +3034,9 @@
       document.getElementById('announcementBadge').style.display = 'none';
     }
 
-    // ---- SURVEY PANEL ----
+    // ----------------------------------------------------------------
+    // §5  SOLAR UI — SURVEY PANEL
+    // ----------------------------------------------------------------
     function mpOpenSurvey() {
       const iframe = document.getElementById('mpSurveyIframe');
       if (!iframe) return;
@@ -2921,7 +3047,9 @@
       }
     }
 
-    // ---- CHAT PANEL ----
+    // ----------------------------------------------------------------
+    // §6  SOLAR UI — CHAT PANEL
+    // ----------------------------------------------------------------
     function mpSwitchRoom(btn, room) {
       document.querySelectorAll('.mp-room-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -3020,7 +3148,9 @@
       }
     }
 
-    // ---- CUSTOMIZE PANEL ----
+    // ----------------------------------------------------------------
+    // §7  SOLAR UI — CUSTOMIZE PANEL
+    // ----------------------------------------------------------------
     function mpSyncFromMain() {
       // Sync mp pickers from main customColors
       const mp = {
@@ -3063,7 +3193,9 @@
       mpSyncFromMain();
     }
 
-    // ---- SETTINGS PANEL ----
+    // ----------------------------------------------------------------
+    // §8  SOLAR UI — SETTINGS PANEL
+    // ----------------------------------------------------------------
     function mpSelectFav(btn, favKey) {
       document.querySelectorAll('.mp-fav-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -3099,7 +3231,9 @@
       showNotification(`🎨 Theme: ${theme}`);
     }
 
-    // ---- DEV PANEL ----
+    // ----------------------------------------------------------------
+    // §9  SOLAR UI — DEV PANEL
+    // ----------------------------------------------------------------
     function mpRenderFeatures() {
       const container = document.getElementById('mpFeatureList');
       if (!container) return;
@@ -3157,10 +3291,68 @@
       navigator.clipboard.writeText(json).then(() => showNotification('📋 Copied to clipboard!'));
     }
 
-    // ==================== DOCK TAB HANDLER ====================
+    // ================================================================
+    // §10  DOCK TAB HANDLER
+    // Routes dock icon clicks to the correct panel/view depending
+    // on which UI is active (Solar UI panels vs Full Hub views)
+    // ================================================================
     function openDockTab(tab, dockEl) {
-      if (currentUI !== 'minimal') {
-        // In full hub mode — switch to that view
+      if (currentUI === 'solar') {
+        // Solar UI — open inline full-screen panel
+        switch(tab) {
+          case 'library':
+            openMinimalPanel('mpLibrary', dockEl);
+            mpRenderLibrary();
+            const mpsi = document.getElementById('mpSearchInput');
+            if (mpsi && !mpsi._wired) {
+              mpsi.addEventListener('input', mpRenderLibrary);
+              mpsi._wired = true;
+            }
+            break;
+          case 'news':
+            openMinimalPanel('mpNews', dockEl);
+            mpRenderNews();
+            break;
+          case 'survey':
+            openMinimalPanel('mpSurvey', dockEl);
+            mpOpenSurvey();
+            break;
+          case 'chat':
+            openMinimalPanel('mpChat', dockEl);
+            if (!supabaseClient) initSupabase();
+            else { loadMessages(); subscribeToMessages(); }
+            break;
+          case 'customize':
+            openMinimalPanel('mpCustomize', dockEl);
+            mpOpenCustomize();
+            break;
+          case 'settings':
+            openMinimalPanel('mpSettings', dockEl);
+            document.getElementById('mpPanicUrl').value = panicUrl;
+            const saved = localStorage.getItem('nebulahub-cloak-title');
+            if (saved) document.getElementById('mpTabTitle').value = saved;
+            break;
+          case 'player':
+            if (mpCurrentGameUrl || (activeGame && activeGame.url)) {
+              openMinimalPanel('mpPlayer', dockEl);
+            } else {
+              showNotification('🎮 Open a game from the library first!');
+            }
+            break;
+          case 'dev':
+            if (devMode.isActive) {
+              openMinimalPanel('mpDev', dockEl);
+              mpRenderFeatures();
+              mpRenderGameEditor();
+              const savedCSS = localStorage.getItem('nebulahub-dev-css') || devMode.customCSS;
+              if (savedCSS) document.getElementById('mpCssEditor').value = savedCSS;
+            } else {
+              devMode.requestAccess();
+            }
+            break;
+        }
+      } else {
+        // Full Hub mode — navigate to the view
         switch(tab) {
           case 'library':    showLibraryView(); break;
           case 'news':       showAnnouncementsView(); break;
@@ -3174,67 +3366,13 @@
             else devMode.requestAccess();
             break;
         }
-        return;
-      }
-
-      // In minimal mode — open inline panel
-      switch(tab) {
-        case 'library':
-          openMinimalPanel('mpLibrary', dockEl);
-          mpRenderLibrary();
-          // Wire up search input
-          const mpsi = document.getElementById('mpSearchInput');
-          if (mpsi && !mpsi._wired) {
-            mpsi.addEventListener('input', mpRenderLibrary);
-            mpsi._wired = true;
-          }
-          break;
-        case 'news':
-          openMinimalPanel('mpNews', dockEl);
-          mpRenderNews();
-          break;
-        case 'survey':
-          openMinimalPanel('mpSurvey', dockEl);
-          mpOpenSurvey();
-          break;
-        case 'chat':
-          openMinimalPanel('mpChat', dockEl);
-          if (!supabaseClient) initSupabase();
-          else { loadMessages(); subscribeToMessages(); }
-          break;
-        case 'customize':
-          openMinimalPanel('mpCustomize', dockEl);
-          mpOpenCustomize();
-          break;
-        case 'settings':
-          openMinimalPanel('mpSettings', dockEl);
-          // Pre-fill current values
-          document.getElementById('mpPanicUrl').value = panicUrl;
-          const saved = localStorage.getItem('nebulahub-cloak-title');
-          if (saved) document.getElementById('mpTabTitle').value = saved;
-          break;
-        case 'player':
-          if (mpCurrentGameUrl || activeGame) {
-            openMinimalPanel('mpPlayer', dockEl);
-          } else {
-            showNotification('🎮 Open a game from the library first!');
-          }
-          break;
-        case 'dev':
-          if (devMode.isActive) {
-            openMinimalPanel('mpDev', dockEl);
-            mpRenderFeatures();
-            mpRenderGameEditor();
-            const savedCSS = localStorage.getItem('nebulahub-dev-css') || devMode.customCSS;
-            if (savedCSS) document.getElementById('mpCssEditor').value = savedCSS;
-          } else {
-            devMode.requestAccess();
-          }
-          break;
       }
     }
 
-    // ==================== UI TOGGLE SYSTEM ====================
+    // ================================================================
+    // §11  UI TOGGLE SYSTEM
+    // switchUI('solar') → Solar UI  |  switchUI('nebulahub') → Full Hub
+    // ================================================================
     let currentUI = 'nebulahub';
     
     function toggleUIDropdown() {
@@ -3250,7 +3388,8 @@
       const optionNebulaHub = document.getElementById('optionNebulaHub');
       const optionMinimal = document.getElementById('optionMinimal');
       
-      if (mode === 'minimal') {
+      if (mode === 'solar' || mode === 'minimal') {
+        currentUI = 'solar'; // normalise to 'solar'
         nebulaHubUI.style.display = 'none';
         nebulaMinimalUI.classList.add('active');
         document.body.style.padding = '0';
@@ -3259,6 +3398,7 @@
         startNebulaClock();
         setTimeout(() => document.getElementById('nebulaSearchInput').focus(), 100);
       } else {
+        closeAllMinimalPanels();
         nebulaMinimalUI.classList.remove('active');
         nebulaHubUI.style.display = '';
         document.body.style.padding = '20px';
@@ -3287,7 +3427,7 @@
 
     function loadSavedUI() {
       const savedUI = localStorage.getItem('nebulahub-ui-mode');
-      if (savedUI === 'minimal') switchUI('minimal');
+      if (savedUI === 'solar' || savedUI === 'minimal') switchUI('solar');
     }
 
     document.addEventListener('click', (e) => {
@@ -3297,7 +3437,11 @@
       }
     });
 
-    // ==================== ANNOUNCEMENTS ====================
+    // ================================================================
+    // §12  ANNOUNCEMENTS DATA
+    // Add objects to the array below to show new announcements.
+    // Types: 'normal' | 'important' | 'update'
+    // ================================================================
     const ANNOUNCEMENTS = [
       {
         id: 1,
@@ -3321,10 +3465,19 @@
       }
     ];
 
+    // ================================================================
+    // §13  SURVEY URL
+    // Replace this with your Google Form link
+    // ================================================================
     const SURVEY_URL = "https://forms.gle/ksnfAHu7X5wwmDgt9";
 
+    // Max announcements shown before "show more"
     const MAX_DISPLAYED_ANNOUNCEMENTS = 5;
 
+    // ================================================================
+    // §14  UPDATE MODAL CONFIG
+    // Change version + changes[] to show a new update popup
+    // ================================================================
     const UPDATE_CONFIG = {
       version: "2.3",
       date: "January 30, 2026",
@@ -3338,11 +3491,15 @@
         "🎨 Full theme customization",
         "📢 NEW: Announcements tab with image/gif support",
         "📋 NEW: Survey tab for community feedback",
-        "⚡ NEW: NebulaHub Minimal UI mode - clean launcher interface"
+        "⚡ NEW: Solar UI mode - clean launcher interface"
       ],
       showOnce: true
     };
 
+    // ================================================================
+    // §15  FAVICONS  (tab-cloak icon presets)
+    // Add more keys here and matching buttons in Settings panel HTML
+    // ================================================================
     // Favicon Data URIs
     const FAVICONS = {
       default: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="n" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%2322c55e"/><stop offset="50%" stop-color="%238b5cf6"/><stop offset="100%" stop-color="%23030014"/></radialGradient></defs><rect width="100" height="100" rx="22" fill="%23030014"/><circle cx="50" cy="50" r="46" fill="url(%23n)" opacity="0.9"/><ellipse cx="50" cy="50" rx="28" ry="11" fill="none" stroke="%23a78bfa" stroke-width="2.5" opacity="0.7" transform="rotate(-20 50 50)"/><circle cx="50" cy="50" r="7" fill="white" opacity="0.9"/></svg>',
@@ -3352,7 +3509,12 @@
       slides: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23fbbc04"/><text x="50" y="70" font-size="50" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">S</text></svg>'
     };
 
-    // ✅ Game data
+    // ================================================================
+    // §16  GAME LIBRARY DATA
+    // Each entry: { id, name, category, tags[], url }
+    // Categories: 'arcade' | 'horror' | 'fps' | 'sandbox'
+    // url can be a relative path or absolute https:// link
+    // ================================================================
     let games = [
       { id: "geometry-dash", name: "Geometry Dash Lite", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "games/Geometry Dash Lite/Geometry Dash Lite.html" },
       { id: "Nautilus OS", name: "NautilusOS", category: "arcade", tags: ["platformer", "rhythm", "gd"], url: "https://frdhhfdhhhsfddsffds.vercel.app/" },
@@ -3429,12 +3591,17 @@
     const sidebarZone = document.getElementById("sidebarZone");
     const libraryZone = document.getElementById("libraryZone");
 
+    // ================================================================
+    // §17  CORE STATE VARIABLES
+    // ================================================================
     let activeCategory = "all";
     let activeSearch = "";
     let activeGame = null;
     let panicUrl = localStorage.getItem('nebulahub-panic-url') || "https://clever.com/in/dallasisd/student/portal";
 
-    // ==================== ANNOUNCEMENTS SYSTEM ====================
+    // ================================================================
+    // §18  ANNOUNCEMENTS SYSTEM
+    // ================================================================
     function renderAnnouncements() {
       const container = document.getElementById('announcementsView');
       const badge = document.getElementById('announcementBadge');
@@ -3474,7 +3641,9 @@
       document.getElementById('announcementBadge').style.display = 'none';
     }
 
-    // ==================== SURVEY SYSTEM ====================
+    // ================================================================
+    // §19  SURVEY SYSTEM
+    // ================================================================
     function showSurveyView() {
       hideAllViews();
       surveyView.style.display = 'flex';
@@ -3493,7 +3662,10 @@
       [viewLibraryBtn, viewPlayerBtn, viewCustomizeBtn, viewSettingsBtn, viewChatBtn, viewDevBtn, viewAnnouncementsBtn, viewSurveyBtn].forEach(b => b.classList.remove('active'));
     }
 
-    // ==================== DEVELOPER MODE SYSTEM ====================
+    // ================================================================
+    // §20  DEVELOPER MODE SYSTEM
+    // Password is stored in devMode.password below
+    // ================================================================
     const devMode = {
       password: "Ponchis721",
       isActive: false,
@@ -3530,7 +3702,7 @@
         document.body.classList.add('dev-active', 'dev-mode-active');
         sessionStorage.setItem('dev-mode-active', 'true');
         // If in minimal mode, open the dev panel; otherwise show the full dev view
-        if (currentUI === 'minimal') {
+        if (currentUI === 'solar') {
           openMinimalPanel('mpDev', null);
           setTimeout(() => { mpRenderFeatures(); mpRenderGameEditor(); }, 50);
         } else {
@@ -3712,7 +3884,10 @@
     viewAnnouncementsBtn.addEventListener('click', showAnnouncementsView);
     viewSurveyBtn.addEventListener('click', showSurveyView);
 
-    // ==================== CUSTOMIZATION SYSTEM ====================
+    // ================================================================
+    // §21  CUSTOMIZATION SYSTEM
+    // Edit defaultColors below to change the default color scheme
+    // ================================================================
     const customColors = {
       brand: '#22c55e', accent: '#8b5cf6', accentStrong: '#22c55e',
       bgGrad1: '#1f2937', bgGrad2: '#111827',
@@ -3826,7 +4001,9 @@
     document.getElementById('chatSentPicker').addEventListener('input', (e) => { customColors.chatSent = e.target.value; document.getElementById('chatSentText').value = e.target.value; document.documentElement.style.setProperty('--custom-chat-sent', e.target.value); updateChatPreview(); });
     document.getElementById('chatBgPicker').addEventListener('input', (e) => { customColors.chatBg = e.target.value; document.getElementById('chatBgText').value = e.target.value; document.documentElement.style.setProperty('--custom-chat-bg', e.target.value); updateChatPreview(); });
 
-    // ==================== TAB CLOAKING SYSTEM ====================
+    // ================================================================
+    // §22  TAB CLOAKING SYSTEM
+    // ================================================================
     document.querySelectorAll('.favicon-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.favicon-btn').forEach(b => b.classList.remove('active'));
@@ -3880,7 +4057,9 @@
       }
     }
 
-    // ==================== UPDATE MODAL ====================
+    // ================================================================
+    // §23  UPDATE MODAL
+    // ================================================================
     function showUpdateModal() {
       const lastSeen = localStorage.getItem('nebulahub-update-seen');
       const savedVersion = localStorage.getItem('nebulahub-update-version');
@@ -3897,7 +4076,10 @@
       document.getElementById('updateModal').classList.remove('show');
     }
 
-    // ==================== CORE FUNCTIONS ====================
+    // ================================================================
+    // §24  CORE FUNCTIONS
+    // renderGrid, showView helpers, theme switching, panic button
+    // ================================================================
     function renderGrid() {
       const query = activeSearch.trim().toLowerCase();
       const filtered = games.filter(game => {
@@ -3997,7 +4179,10 @@
       }
     }
 
-    // ==================== NEBULACHAT SYSTEM ====================
+    // ================================================================
+    // §25  NEBULACHAT SYSTEM
+    // Supabase credentials are in SUPABASE_CONFIG below
+    // ================================================================
     const SUPABASE_CONFIG = {
       url: 'https://eatwwxzrnsyxuzkfckal.supabase.co',
       anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhdHd3eHpybnN5eHV6a2Zja2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MjM0MjgsImV4cCI6MjA3OTQ5OTQyOH0.UZoqLR93nMHoK_zQAEndaSntx9F05CXLEKMNGDyi9qc'
@@ -4082,6 +4267,9 @@
       });
     });
 
+    // ================================================================
+    // §26  INIT — Event Listeners & Bootstrap
+    // ================================================================
     document.getElementById('sendMessageBtn').addEventListener('click', sendMessage);
     document.getElementById('messageInput').addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
     document.getElementById('devPasswordInput').addEventListener('keypress', e => { if (e.key === 'Enter') devMode.authenticate(); });
