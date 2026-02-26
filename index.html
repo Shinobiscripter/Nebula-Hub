@@ -142,6 +142,191 @@
     }
 
     /* ============================================================
+       EXTENSIVE ANIMATION LIBRARY - Simple but aesthetic
+       ============================================================ */
+    
+    /* Slide animations */
+    @keyframes slideInFromRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInFromLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInFromTop {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideInFromBottom {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Scale animations */
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes scaleUp {
+      from { transform: scale(0.95); }
+      to { transform: scale(1); }
+    }
+
+    @keyframes scalePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Rotation animations */
+    @keyframes rotateFlip {
+      0% { transform: perspective(800px) rotateY(0deg); opacity: 1; }
+      50% { transform: perspective(800px) rotateY(90deg); opacity: 0.5; }
+      100% { transform: perspective(800px) rotateY(0deg); opacity: 1; }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-3deg); }
+      75% { transform: rotate(3deg); }
+    }
+
+    /* Glow and pulse effects */
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3); }
+      50% { box-shadow: 0 0 40px rgba(139,92,246,0.6), 0 0 60px rgba(139,92,246,0.3); }
+    }
+
+    @keyframes softGlow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(139,92,246,0.4)); }
+      50% { filter: drop-shadow(0 0 16px rgba(139,92,246,0.7)); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    @keyframes rainbow {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    /* Fade animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Bounce and elastic */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes elastic {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.25); }
+      40% { transform: scale(0.75); }
+      50% { transform: scale(1.15); }
+      65% { transform: scale(0.95); }
+      75% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes rubberBand {
+      0% { transform: scale(1); }
+      30% { transform: scaleX(1.25) scaleY(0.75); }
+      40% { transform: scaleX(0.75) scaleY(1.25); }
+      50% { transform: scaleX(1.15) scaleY(0.85); }
+      65% { transform: scaleX(0.95) scaleY(1.05); }
+      75% { transform: scaleX(1.05) scaleY(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    /* Special effects */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes swing {
+      20% { transform: rotate(15deg); }
+      40% { transform: rotate(-10deg); }
+      60% { transform: rotate(5deg); }
+      80% { transform: rotate(-5deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.15); }
+      70% { transform: scale(1); }
+    }
+
+    @keyframes dropdownSlide {
+      from { transform: translateY(-10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes slideExpand {
+      from { max-height: 0; opacity: 0; }
+      to { max-height: 500px; opacity: 1; }
+    }
+
+    /* Stagger delays for sequential animations */
+    .stagger-1 { animation-delay: 0.05s; }
+    .stagger-2 { animation-delay: 0.1s; }
+    .stagger-3 { animation-delay: 0.15s; }
+    .stagger-4 { animation-delay: 0.2s; }
+    .stagger-5 { animation-delay: 0.25s; }
+    .stagger-6 { animation-delay: 0.3s; }
+
+    /* Hover animation classes */
+    .hover-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+
+    .hover-glow { transition: filter 0.3s ease; }
+    .hover-glow:hover { filter: drop-shadow(0 0 12px rgba(139,92,246,0.6)); }
+
+    .hover-scale { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .hover-scale:hover { transform: scale(1.05); }
+
+    /* ============================================================
        3. LAYOUT — APP SHELL & SIDEBAR
        ============================================================ */
     .app-shell {
@@ -1129,7 +1314,7 @@
       position: fixed; inset: 0;
       background: rgba(0,0,0,0.8);
       backdrop-filter: blur(8px);
-      z-index: 1000;
+      z-index: 1500;
       display: none;
       align-items: center;
       justify-content: center;
@@ -1143,6 +1328,7 @@
       background: var(--bg-elevated);
       border-radius: 24px;
       border: 1px solid var(--accent-soft);
+      animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       max-width: 480px;
       width: 100%;
       max-height: 85vh;
@@ -1267,7 +1453,7 @@
     .chat-unread { min-width: 18px; height: 18px; border-radius: 999px; background: var(--custom-accent-color); color: white; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; padding: 0 4px; }
 
     /* ---- Friends panel (full-screen solar panel style) ---- */
-    .friends-panel { position: fixed; inset: 0; bottom: 88px; background: rgba(3,0,20,0.98); backdrop-filter: blur(28px); z-index: 200; display: none; flex-direction: column; animation: panelIn 0.2s ease-out; }
+    .friends-panel { position: fixed; inset: 0; bottom: 88px; background: rgba(3,0,20,0.98); backdrop-filter: blur(28px); z-index: 200; display: none; flex-direction: column; animation: slideInFromLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     .friends-panel.show { display: flex; }
     .friends-layout { display: grid; grid-template-columns: 280px 1fr; flex: 1; overflow: hidden; }
     @media (max-width: 700px) { .friends-layout { grid-template-columns: 1fr; } }
@@ -1598,7 +1784,7 @@
       bottom: 28px;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
+      display: none;
       align-items: center;
       gap: 6px;
       padding: 10px 18px;
@@ -1661,6 +1847,9 @@
 
     .nebulahub-dock-divider { width: 1px; height: 26px; background: rgba(148,163,184,0.25); margin: 0 4px; }
 
+    /* Show dock only when Solar UI is active */
+    body.solar-mode .nebulahub-dock { display: flex; }
+
     .nebulahub-dock-time {
       font-size: 0.82rem;
       color: var(--text-soft);
@@ -1694,7 +1883,7 @@
       flex-direction: column;
       z-index: 200;
       overflow: hidden;
-      animation: panelIn 0.2s ease-out;
+      animation: slideInFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .minimal-panel.show { display: flex; }
 
@@ -2190,7 +2379,7 @@
       border-radius: 24px;
       padding: 36px 32px;
       box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(139,92,246,0.1);
-      animation: panelIn 0.3s ease-out;
+      animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .auth-logo {
@@ -2289,7 +2478,7 @@
       backdrop-filter: blur(28px) saturate(1.4);
       z-index: 200; overflow-y: auto;
       display: none; flex-direction: column;
-      animation: panelIn 0.2s ease-out;
+      animation: slideInFromRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .profile-panel.show { display: flex; }
 
@@ -2461,6 +2650,101 @@
     }
     .dock-profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .dock-profile-avatar:hover { transform: scale(1.1); border-color: rgba(139,92,246,0.9); }
+
+    /* ================================================================
+       LAYOUT BUILDER - Drag-and-drop homepage customization
+       ================================================================ */
+    .layout-builder {
+      background: rgba(139,92,246,0.05);
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid rgba(139,92,246,0.2);
+    }
+    .layout-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 200px;
+    }
+    .layout-item {
+      background: var(--bg-elevated);
+      border: 1px solid rgba(139,92,246,0.3);
+      padding: 12px 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: move;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+    .layout-item:hover {
+      background: rgba(139,92,246,0.1);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(139,92,246,0.2);
+    }
+    .layout-item.dragging {
+      opacity: 0.5;
+      transform: rotate(2deg);
+    }
+    .layout-item[data-hidden="true"] {
+      opacity: 0.4;
+      background: rgba(148,163,184,0.1);
+    }
+    .layout-icon {
+      font-size: 1.3rem;
+      width: 32px;
+      text-align: center;
+    }
+    .layout-item-name {
+      flex: 1;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    .btn-icon {
+      background: transparent;
+      border: 1px solid rgba(139,92,246,0.3);
+      padding: 4px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1rem;
+    }
+    .btn-icon:hover {
+      background: rgba(139,92,246,0.2);
+      border-color: rgba(139,92,246,0.5);
+    }
+    .drag-handle {
+      color: var(--text-soft);
+      cursor: grab;
+      font-size: 1.2rem;
+      padding: 0 4px;
+    }
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      border: 1px solid rgba(139,92,246,0.3);
+      background: rgba(139,92,246,0.1);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .btn-sm:hover {
+      background: rgba(139,92,246,0.2);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      background: transparent;
+      border-color: rgba(148,163,184,0.3);
+    }
+    .btn-ghost:hover {
+      background: rgba(148,163,184,0.1);
+    }
   </style>
 </head>
 <body>
@@ -2639,7 +2923,7 @@
                 <span class="sub" id="playerGameMeta">Category • Opens in iframe</span>
               </div>
               <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button class="btn btn-ghost" id="openInNewTabBtn">🔗 Open in new tab</button>
+                <button class="btn btn-ghost" id="fullscreenBtn">⛶ Fullscreen</button>
                 <button class="btn" id="backToLibraryBtn">⬅ Back to library</button>
               </div>
             </div>
@@ -2736,6 +3020,14 @@
                   <button class="preset-btn" onclick="applyPreset('arctic')">❄️ Arctic</button>
                   <button class="preset-btn" onclick="applyPreset('lava')">🌋 Lava</button>
                   <button class="preset-btn" onclick="applyPreset('nebula')">🌌 Nebula</button>
+                  <button class="preset-btn" onclick="applyPreset('mint')">🌿 Mint</button>
+                  <button class="preset-btn" onclick="applyPreset('cherry')">🍒 Cherry</button>
+                  <button class="preset-btn" onclick="applyPreset('slate')">⚫ Slate</button>
+                  <button class="preset-btn" onclick="applyPreset('peach')">🍑 Peach</button>
+                  <button class="preset-btn" onclick="applyPreset('sapphire')">💎 Sapphire</button>
+                  <button class="preset-btn" onclick="applyPreset('emerald')">💚 Emerald</button>
+                  <button class="preset-btn" onclick="applyPreset('amber')">🟠 Amber</button>
+                  <button class="preset-btn" onclick="applyPreset('cosmic')">✨ Cosmic</button>
                 </div>
                 <div class="theme-active-notice" id="customActiveNotice">
                   ✨ Custom theme active! Select a preset theme from the dropdown above to reset.
@@ -2779,6 +3071,73 @@
                     <input type="checkbox" id="valentineToggle" onchange="applyValentineMode(this.checked)">
                     <span class="toggle-slider"></span>
                   </label>
+                </div>
+              </div>
+
+              <!-- ============================================================
+                   LAYOUT BUILDER - Drag-and-drop homepage customization
+                   ============================================================ -->
+              <div class="customize-card">
+                <h3>🎨 Layout Builder</h3>
+                <p style="font-size:0.8rem;color:var(--text-soft);margin-bottom:12px;">
+                  Drag sections to reorder • Click 👁️ to hide/show
+                </p>
+                
+                <div class="layout-builder" id="layoutBuilder">
+                  <div class="layout-preview" id="layoutPreview">
+                    <div class="layout-item" data-item="header" draggable="true">
+                      <span class="layout-icon">⬆️</span>
+                      <span class="layout-item-name">Header Bar</span>
+                      <button class="btn-icon" onclick="toggleLayoutItem(this)" title="Show/Hide">👁️</button>
+                      <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+                    </div>
+                    <div class="layout-item" data-item="search" draggable="true">
+                      <span class="layout-icon">🔍</span>
+                      <span class="layout-item-name">Search Bar</span>
+                      <button class="btn-icon" onclick="toggleLayoutItem(this)" title="Show/Hide">👁️</button>
+                      <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+                    </div>
+                    <div class="layout-item" data-item="recent" draggable="true">
+                      <span class="layout-icon">🕒</span>
+                      <span class="layout-item-name">Recently Played</span>
+                      <button class="btn-icon" onclick="toggleLayoutItem(this)" title="Show/Hide">👁️</button>
+                      <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+                    </div>
+                    <div class="layout-item" data-item="filters" draggable="true">
+                      <span class="layout-icon">🏷️</span>
+                      <span class="layout-item-name">Category Filters</span>
+                      <button class="btn-icon" onclick="toggleLayoutItem(this)" title="Show/Hide">👁️</button>
+                      <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+                    </div>
+                    <div class="layout-item" data-item="grid" draggable="true">
+                      <span class="layout-icon">🎮</span>
+                      <span class="layout-item-name">Game Grid</span>
+                      <button class="btn-icon" onclick="toggleLayoutItem(this)" title="Show/Hide">👁️</button>
+                      <span class="drag-handle" title="Drag to reorder">⋮⋮</span>
+                    </div>
+                  </div>
+                  
+                  <div style="margin:14px 0;">
+                    <p style="font-size:0.8rem;color:var(--text-soft);margin-bottom:8px;">📋 Quick Templates:</p>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                      <button class="btn-icon" onclick="applyLayoutTemplate('minimal')" title="Minimal" style="padding:6px 10px;font-size:0.8rem;">Simple</button>
+                      <button class="btn-icon" onclick="applyLayoutTemplate('focused')" title="Focused" style="padding:6px 10px;font-size:0.8rem;">Focused</button>
+                      <button class="btn-icon" onclick="applyLayoutTemplate('discover')" title="Discovery" style="padding:6px 10px;font-size:0.8rem;">Discover</button>
+                      <button class="btn-icon" onclick="applyLayoutTemplate('classic')" title="Classic" style="padding:6px 10px;font-size:0.8rem;">Classic</button>
+                    </div>
+                  </div>
+                  
+                  <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+                    <button class="btn btn-sm" onclick="saveCustomLayout()" title="Save your custom layout">
+                      💾 Save Layout
+                    </button>
+                    <button class="btn btn-sm btn-ghost" onclick="resetLayout()" title="Reset to default">
+                      🔄 Reset Default
+                    </button>
+                    <button class="btn btn-sm btn-ghost" onclick="exportLayout()" title="Copy layout code">
+                      📋 Export
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -3137,7 +3496,7 @@
       <div class="mp-header">
         <div class="mp-title">▶️ <span id="mpPlayerTitle">Now Playing</span></div>
         <div style="display:flex;gap:8px;">
-          <button class="mp-close" style="width:auto;padding:0 10px;border-radius:999px;" onclick="window.open(mpCurrentGameUrl,'_blank')" title="Open in new tab">🔗</button>
+          <button class="mp-close" style="width:auto;padding:0 10px;border-radius:999px;" onclick="mpToggleFullscreen()" title="Fullscreen">⛶</button>
           <button class="mp-close" onclick="closeMinimalPanel('mpPlayer')">✕</button>
         </div>
       </div>
@@ -3446,6 +3805,11 @@
         <div class="auth-error" id="siError"></div>
         <button class="auth-btn" type="submit" id="siBtnSubmit">Sign In →</button>
         <div class="auth-divider"><span>or</span></div>
+        <button class="auth-btn" type="button" onclick="authSignInWithGoogle()"
+          style="background: #fff; color: #1f2937; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+          Sign in with Google
+        </button>
         <button class="auth-btn" type="button" id="siGuestBtn" onclick="authContinueAsGuest()"
           style="background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.3); color: var(--text-soft);">
           Continue as Guest
@@ -3471,6 +3835,11 @@
         <div class="auth-success" id="suSuccess">✅ Account created! Check your email to confirm, then sign in.</div>
         <button class="auth-btn" type="submit" id="suBtnSubmit">Create Account →</button>
         <div class="auth-divider"><span>or</span></div>
+        <button class="auth-btn" type="button" onclick="authSignInWithGoogle()"
+          style="background: #fff; color: #1f2937; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+          Sign in with Google
+        </button>
         <button class="auth-btn" type="button" onclick="authContinueAsGuest()"
           style="background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.3); color: var(--text-soft);">
           Continue as Guest
@@ -3861,6 +4230,19 @@
     // ================================================================
     let mpActivePanel = null;
     let mpCurrentGameUrl = '';
+
+    function mpToggleFullscreen() {
+      const iframe = document.getElementById('mpPlayerIframe');
+      if (!iframe) return;
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        iframe.requestFullscreen().catch(err => {
+          console.log('Fullscreen error:', err);
+          showNotification('⚠️ Fullscreen not supported');
+        });
+      }
+    }
     let mpActiveCategory = 'all';
 
     const MP_PANELS = ['mpLibrary','mpApps','mpPlayer','mpNews','mpSurvey','mpChat','mpCustomize','mpSettings','mpDev'];
@@ -4011,15 +4393,22 @@
     // Patch initSupabase to update mpChatStatus
     function initSupabase() {
       if (window.supabase) {
-        supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-        const statusEl = document.getElementById('connectionStatus');
-        if (statusEl) statusEl.textContent = 'Connected';
-        const mpStatus = document.getElementById('mpChatStatus');
-        if (mpStatus) mpStatus.textContent = '· Connected';
-        initAuthAndProfile();
+        try {
+          supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+          const statusEl = document.getElementById('connectionStatus');
+          if (statusEl) statusEl.textContent = 'Connected';
+          const mpStatus = document.getElementById('mpChatStatus');
+          if (mpStatus) mpStatus.textContent = '· Connected';
+          initAuthAndProfile();
+        } catch (e) {
+          console.error('Supabase init error:', e);
+          showAuthGate();
+        }
       } else {
         const statusEl = document.getElementById('connectionStatus');
         if (statusEl) statusEl.textContent = 'Error';
+        // Supabase CDN failed to load — show auth gate anyway so user sees the UI
+        showAuthGate();
       }
     }
 
@@ -4267,26 +4656,38 @@
       const optionNebulaHub = document.getElementById('optionNebulaHub');
       const optionMinimal = document.getElementById('optionMinimal');
       
-      if (mode === 'solar' || mode === 'minimal') {
-        currentUI = 'solar'; // normalise to 'solar'
-        nebulaHubUI.style.display = 'none';
-        nebulaMinimalUI.classList.add('active');
-        document.body.style.padding = '0';
-        optionNebulaHub.classList.remove('active');
-        optionMinimal.classList.add('active');
-        startNebulaClock();
-        setTimeout(() => document.getElementById('nebulaSearchInput').focus(), 100);
-      } else {
-        closeAllMinimalPanels();
-        nebulaMinimalUI.classList.remove('active');
-        nebulaHubUI.style.display = '';
-        document.body.style.padding = '20px';
-        optionMinimal.classList.remove('active');
-        optionNebulaHub.classList.add('active');
-        stopNebulaClock();
-      }
+      // Add flip animation
+      document.body.style.animation = 'rotateFlip 0.6s ease-in-out';
       
-      document.getElementById('uiToggleDropdown').classList.remove('active');
+      setTimeout(() => {
+        if (mode === 'solar' || mode === 'minimal') {
+          currentUI = 'solar'; // normalise to 'solar'
+          nebulaHubUI.style.display = 'none';
+          nebulaMinimalUI.classList.add('active');
+          document.body.style.padding = '0';
+          document.body.classList.add('solar-mode');
+          optionNebulaHub.classList.remove('active');
+          optionMinimal.classList.add('active');
+          startNebulaClock();
+          setTimeout(() => document.getElementById('nebulaSearchInput').focus(), 100);
+        } else {
+          closeAllMinimalPanels();
+          nebulaMinimalUI.classList.remove('active');
+          nebulaHubUI.style.display = '';
+          document.body.style.padding = '20px';
+          document.body.classList.remove('solar-mode');
+          optionMinimal.classList.remove('active');
+          optionNebulaHub.classList.add('active');
+          stopNebulaClock();
+        }
+        
+        document.getElementById('uiToggleDropdown').classList.remove('active');
+        
+        // Remove animation after completion
+        setTimeout(() => {
+          document.body.style.animation = '';
+        }, 100);
+      }, 300); // Switch halfway through flip
     }
 
     let nebulaClockInterval;
@@ -4324,9 +4725,29 @@
     const ANNOUNCEMENTS = [
       {
         id: 1,
-        title: "🎮 Welcome to NebulaHub v2.3!",
-        content: "Big news, for those of you who know Abel personally you know that NebulaHub has been extremely dry and has had no updates lately. Well now due to the newfound and unexpected popularity of NebulaHub Abel has hired a group of developers to work on NebulaHub with him, our plans for this website include Monthly large scale updates, weekly game and app drops, and lastly themed updates like our latest Developer update.",
-        date: "January 30, 2026",
+        title: "🎨 UI & Animation Update (v3.1.0)",
+        content: `<strong>Customize your homepage like never before!</strong> The Layout Builder update gives you complete control over your NebulaHub experience:
+
+<strong>🎨 Drag & Drop Layout Editor</strong>
+Rearrange every section of your homepage. Drag the header, search bar, filters, game grid, and recently played strip into any order you want.
+
+<strong>👁️ Show/Hide Sections</strong>
+Click the eye icon on any section to hide it completely. Want a minimalist homepage with just games? Hide everything else. Want filters at the top? Drag them there.
+
+<strong>💾 Save & Persist</strong>
+Your custom layout is saved automatically and persists across sessions. Your personal layout follows you everywhere.
+
+<strong>📋 Export & Share</strong>
+Export your layout as JSON code and share it with friends. Everyone can build their perfect NebulaHub.
+
+<strong>🔄 Easy Reset</strong>
+Don't like your changes? One click resets everything back to the default layout.
+
+<strong>🔍 Quick Access</strong>
+Press Ctrl+K and search "Layout Builder" to jump straight to the customization panel.
+
+Plus all features from v3.0.1 remain: Spotlight Search, Reactions, Favorites, Presence, Typing Indicators, Reply-to, Delete Messages, and more!`,
+        date: "February 27, 2026",
         image: null,
         gif: null,
         badge: "NEW",
@@ -4334,6 +4755,56 @@
       },
       {
         id: 2,
+        title: "💝 The Valentine's Update (v3.0.1)",
+        content: `<strong>Love is in the air!</strong> NebulaHub's biggest update yet is here with 10 major features:
+
+<strong>🔍 Spotlight Search (Ctrl+K)</strong>
+Instant search across games, apps, friends, and views with fuzzy matching and keyboard navigation.
+
+<strong>❤️ Favorites System</strong>
+Mark games as favorites with the heart button. Your favorites automatically sort to the top.
+
+<strong>🕒 Recently Played</strong>
+Quick access to your last 5 played games at the top of your library.
+
+<strong>😊 Message Reactions</strong>
+React to chat messages with 6 emoji options (👍❤️😂😮😢🔥).
+
+<strong>↩️ Reply-to Messages</strong>
+Quote and reply to specific messages in chat.
+
+<strong>🗑️ Delete Messages</strong>
+Soft-delete your own messages from conversations.
+
+<strong>💬 Typing Indicators</strong>
+See when others are typing in real-time with animated dots.
+
+<strong>🟢 Online Presence</strong>
+Live online/idle/offline status for all users.
+
+<strong>🔐 Google Sign-In</strong>
+One-click authentication with your Google account.
+
+<strong>📱 App Library Enhancement</strong>
+Apps now open directly in NebulaHub's embedded player.`,
+        date: "February 19, 2026",
+        image: null,
+        gif: null,
+        badge: null,
+        type: "update"
+      },
+      {
+        id: 3,
+        title: "🎮 Welcome to NebulaHub v2.3!",
+        content: "Big news, for those of you who know Abel personally you know that NebulaHub has been extremely dry and has had no updates lately. Well now due to the newfound and unexpected popularity of NebulaHub Abel has hired a group of developers to work on NebulaHub with him, our plans for this website include Monthly large scale updates, weekly game and app drops, and lastly themed updates like our latest Developer update.",
+        date: "January 30, 2026",
+        image: null,
+        gif: null,
+        badge: null,
+        type: "update"
+      },
+      {
+        id: 4,
         title: "🛠️ New Indie Game Drop",
         content: "New Indie games added to the website such as Oneshot, Omori, Celeste, and more",
         date: "February 2, 2026",
@@ -4358,24 +4829,19 @@
     // Change version + changes[] to show a new update popup
     // ================================================================
     const UPDATE_CONFIG = {
-      version: "3.0",
-      date: "February 14, 2026",
-      title: "💝 The Valentine's Update",
+      version: "3.2.0",
+      date: "February 26, 2026",
+      title: "🎨 UI & Animation Update",
       changes: [
-        "💝 Happy Valentine's Day! — Valentine's Mode with heart particles",
-        "🔍 Spotlight Search (Ctrl+K) — find games, apps, friends & views instantly",
-        "💬 Message Reactions — react with 👍 ❤️ 😂 😮 😢 🔥 on any message",
-        "↩️ Reply-to Messages — quote & reply inline in any chat",
-        "🗑️ Delete Your Messages — remove your own messages from any chat",
-        "⌨️ Typing Indicators — see when friends are typing in real time",
-        "🌐 Presence & Online Status — live online/idle/offline dots on friends",
-        "❤️ Favorite Games — heart any game to pin it to the top of your library",
-        "🕒 Recently Played — last 5 games shown at the top of the library",
-        "👤 Profiles now show avatar in chat messages",
-        "📱 New App Library tab — 30+ curated apps across 5 categories",
-        "🎨 New Customization — font picker, radius/blur/opacity sliders, 5 new presets",
-        "🌌 Nebula, Neon, Cyber, Rose, Arctic & Lava color themes added",
-        "⚡ Performance — indexed DB queries, faster message loading"
+        "🎨 Layout Builder — drag & drop to customize your homepage layout",
+        "👁️ Show/Hide Sections — toggle visibility of header, search, filters, and more",
+        "💾 Save Custom Layouts — your layout persists across sessions",
+        "📋 Export Layouts — share your custom layout with friends",
+        "🔄 Reset Option — return to default layout anytime",
+        "🏷️ All previous features retained — Reactions, Spotlight, Favorites, Presence, etc.",
+        "✨ Improved animations throughout the site",
+        "🔍 Layout Builder added to Spotlight Search (Ctrl+K)",
+        "⚡ Better performance with optimized DOM manipulation"
       ],
       showOnce: true
     };
@@ -4469,7 +4935,7 @@
     const playerGameMeta = document.getElementById("playerGameMeta");
     const playerIframe = document.getElementById("playerIframe");
     const backToLibraryBtn = document.getElementById("backToLibraryBtn");
-    const openInNewTabBtn = document.getElementById("openInNewTabBtn");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
     const portalLink = document.getElementById("portalLink");
     const yearSpan = document.getElementById("yearSpan");
     const sidebarZone = document.getElementById("sidebarZone");
@@ -4862,7 +5328,15 @@
         rose:   { brand:'#fb7185', accent:'#e11d48', accentStrong:'#fda4af', bgGrad1:'#4c0519', bgGrad2:'#27030e', overlay1:'rgba(251,113,133,0.35)', overlay2:'rgba(253,164,175,0.25)', chatSent:'#fb7185', chatBg:'#27030e' },
         arctic: { brand:'#67e8f9', accent:'#0891b2', accentStrong:'#a5f3fc', bgGrad1:'#0c4a6e', bgGrad2:'#0a2540', overlay1:'rgba(103,232,249,0.3)', overlay2:'rgba(165,243,252,0.2)', chatSent:'#67e8f9', chatBg:'#0a2540' },
         lava:   { brand:'#ff4500', accent:'#ff6a00', accentStrong:'#ffd700', bgGrad1:'#1a0500', bgGrad2:'#0d0200', overlay1:'rgba(255,69,0,0.4)', overlay2:'rgba(255,106,0,0.3)', chatSent:'#ff4500', chatBg:'#0d0200' },
-        nebula: { brand:'#22c55e', accent:'#8b5cf6', accentStrong:'#22c55e', bgGrad1:'#1f2937', bgGrad2:'#111827', overlay1:'rgba(59,130,246,0.35)', overlay2:'rgba(236,72,153,0.3)', chatSent:'#8b5cf6', chatBg:'#0c1024' }
+        nebula: { brand:'#22c55e', accent:'#8b5cf6', accentStrong:'#22c55e', bgGrad1:'#1f2937', bgGrad2:'#111827', overlay1:'rgba(59,130,246,0.35)', overlay2:'rgba(236,72,153,0.3)', chatSent:'#8b5cf6', chatBg:'#0c1024' },
+        mint:   { brand:'#10b981', accent:'#059669', accentStrong:'#34d399', bgGrad1:'#064e3b', bgGrad2:'#022c22', overlay1:'rgba(16,185,129,0.35)', overlay2:'rgba(52,211,153,0.25)', chatSent:'#10b981', chatBg:'#022c22' },
+        cherry: { brand:'#f43f5e', accent:'#e11d48', accentStrong:'#fb7185', bgGrad1:'#881337', bgGrad2:'#4c0519', overlay1:'rgba(244,63,94,0.4)', overlay2:'rgba(251,113,133,0.3)', chatSent:'#f43f5e', chatBg:'#4c0519' },
+        slate:  { brand:'#64748b', accent:'#475569', accentStrong:'#94a3b8', bgGrad1:'#1e293b', bgGrad2:'#0f172a', overlay1:'rgba(100,116,139,0.3)', overlay2:'rgba(148,163,184,0.2)', chatSent:'#64748b', chatBg:'#0f172a' },
+        peach:  { brand:'#fb923c', accent:'#f97316', accentStrong:'#fdba74', bgGrad1:'#7c2d12', bgGrad2:'#431407', overlay1:'rgba(251,146,60,0.35)', overlay2:'rgba(253,186,116,0.25)', chatSent:'#fb923c', chatBg:'#431407' },
+        sapphire: { brand:'#3b82f6', accent:'#2563eb', accentStrong:'#60a5fa', bgGrad1:'#1e3a8a', bgGrad2:'#1e293b', overlay1:'rgba(59,130,246,0.4)', overlay2:'rgba(96,165,250,0.3)', chatSent:'#3b82f6', chatBg:'#1e293b' },
+        emerald: { brand:'#10b981', accent:'#059669', accentStrong:'#34d399', bgGrad1:'#064e3b', bgGrad2:'#022c22', overlay1:'rgba(16,185,129,0.35)', overlay2:'rgba(52,211,153,0.25)', chatSent:'#10b981', chatBg:'#022c22' },
+        amber:  { brand:'#f59e0b', accent:'#d97706', accentStrong:'#fbbf24', bgGrad1:'#78350f', bgGrad2:'#451a03', overlay1:'rgba(245,158,11,0.4)', overlay2:'rgba(251,191,36,0.3)', chatSent:'#f59e0b', chatBg:'#451a03' },
+        cosmic: { brand:'#a78bfa', accent:'#8b5cf6', accentStrong:'#c4b5fd', bgGrad1:'#4c1d95', bgGrad2:'#2e1065', overlay1:'rgba(167,139,250,0.35)', overlay2:'rgba(196,181,253,0.25)', chatSent:'#a78bfa', chatBg:'#2e1065' }
       };
       if (presets[name]) { Object.assign(customColors, presets[name]); syncColorInputs(); applyCustomColors(); }
     }
@@ -5086,6 +5560,19 @@
     }
 
     function showPlayerView() { hideAllViews(); playerView.style.display = "flex"; viewPlayerBtn.classList.add("active"); viewPlayerBtn.disabled = false; }
+
+    function toggleFullscreen() {
+      const iframe = document.getElementById('playerIframe');
+      if (!iframe) return;
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        iframe.requestFullscreen().catch(err => {
+          console.log('Fullscreen error:', err);
+          showNotification('⚠️ Fullscreen not supported');
+        });
+      }
+    }
     function showLibraryView() { playerIframe.src = ""; hideAllViews(); libraryView.style.display = "block"; viewLibraryBtn.classList.add("active"); viewPlayerBtn.disabled = !activeGame; }
     function showAppView() { playerIframe.src = ""; hideAllViews(); const av = document.getElementById('appView'); if (av) av.style.display = "block"; const ab = document.getElementById('viewAppsBtn'); if (ab) ab.classList.add('active'); viewPlayerBtn.disabled = !activeGame; renderAppGrid('all'); }
     function showCustomizeView() { playerIframe.src = ""; hideAllViews(); customizeView.style.display = "flex"; viewCustomizeBtn.classList.add("active"); viewPlayerBtn.disabled = !activeGame; }
@@ -5119,7 +5606,7 @@
     viewSettingsBtn.addEventListener("click", showSettingsView);
     viewChatBtn.addEventListener("click", showChatView);
     backToLibraryBtn.addEventListener("click", showLibraryView);
-    openInNewTabBtn.addEventListener("click", () => { if (activeGame && activeGame.url) window.open(activeGame.url, "_blank"); });
+    fullscreenBtn.addEventListener("click", toggleFullscreen);
     portalLink.addEventListener("click", () => { location.hash = (location.hash === "#portal") ? "" : "#portal"; location.reload(); });
 
     const themeSelector = document.getElementById("themeSelector");
@@ -5222,6 +5709,24 @@
     }
 
     // ---- Auth: guest ----
+    async function authSignInWithGoogle() {
+      if (!supabaseClient) { showNotification('❌ Auth not initialized'); return; }
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin + window.location.pathname
+          }
+        });
+        if (error) throw error;
+        // User will be redirected to Google, then back here
+        // The session will be picked up by initAuthAndProfile on return
+      } catch (e) {
+        console.error('Google sign-in error:', e);
+        showNotification('❌ Google sign-in failed');
+      }
+    }
+
     function authContinueAsGuest() {
       authUser = null;
       userProfile = { display_name: 'Guest', username: 'guest_' + Math.random().toString(36).slice(2,6), avatar_url: null };
@@ -5242,7 +5747,7 @@
     function showAuthGate() {
       document.getElementById('authGate').classList.remove('hidden');
     }
-    let _updateModalShown = false;
+    
     function closeAuthGate() {
       document.getElementById('authGate').classList.add('hidden');
       profileUpdateUI(userProfile);
@@ -5261,11 +5766,8 @@
       chatInit();
       // Start presence heartbeat
       startPresenceHeartbeat();
-      // Show update modal once per page load, after the user is in
-      if (!_updateModalShown) {
-        _updateModalShown = true;
-        setTimeout(showUpdateModal, 800);
-      }
+      // Always show update modal after auth (unless user checked "don't show")
+      setTimeout(showUpdateModal, 800);
     }
 
     // ---- Profile: load from Supabase ----
@@ -5594,7 +6096,7 @@
 
     // ---- Init auth + profile on page load ----
     async function initAuthAndProfile() {
-      if (!supabaseClient) return;
+      if (!supabaseClient) { showAuthGate(); return; }
       // Listen for future auth state changes (sign in / sign out events)
       supabaseClient.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
@@ -5608,13 +6110,18 @@
         }
       });
       // Check for an existing persisted session on page load
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      if (session?.user) {
-        authUser = session.user;
-        await profileLoad();
-        closeAuthGate(); // restores UI + boots chat without showing auth gate
-      } else {
-        showAuthGate();
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session?.user) {
+          authUser = session.user;
+          await profileLoad();
+          closeAuthGate();
+        } else {
+          showAuthGate();
+        }
+      } catch (e) {
+        console.error('Auth init error:', e);
+        showAuthGate(); // always show auth gate on any failure
       }
     }
 
@@ -5650,8 +6157,6 @@
       { id:'timer',      name:'Timer Tab',         category:'tools',        icon:'⏱️', color:'#f59e0b', desc:'Pomodoro & timers',       url:'https://timer.guru' },
       { id:'typeracer',  name:'TypeRacer',         category:'tools',        icon:'⌨️', color:'#1e40af', desc:'Practice typing',         url:'https://play.typeracer.com' },
       { id:'excalidraw', name:'Excalidraw',        category:'tools',        icon:'🔷', color:'#6965db', desc:'Whiteboard & diagrams',   url:'https://excalidraw.com' },
-       { id:'NebulaAI', name:'NebulaAI',        category:'tools',        icon:'🤖', color:'#6965db', desc:'Cheats & AI Chatbot',   url:'games/NebulaAI/NebulaAI.html' },
-
       // Media
       { id:'youtube',    name:'YouTube',           category:'media',        icon:'▶️', color:'#ff0000', desc:'Watch videos',            url:'https://youtube.com' },
       { id:'spotify',    name:'Spotify Web',       category:'media',        icon:'🎧', color:'#1db954', desc:'Stream music',            url:'https://open.spotify.com' },
@@ -5668,12 +6173,22 @@
       if (!grid) return;
       const filtered = activeAppCategory === 'all' ? apps : apps.filter(a => a.category === activeAppCategory);
       grid.innerHTML = filtered.map(app => `
-        <div class="app-card" onclick="window.open('${app.url}','_blank')" title="${app.desc}">
+        <div class="app-card" onclick="openApp(apps.find(a=>a.id==='${app.id}'))" title="${app.desc}">
           <div class="app-icon" style="background:${app.color}22;border:1.5px solid ${app.color}44;">${app.icon}</div>
           <div class="app-name">${app.name}</div>
           <div class="app-desc">${app.desc}</div>
           <span class="app-tag">${app.category}</span>
         </div>`).join('');
+    }
+
+    // Open app in player view
+    function openApp(app) {
+      if (!app) return;
+      activeGame = app; // treat app as activeGame so player controls work
+      playerGameName.textContent = app.name;
+      playerGameMeta.textContent = app.category.toUpperCase() + ' • ' + app.desc;
+      playerIframe.src = app.url;
+      showPlayerView();
     }
 
     // Wire Full Hub app category chips
@@ -5691,7 +6206,7 @@
       if (!grid) return;
       const filtered = (!category || category === 'all') ? apps : apps.filter(a => a.category === category);
       grid.innerHTML = filtered.map(app => `
-        <div class="mp-app-card" onclick="window.open('${app.url}','_blank')" title="${app.desc}">
+        <div class="mp-app-card" onclick="openApp(apps.find(a=>a.id==='${app.id}'));closeAllMinimalPanels();switchUI('nebulahub')" title="${app.desc}">
           <div class="app-icon" style="background:${app.color}22;border:1.5px solid ${app.color}44;">${app.icon}</div>
           <div class="app-name">${app.name}</div>
           <div class="app-desc" style="font-size:0.68rem;color:var(--text-soft);">${app.desc}</div>
@@ -6653,6 +7168,227 @@
     document.getElementById('messageInput')?.addEventListener('input', chatStartTyping);
     document.getElementById('mpChatInput')?.addEventListener('input', chatStartTyping);
 
+    // ================================================================
+    // §25b  LAYOUT BUILDER SYSTEM - Drag-and-drop homepage customization
+    // ================================================================
+    
+    let customLayout = null;
+    let draggedElement = null;
+    
+    function initLayoutBuilder() {
+      const preview = document.getElementById('layoutPreview');
+      if (!preview) return;
+      
+      const items = preview.querySelectorAll('.layout-item');
+      items.forEach(item => {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('drop', handleDrop);
+      });
+      
+      const saved = localStorage.getItem('nebulahub-custom-layout');
+      if (saved) {
+        try {
+          customLayout = JSON.parse(saved);
+          applyCustomLayout();
+        } catch (e) {
+          console.error('Failed to load custom layout:', e);
+        }
+      }
+    }
+    
+    function handleDragStart(e) {
+      draggedElement = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    }
+    
+    function handleDragEnd(e) {
+      this.classList.remove('dragging');
+    }
+    
+    function handleDragOver(e) {
+      if (e.preventDefault) e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      
+      if (this === draggedElement) return;
+      
+      const afterElement = getDragAfterElement(this.parentElement, e.clientY);
+      if (afterElement == null) {
+        this.parentElement.appendChild(draggedElement);
+      } else {
+        this.parentElement.insertBefore(draggedElement, afterElement);
+      }
+      
+      return false;
+    }
+    
+    function handleDrop(e) {
+      if (e.stopPropagation) e.stopPropagation();
+      return false;
+    }
+    
+    function getDragAfterElement(container, y) {
+      const draggableElements = [...container.querySelectorAll('.layout-item:not(.dragging)')];
+      
+      return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+    
+    function toggleLayoutItem(btn) {
+      const item = btn.closest('.layout-item');
+      const isHidden = item.dataset.hidden === 'true';
+      item.dataset.hidden = !isHidden;
+      btn.textContent = isHidden ? '👁️' : '🙈';
+    }
+    
+    function saveCustomLayout() {
+      const preview = document.getElementById('layoutPreview');
+      if (!preview) return;
+      
+      const items = preview.querySelectorAll('.layout-item');
+      const layout = [];
+      
+      items.forEach(item => {
+        layout.push({
+          id: item.dataset.item,
+          hidden: item.dataset.hidden === 'true',
+          order: layout.length
+        });
+      });
+      
+      customLayout = layout;
+      localStorage.setItem('nebulahub-custom-layout', JSON.stringify(layout));
+      showNotification('✅ Layout saved! Refresh to see changes.');
+      
+      applyCustomLayout();
+    }
+    
+    function resetLayout() {
+      if (!confirm('Reset to default layout? This will reload the page.')) return;
+      
+      customLayout = null;
+      localStorage.removeItem('nebulahub-custom-layout');
+      showNotification('🔄 Layout reset to default');
+      
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    }
+    
+    function exportLayout() {
+      const preview = document.getElementById('layoutPreview');
+      if (!preview) return;
+      
+      const items = preview.querySelectorAll('.layout-item');
+      const layout = [];
+      
+      items.forEach(item => {
+        layout.push({
+          id: item.dataset.item,
+          hidden: item.dataset.hidden === 'true'
+        });
+      });
+      
+      const code = JSON.stringify(layout, null, 2);
+      
+      navigator.clipboard.writeText(code).then(() => {
+        showNotification('📋 Layout code copied to clipboard!');
+      }).catch(() => {
+        alert('Your layout code:\n\n' + code);
+      });
+    }
+    
+    // Layout Templates - Premade layouts
+    function applyLayoutTemplate(template) {
+      const templates = {
+        minimal: [
+          {id: 'search', hidden: false},
+          {id: 'grid', hidden: false},
+          {id: 'header', hidden: true},
+          {id: 'filters', hidden: true},
+          {id: 'recent', hidden: true}
+        ],
+        focused: [
+          {id: 'search', hidden: false},
+          {id: 'recent', hidden: false},
+          {id: 'grid', hidden: false},
+          {id: 'header', hidden: true},
+          {id: 'filters', hidden: true}
+        ],
+        discover: [
+          {id: 'header', hidden: false},
+          {id: 'filters', hidden: false},
+          {id: 'search', hidden: false},
+          {id: 'recent', hidden: false},
+          {id: 'grid', hidden: false}
+        ],
+        classic: [
+          {id: 'header', hidden: false},
+          {id: 'search', hidden: false},
+          {id: 'filters', hidden: false},
+          {id: 'grid', hidden: false},
+          {id: 'recent', hidden: false}
+        ]
+      };
+      
+      if (!templates[template]) return;
+      
+      const preview = document.getElementById('layoutPreview');
+      if (!preview) return;
+      
+      const items = preview.querySelectorAll('.layout-item');
+      const itemMap = {};
+      items.forEach(item => itemMap[item.dataset.item] = item);
+      
+      // Apply template
+      templates[template].forEach(({id, hidden}) => {
+        const item = itemMap[id];
+        if (item) {
+          item.dataset.hidden = hidden;
+          const btn = item.querySelector('.btn-icon');
+          if (btn) btn.textContent = hidden ? '🙈' : '👁️';
+          preview.appendChild(item); // Reorder
+        }
+      });
+      
+      showNotification(`✨ ${template.charAt(0).toUpperCase() + template.slice(1)} template applied!`);
+    }
+    
+    function applyCustomLayout() {
+      if (!customLayout) return;
+      
+      const elementsMap = {
+        header: document.querySelector('.top-bar'),
+        search: document.querySelector('.search-section'),
+        filters: document.querySelector('.filters'),
+        grid: document.querySelector('.game-grid'),
+        recent: document.getElementById('recentSection')
+      };
+      
+      const container = document.getElementById('libraryView');
+      if (!container) return;
+      
+      customLayout.forEach(({id, hidden}) => {
+        const element = elementsMap[id];
+        if (element) {
+          element.style.display = hidden ? 'none' : '';
+          if (element.parentElement === container || element.closest('#libraryView')) {
+            container.appendChild(element);
+          }
+        }
+      });
+    }
+
 
     // ---- Load Valentine's and interface settings on boot ----
     function loadValentineSettings() {
@@ -6683,6 +7419,7 @@
       renderRecentStrip();
       loadInterfaceSettings();
       loadValentineSettings();
+      initLayoutBuilder(); // Initialize layout builder
       // Init Supabase + Auth on every page load
       initSupabase();
       initProfileListeners();
