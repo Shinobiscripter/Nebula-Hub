@@ -563,9 +563,9 @@
       font-size:0.72rem;
       padding:3px 7px;
       border-radius:999px;
-      background: rgba(34,197,94,0.16);
-      color:#bbf7d0;
-      border:1px solid rgba(34,197,94,0.6);
+      background: var(--accent-soft);
+      color: var(--custom-accent-strong);
+      border:1px solid var(--custom-accent-color);
       text-transform:uppercase;
       letter-spacing:0.08em;
     }
@@ -1565,9 +1565,19 @@
     /* ============================================================
        11. ANNOUNCEMENTS & SURVEY
        ============================================================ */
-    .announcements-view, .survey-view { display: none; flex-direction: column; gap: 20px; animation: fadeIn 0.3s ease; max-height: 75vh; overflow-y: auto; }
+    .announcements-view, .survey-view { display: none; flex-direction: column; gap: 20px; animation: fadeIn 0.3s ease; max-height: 75vh; overflow-y: auto; padding-right: 8px; }
 
-    .announcement-card { background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(30,64,175,0.05)); border: 1px solid rgba(139,92,246,0.3); border-radius: 20px; padding: 24px; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .announcement-card { 
+      background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(30,64,175,0.05)); 
+      border: 1px solid rgba(139,92,246,0.3); 
+      border-radius: 20px; 
+      padding: 24px; 
+      position: relative; 
+      max-height: 600px;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    }
     .announcement-card:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
     .announcement-card.important { border-color: rgba(239,68,68,0.5); background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(245,158,11,0.05)); }
     .announcement-card.update { border-color: rgba(34,197,94,0.5); background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(21,128,61,0.05)); }
@@ -1580,7 +1590,19 @@
     .announcement-date { font-size: 0.8rem; color: var(--text-soft); margin-bottom: 16px; opacity: 0.8; }
     .announcement-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 12px; margin: 16px 0; border: 1px solid rgba(148,163,184,0.2); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
     .announcement-gif { width: 100%; max-height: 250px; object-fit: contain; border-radius: 12px; margin: 16px 0; background: rgba(0,0,0,0.3); padding: 8px; }
-    .announcement-content { font-size: 0.95rem; line-height: 1.6; color: var(--text); opacity: 0.95; }
+    .announcement-content { 
+      font-size: 0.95rem; 
+      line-height: 1.6; 
+      color: var(--text); 
+      opacity: 0.95; 
+      overflow-y: auto;
+      max-height: 450px;
+      padding-right: 8px;
+    }
+    .announcement-content::-webkit-scrollbar { width: 6px; }
+    .announcement-content::-webkit-scrollbar-track { background: rgba(148,163,184,0.1); border-radius: 3px; }
+    .announcement-content::-webkit-scrollbar-thumb { background: var(--custom-accent-color); border-radius: 3px; }
+    .announcement-content::-webkit-scrollbar-thumb:hover { background: var(--custom-accent-strong); }
     .announcement-empty { text-align: center; padding: 60px 20px; color: var(--text-soft); }
     .announcement-empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
 
@@ -2210,25 +2232,29 @@
     .ui-toggle-btn {
       display: flex; align-items: center; gap: 8px;
       padding: 8px 14px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(148,163,184,0.4);
+      background: var(--bg-elevated);
+      border: 1px solid var(--custom-accent-color);
       border-radius: 12px;
       color: var(--text);
       font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .ui-toggle-btn:hover { background: var(--accent-soft); border-color: var(--custom-accent-color); }
+    .ui-toggle-btn:hover { 
+      background: var(--accent-soft); 
+      border-color: var(--custom-accent-strong); 
+      box-shadow: 0 0 12px rgba(var(--custom-accent-color-rgb), 0.3);
+    }
 
     .ui-toggle-dropdown {
       position: absolute; top: 100%; right: 0;
       margin-top: 8px;
       background: var(--bg-elevated);
-      border: 1px solid rgba(148,163,184,0.3);
+      border: 1px solid var(--custom-accent-color);
       border-radius: 12px;
       padding: 8px;
       min-width: 190px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4), 0 0 20px var(--accent-soft);
       opacity: 0; visibility: hidden;
       transform: translateY(-10px);
       transition: all 0.2s ease;
@@ -2239,8 +2265,8 @@
     .ui-toggle-dropdown.active { opacity: 1; visibility: visible; transform: translateY(0); }
 
     .ui-option { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; transition: all 0.15s ease; font-size: 0.85rem; }
-    .ui-option:hover { background: rgba(139,92,246,0.15); }
-    .ui-option.active { background: var(--accent-soft); }
+    .ui-option:hover { background: var(--accent-soft); }
+    .ui-option.active { background: var(--accent-soft); border: 1px solid var(--custom-accent-color); }
     .ui-option-icon { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
     .ui-option-text { display: flex; flex-direction: column; }
     .ui-option-label { font-weight: 600; color: var(--text); }
@@ -4844,8 +4870,8 @@ Plus all features from v3.0.1 remain: Spotlight Search, Reactions, Favorites, Pr
       { id: "0V0", name: "0V0", category: "arcade", tags: ["fun"], url: "games/0V0/OvO.html" },
       { id: "Steal a Brainrot", name: "Steal a Brainrot", category: "pc game", tags: ["fun"], url: "games/SAB/Steal Brainrot Online.html" },
       { id: "Geometry Dash Wave 3d", name: "Geometry Dash Wave 3d", category: "arcade", tags: ["arcade"], url: "https://www.gamenora.com/embed/geometry-dash-wave-original" },
-      { id: "Iron Lung", name: "Iron Lung", category: "arcade", tags: ["arcade"], url: "games/Iron Lung/Iron Lung.html" },
-      { id: "Bendy and The Ink Machine", name: "Bendy and The Ink Machine", category: "arcade", tags: ["arcade"], url: "games/Bendy and The Ink Machine/Bendy and the Ink Machine (1).html" }
+      { id: "Bendy and the ink machine", name: "Bendy and the ink machine", category: "arcade", tags: ["arcade"], url: "games/Bendy and The Ink Machine/Bendy and the ink machine (1).html" },
+      { id: "Iron Lung", name: "Iron Lung", category: "arcade", tags: ["arcade"], url: "games/Iron Lung/Iron Lung.html" }
     ];
 
     // elements
